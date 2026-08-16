@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -1042,96 +1043,15 @@
         </a>
 
       </div>
+        <div class="products" id="products-container">
+  <p style="grid-column: 1 / -1; text-align: center; color: #888;">
+    Loading the drop...
+  </p>
+</div>
+  
 
 
-      <div class="products">
-
-
-        <article class="product">
-
-          <div class="product-image">
-            <span class="tag">New</span>
-            <div class="placeholder">01</div>
-          </div>
-
-          <div class="product-info">
-
-            <div>
-              <div class="product-name">
-                Black Lace Jeans
-              </div>
-
-              <div class="product-meta">
-                Y2K · One of one
-              </div>
-            </div>
-
-            <div class="price">
-              Rs. 2,500
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <article class="product">
-
-          <div class="product-image">
-            <span class="tag">New</span>
-            <div class="placeholder">02</div>
-          </div>
-
-          <div class="product-info">
-
-            <div>
-              <div class="product-name">
-                Star Patch Jeans
-              </div>
-
-              <div class="product-meta">
-                Upcycled · One of one
-              </div>
-            </div>
-
-            <div class="price">
-              Rs. 2,500
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <article class="product">
-
-          <div class="product-image">
-            <span class="tag">Coming soon</span>
-            <div class="placeholder">03</div>
-          </div>
-
-          <div class="product-info">
-
-            <div>
-              <div class="product-name">
-                Next Cherry
-              </div>
-
-              <div class="product-meta">
-                Something is coming...
-              </div>
-            </div>
-
-            <div class="price">
-              ♡
-            </div>
-
-          </div>
-
-        </article>
-
-
-      </div>
+      
 
     </section>
 
@@ -1247,7 +1167,7 @@
         </p>
 
         <a
-          href="mailto:chandlerbing0305@gmail.com"
+          href="mailto:reejscherryclub@gmail.com"
           class="contact-link"
         >
           Email Cherry Club →
@@ -1397,8 +1317,65 @@
        JAVASCRIPT
        ========================= -->
 
-  <script>
+ <script>
 
+    const SUPABASE_URL = 'https://jqpkvttexoekaoylwtkg.supabase.co';
+    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_QzAhQAxVVhrOdR0zhPbHBg_5c0LDxKF';
+
+    const supabaseClient = supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    async function loadProducts() {
+      const container = document.getElementById("products-container");
+
+      const { data, error } = await supabaseClient
+        .from("products")
+        .select("*")
+        .eq("status", "available")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Error loading products:", error);
+        container.innerHTML = "<p>Unable to load products.</p>";
+        return;
+      }
+
+      container.innerHTML = "";
+
+      data.forEach(product => {
+        const article = document.createElement("article");
+        article.className = "product";
+
+        article.innerHTML = `
+          <div class="product-image">
+            ${product.image_url
+              ? `<img src="${product.image_url}" alt="${product.name}" style="width:100%;height:100%;object-fit:cover;">`
+              : `<div class="placeholder">🍒</div>`
+            }
+          </div>
+
+          <div class="product-info">
+            <div>
+              <div class="product-name">${product.name}</div>
+              <div class="product-meta">
+                ${product.category || ""}
+                ${product.size ? " · " + product.size : ""}
+              </div>
+            </div>
+
+            <div class="price">
+              Rs. ${Number(product.price).toLocaleString()}
+            </div>
+          </div>
+        `;
+
+        container.appendChild(article);
+      });
+    }
+
+    loadProducts();
     function openMenu() {
       document
         .getElementById("menuOverlay")
@@ -1410,7 +1387,7 @@
         .getElementById("menuOverlay")
         .classList.remove("active");
     }
-
+    
     document
       .getElementById("menuOverlay")
       .addEventListener("click", function(event) {
