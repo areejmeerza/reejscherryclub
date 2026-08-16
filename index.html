@@ -708,6 +708,173 @@
         line-height: 2;
       }
     }
+
+
+    /* =========================
+       CONTACT / CUSTOMER CARE
+       ========================= */
+
+    .contact-section {
+      background: #f5f1eb;
+      padding: 110px 6vw;
+      border-top: 1px solid #ddd7d0;
+    }
+
+    .contact-header {
+      max-width: 650px;
+      margin-bottom: 55px;
+    }
+
+    .contact-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(52px, 7vw, 90px);
+      font-weight: 500;
+      line-height: 0.95;
+      letter-spacing: -4px;
+    }
+
+    .contact-header h2 em {
+      color: #a20f20;
+      font-weight: 500;
+    }
+
+    .contact-header p {
+      max-width: 450px;
+      margin-top: 25px;
+      color: #666;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: #d8d1ca;
+      border: 1px solid #d8d1ca;
+    }
+
+    .contact-card {
+      background: #f5f1eb;
+      padding: 38px;
+      min-height: 220px;
+    }
+
+    .contact-label {
+      display: block;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: #888;
+      margin-bottom: 15px;
+    }
+
+    .contact-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .contact-card p {
+      color: #666;
+      font-size: 12px;
+      line-height: 1.7;
+      max-width: 300px;
+    }
+
+    .contact-link {
+      display: inline-block;
+      margin-top: 22px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      border-bottom: 1px solid #111;
+      padding-bottom: 5px;
+      transition: 0.25s;
+    }
+
+    .contact-link:hover {
+      color: #a20f20;
+      border-color: #a20f20;
+    }
+
+    .contact-note {
+      display: block;
+      margin-top: 18px;
+      color: #555;
+      font-size: 11px;
+    }
+
+    .policy-box {
+      margin-top: 1px;
+      padding: 45px 38px;
+      background: #111;
+      color: white;
+      display: grid;
+      grid-template-columns: 0.7fr 1.3fr;
+      gap: 8vw;
+    }
+
+    .policy-box h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 500;
+    }
+
+    .policy-text {
+      color: #aaa;
+      font-size: 12px;
+      line-height: 1.9;
+    }
+
+    .policy-text p + p {
+      margin-top: 18px;
+    }
+
+    .policy-text strong {
+      color: white;
+    }
+
+
+    /* =========================
+       CONTACT MOBILE
+       ========================= */
+
+    @media (max-width: 700px) {
+
+      .contact-section {
+        padding: 80px 20px;
+      }
+
+      .contact-header h2 {
+        font-size: 52px;
+        letter-spacing: -3px;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-card {
+        padding: 30px;
+      }
+
+      .contact-card h3 {
+        font-size: 25px;
+      }
+
+      .policy-box {
+        display: block;
+        padding: 35px 30px;
+      }
+
+      .policy-text {
+        margin-top: 30px;
+      }
+
+    }
+
   </style>
 </head>
 
@@ -770,7 +937,7 @@
         <a href="#about">About Us</a>
         <a href="#">Size Guide</a>
         <a href="#">Shipping & Returns</a>
-        <a href="#contact">Contact</a>
+        <a href="#contact-us">Contact</a>
       </div>
 
     </div>
@@ -1014,6 +1181,169 @@
 
 
   <!-- =========================
+       CONTACT / CUSTOMER CARE
+       ========================= -->
+
+  <section class="contact-section" id="contact-us">
+
+    <div class="contact-header">
+
+      <div class="section-kicker">
+        Need us?
+      </div>
+
+      <h2>
+        Contact <em>Cherry.</em>
+      </h2>
+
+      <p>
+        Questions about a piece, your order, sizing, or delivery?
+        We're here.
+      </p>
+
+    </div>
+
+
+    <div class="contact-grid">
+
+
+      <div class="contact-card">
+
+        <span class="contact-label">
+          Instagram
+        </span>
+
+        <h3>
+          @reejscherryclub
+        </h3>
+
+        <p>
+          For orders, questions & updates.
+        </p>
+
+        <a
+          href="https://instagram.com/reejscherryclub"
+          target="_blank"
+          class="contact-link"
+        >
+          Message us →
+        </a>
+
+      </div>
+
+
+      <div class="contact-card">
+
+        <span class="contact-label">
+          Email
+        </span>
+
+        <h3>
+          reejscherryclub@gmail.com
+        </h3>
+
+        <p>
+          For enquiries & order-related questions.
+        </p>
+
+        <a
+          href="mailto:chandlerbing0305@gmail.com"
+          class="contact-link"
+        >
+          Email Cherry Club →
+        </a>
+
+      </div>
+
+
+      <div class="contact-card">
+
+        <span class="contact-label">
+          Delivery
+        </span>
+
+        <h3>
+          Pakistan-wide
+        </h3>
+
+        <p>
+          Flat delivery fee of Rs. 370.
+        </p>
+
+        <span class="contact-note">
+          Estimated delivery: 5–7 working days.
+        </span>
+
+      </div>
+
+
+      <div class="contact-card">
+
+        <span class="contact-label">
+          Payments
+        </span>
+
+        <h3>
+          JazzCash only
+        </h3>
+
+        <p>
+          Orders are confirmed after payment is submitted
+          and verified.
+        </p>
+
+        <span class="contact-note">
+          Areej Fatima · 03054400537
+        </span>
+
+      </div>
+
+
+    </div>
+
+
+    <div class="policy-box">
+
+      <div>
+
+        <span class="contact-label">
+          Please note
+        </span>
+
+        <h3>
+          Before you order 🍒
+        </h3>
+
+      </div>
+
+
+      <div class="policy-text">
+
+        <p>
+          All sales are final. We do not accept returns or
+          exchanges for change of mind, sizing, fit, or preference.
+        </p>
+
+        <p>
+          Exchanges are only considered if an item arrives
+          genuinely defective or damaged. Any defect must be
+          reported within <strong>24 hours of delivery</strong>
+          with clear photos or videos for verification.
+        </p>
+
+        <p>
+          Please make sure your delivery information and
+          contact details are correct before submitting your order.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
        FOOTER
        ========================= -->
 
@@ -1026,13 +1356,27 @@
       </div>
 
       <div class="footer-links">
-        <a href="#">Instagram</a>
-        <a href="#">TikTok</a>
-        <a href="#">Contact</a>
-        <a href="#">Shipping</a>
+
+        <a href="#">
+          Instagram
+        </a>
+
+        <a href="#">
+          TikTok
+        </a>
+
+        <a href="#contact-us">
+          Contact
+        </a>
+
+        <a href="#">
+          Shipping
+        </a>
+
       </div>
 
     </div>
+
 
     <div class="footer-bottom">
 
