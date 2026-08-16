@@ -2261,7 +2261,41 @@ async function submitOrder(event) {
         orderError.message
       );
     }
+    if (orderError) {
+      console.error(
+        "Order error:",
+        orderError
+      );
 
+      throw new Error(
+        orderError.message
+      );
+    }
+
+    /* SEND ORDER EMAIL */
+
+    const { error: emailError } = await supabaseClient.functions.invoke(
+      "smooth-worker",
+      {
+        body: {
+          customer_name: customerName,
+          phone: customerPhone,
+          address: customerAddress,
+          city: customerCity,
+          transaction_id: transactionId,
+          total: cartTotal(),
+          order_id: order.id
+        }
+      }
+    );
+
+    if (emailError) {
+      console.error("Email error:", emailError);
+    }
+
+    /* CREATE ORDER ITEMS */
+
+    const items = cart.map(item => ({
 
     /* CREATE ORDER ITEMS */
 
