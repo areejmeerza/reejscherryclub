@@ -2258,7 +2258,7 @@ async function submitOrder(event) {
       );
 
       throw new Error(
-        "Unable to create your order."
+        orderError.message
       );
     }
 
