@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Cherry Club 🍒</title>
+  <meta name="description" content="Cherry Club — Y2K pieces, one-of-one finds & clothes worth obsessing over.">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #f5f1eb;
+      color: #111;
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+
+    /* =========================
+       INTRO / CHERRY ANIMATION
+       ========================= */
+
+    .intro {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      animation: introExit 1s ease forwards;
+      animation-delay: 3.7s;
+    }
+
+    .cherry-stage {
+      position: relative;
+      width: 260px;
+      height: 240px;
+    }
+
+    .cherry {
+      position: absolute;
+      width: 88px;
+      height: 88px;
+      background: #a20f20;
+      border-radius: 50%;
+      top: 90px;
+      box-shadow:
+        inset -12px -10px 0 rgba(0,0,0,0.12),
+        0 12px 35px rgba(162,15,32,0.25);
+    }
+
+    .cherry.left {
+      left: 10px;
+      animation: cherryLeft 2s cubic-bezier(.7,0,.2,1) forwards;
+    }
+
+    .cherry.right {
+      right: 10px;
+      animation: cherryRight 2s cubic-bezier(.7,0,.2,1) forwards;
+    }
+
+    .cherry::before {
+      content: "";
+      position: absolute;
+      width: 3px;
+      height: 75px;
+      background: #7a5b35;
+      top: -55px;
+      left: 51px;
+      transform: rotate(-22deg);
+      transform-origin: bottom;
+    }
+
+    .cherry.right::before {
+      transform: rotate(22deg);
+      left: 34px;
+    }
+
+    .cherry::after {
+      content: "";
+      position: absolute;
+      width: 19px;
+      height: 10px;
+      background: #71844b;
+      border-radius: 100% 0 100% 0;
+      top: -59px;
+      left: 50px;
+      transform: rotate(-15deg);
+    }
+
+    .cherry.right::after {
+      left: 20px;
+      transform: rotate(15deg) scaleX(-1);
+    }
+
+    .intro-logo {
+      position: absolute;
+      color: white;
+      text-align: center;
+      opacity: 0;
+      animation: logoReveal 1s ease forwards;
+      animation-delay: 2.1s;
+    }
+
+    .intro-logo h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(50px, 11vw, 105px);
+      font-weight: 500;
+      font-style: italic;
+      letter-spacing: -4px;
+    }
+
+    .intro-logo p {
+      margin-top: 8px;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      color: #aaa;
+    }
+
+    @keyframes cherryLeft {
+      0% {
+        transform: translateX(-150px) rotate(-25deg);
+      }
+
+      65% {
+        transform: translateX(0) rotate(0);
+      }
+
+      78% {
+        transform: translateX(5px) scale(1.15);
+      }
+
+      100% {
+        transform: translateX(0) scale(1);
+      }
+    }
+
+    @keyframes cherryRight {
+      0% {
+        transform: translateX(150px) rotate(25deg);
+      }
+
+      65% {
+        transform: translateX(0) rotate(0);
+      }
+
+      78% {
+        transform: translateX(-5px) scale(1.15);
+      }
+
+      100% {
+        transform: translateX(0) scale(1);
+      }
+    }
+
+    @keyframes logoReveal {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes introExit {
+      to {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+    }
+
+
+    /* =========================
+       NAVIGATION
+       ========================= */
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 72px;
+      padding: 0 5vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(245,241,235,0.86);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(17,17,17,0.08);
+      z-index: 1000;
+    }
+
+    .menu-button,
+    .bag-button {
+      background: none;
+      border: 0;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    .menu-button {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      width: 25px;
+    }
+
+    .menu-line {
+      height: 1.5px;
+      background: #111;
+      width: 100%;
+    }
+
+    .logo {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Playfair Display', serif;
+      font-size: 23px;
+      font-style: italic;
+      white-space: nowrap;
+    }
+
+    .logo span {
+      color: #a20f20;
+    }
+
+
+    /* =========================
+       SIDE MENU
+       ========================= */
+
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.35s ease;
+    }
+
+    .menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .side-menu {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: min(390px, 88vw);
+      background: #f5f1eb;
+      padding: 100px 35px 35px;
+      transform: translateX(-100%);
+      transition: 0.45s cubic-bezier(.7,0,.2,1);
+      overflow-y: auto;
+    }
+
+    .menu-overlay.active .side-menu {
+      transform: translateX(0);
+    }
+
+    .close-menu {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      border: 0;
+      background: none;
+      font-size: 25px;
+      cursor: pointer;
+    }
+
+    .menu-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: #888;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .menu-links {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+
+    .menu-links a {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      transition: 0.2s;
+    }
+
+    .menu-links a:hover {
+      color: #a20f20;
+      padding-left: 8px;
+    }
+
+    .menu-divider {
+      height: 1px;
+      background: #ddd7d0;
+      margin: 35px 0;
+    }
+
+    .menu-small {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+
+    /* =========================
+       HERO
+       ========================= */
+
+    .hero {
+      min-height: 100vh;
+      padding: 140px 6vw 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 900px;
+    }
+
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #777;
+      margin-bottom: 25px;
+    }
+
+    .hero h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(60px, 12vw, 150px);
+      line-height: 0.85;
+      font-weight: 500;
+      letter-spacing: -6px;
+    }
+
+    .hero h2 em {
+      color: #a20f20;
+      font-weight: 500;
+    }
+
+    .hero-text {
+      max-width: 430px;
+      margin: 35px auto 0;
+      color: #666;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .shop-button {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 17px 28px;
+      background: #111;
+      color: white;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: 0.3s;
+    }
+
+    .shop-button:hover {
+      background: #a20f20;
+      transform: translateY(-3px);
+    }
+
+    .scroll-note {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: #888;
+      text-transform: uppercase;
+    }
+
+
+    /* =========================
+       MARQUEE
+       ========================= */
+
+    .marquee {
+      background: #a20f20;
+      color: white;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 14px 0;
+      font-size: 10px;
+      letter-spacing: 3px;
+    }
+
+    .marquee-track {
+      display: inline-block;
+      animation: move 22s linear infinite;
+    }
+
+    .marquee span {
+      margin: 0 28px;
+    }
+
+    @keyframes move {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+
+    /* =========================
+       SHOP
+       ========================= */
+
+    .section {
+      padding: 110px 6vw;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      margin-bottom: 45px;
+    }
+
+    .section-kicker {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #777;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(48px, 7vw, 82px);
+      font-weight: 500;
+      letter-spacing: -3px;
+    }
+
+    .view-all {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border-bottom: 1px solid;
+      padding-bottom: 5px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .product {
+      cursor: pointer;
+    }
+
+    .product-image {
+      aspect-ratio: 4 / 5;
+      background: #ddd6cf;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      transition: 0.4s;
+    }
+
+    .product:hover .product-image {
+      transform: translateY(-6px);
+    }
+
+    .placeholder {
+      font-family: 'Playfair Display', serif;
+      font-size: 60px;
+      font-style: italic;
+      color: rgba(17,17,17,0.15);
+    }
+
+    .tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: white;
+      padding: 7px 10px;
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .product-info {
+      padding: 15px 2px;
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .product-name {
+      font-size: 13px;
+    }
+
+    .product-meta {
+      font-size: 10px;
+      color: #888;
+      margin-top: 5px;
+    }
+
+    .price {
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+
+    /* =========================
+       ABOUT
+       ========================= */
+
+    .about {
+      background: #111;
+      color: white;
+      padding: 120px 6vw;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10vw;
+      align-items: center;
+    }
+
+    .about h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(50px, 7vw, 95px);
+      line-height: 0.92;
+      font-weight: 500;
+      letter-spacing: -4px;
+    }
+
+    .about h2 em {
+      color: #d83b4c;
+    }
+
+    .about-copy {
+      max-width: 440px;
+      color: #aaa;
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    .about-copy strong {
+      color: white;
+    }
+
+
+    /* =========================
+       FOOTER
+       ========================= */
+
+    footer {
+      background: #111;
+      color: white;
+      border-top: 1px solid #333;
+      padding: 60px 6vw 30px;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      padding-bottom: 60px;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 45px;
+      font-style: italic;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 30px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #333;
+      padding-top: 22px;
+      display: flex;
+      justify-content: space-between;
+      color: #777;
+      font-size: 9px;
+    }
+
+
+    /* =========================
+       MOBILE
+       ========================= */
+
+    @media (max-width: 700px) {
+
+      nav {
+        height: 64px;
+        padding: 0 20px;
+      }
+
+      .logo {
+        font-size: 19px;
+      }
+
+      .hero {
+        padding: 120px 20px 70px;
+      }
+
+      .hero h2 {
+        font-size: 70px;
+        letter-spacing: -4px;
+      }
+
+      .hero-text {
+        font-size: 13px;
+      }
+
+      .section {
+        padding: 80px 20px;
+      }
+
+      .section-header {
+        margin-bottom: 30px;
+      }
+
+      .section-title {
+        font-size: 50px;
+      }
+
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .product-info {
+        display: block;
+      }
+
+      .price {
+        display: block;
+        margin-top: 6px;
+      }
+
+      .about {
+        display: block;
+        padding: 85px 20px;
+      }
+
+      .about-copy {
+        margin-top: 40px;
+      }
+
+      .footer-top {
+        display: block;
+      }
+
+      .footer-links {
+        margin-top: 35px;
+        flex-wrap: wrap;
+      }
+
+      .footer-bottom {
+        display: block;
+        line-height: 2;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- =========================
+       CHERRY INTRO
+       ========================= -->
+
+  <div class="intro">
+
+    <div class="cherry-stage">
+
+      <div class="cherry left"></div>
+      <div class="cherry right"></div>
+
+    </div>
+
+    <div class="intro-logo">
+      <h1>Cherry Club</h1>
+      <p>Welcome to the club</p>
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       SIDE MENU
+       ========================= -->
+
+  <div class="menu-overlay" id="menuOverlay">
+
+    <div class="side-menu">
+
+      <button class="close-menu" onclick="closeMenu()">×</button>
+
+      <div class="menu-label">Shop</div>
+
+      <div class="menu-links">
+        <a href="#shop">New Arrivals</a>
+        <a href="#shop">Dresses</a>
+        <a href="#shop">Tops</a>
+        <a href="#shop">Jeans</a>
+        <a href="#shop">Bottoms</a>
+        <a href="#shop">Shoes</a>
+        <a href="#shop">Accessories</a>
+        <a href="#shop">Women</a>
+        <a href="#shop">Men</a>
+        <a href="#shop">Unisex</a>
+        <a href="#shop">Sale</a>
+      </div>
+
+      <div class="menu-divider"></div>
+
+      <div class="menu-label">The Club</div>
+
+      <div class="menu-small">
+        <a href="#about">About Us</a>
+        <a href="#">Size Guide</a>
+        <a href="#">Shipping & Returns</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       NAVIGATION
+       ========================= -->
+
+  <nav>
+
+    <button class="menu-button" onclick="openMenu()" aria-label="Open menu">
+      <span class="menu-line"></span>
+      <span class="menu-line"></span>
+      <span class="menu-line"></span>
+    </button>
+
+    <a href="#" class="logo">
+      Cherry <span>🍒</span> Club
+    </a>
+
+    <button class="bag-button" aria-label="Shopping bag">
+      ♡
+    </button>
+
+  </nav>
+
+
+  <!-- =========================
+       MAIN
+       ========================= -->
+
+  <main>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+      <div class="hero-content">
+
+        <div class="eyebrow">
+          Est. 2026 · Pakistan
+        </div>
+
+        <h2>
+          Dress<br>
+          <em>different.</em>
+        </h2>
+
+        <p class="hero-text">
+          Y2K pieces, one-of-one finds & clothes
+          you probably shouldn't be this obsessed with.
+        </p>
+
+        <a href="#shop" class="shop-button">
+          Shop the drop →
+        </a>
+
+      </div>
+
+      <div class="scroll-note">
+        Scroll to explore ↓
+      </div>
+
+    </section>
+
+
+    <!-- MARQUEE -->
+
+    <div class="marquee">
+
+      <div class="marquee-track">
+
+        <span>🍒 CHERRY CLUB</span>
+        <span>Y2K · THRIFT · ONE OF ONE</span>
+        <span>🍒 CHERRY CLUB</span>
+        <span>Y2K · THRIFT · ONE OF ONE</span>
+        <span>🍒 CHERRY CLUB</span>
+        <span>Y2K · THRIFT · ONE OF ONE</span>
+
+      </div>
+
+    </div>
+
+
+    <!-- SHOP -->
+
+    <section class="section" id="shop">
+
+      <div class="section-header">
+
+        <div>
+          <div class="section-kicker">Freshly picked</div>
+          <h2 class="section-title">The Drop</h2>
+        </div>
+
+        <a href="#shop" class="view-all">
+          View all →
+        </a>
+
+      </div>
+
+
+      <div class="products">
+
+
+        <article class="product">
+
+          <div class="product-image">
+            <span class="tag">New</span>
+            <div class="placeholder">01</div>
+          </div>
+
+          <div class="product-info">
+
+            <div>
+              <div class="product-name">
+                Black Lace Jeans
+              </div>
+
+              <div class="product-meta">
+                Y2K · One of one
+              </div>
+            </div>
+
+            <div class="price">
+              Rs. 2,500
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <article class="product">
+
+          <div class="product-image">
+            <span class="tag">New</span>
+            <div class="placeholder">02</div>
+          </div>
+
+          <div class="product-info">
+
+            <div>
+              <div class="product-name">
+                Star Patch Jeans
+              </div>
+
+              <div class="product-meta">
+                Upcycled · One of one
+              </div>
+            </div>
+
+            <div class="price">
+              Rs. 2,500
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <article class="product">
+
+          <div class="product-image">
+            <span class="tag">Coming soon</span>
+            <div class="placeholder">03</div>
+          </div>
+
+          <div class="product-info">
+
+            <div>
+              <div class="product-name">
+                Next Cherry
+              </div>
+
+              <div class="product-meta">
+                Something is coming...
+              </div>
+            </div>
+
+            <div class="price">
+              ♡
+            </div>
+
+          </div>
+
+        </article>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- ABOUT -->
+
+    <section class="about" id="about">
+
+      <div>
+
+        <h2>
+          Not your<br>
+          average <em>thrift.</em>
+        </h2>
+
+      </div>
+
+      <div class="about-copy">
+
+        <p>
+          <strong>Cherry Club</strong> is a curated little
+          corner of the internet for people who refuse
+          to dress boring.
+        </p>
+
+        <br>
+
+        <p>
+          Every piece is picked because we'd want it
+          in our own wardrobe — from Y2K finds to
+          reworked one-of-one pieces.
+        </p>
+
+        <br>
+
+        <p>
+          Once it's gone, it's gone.
+          <strong>So if you like it, don't sleep on it. 🍒</strong>
+        </p>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+       ========================= -->
+
+  <footer id="contact">
+
+    <div class="footer-top">
+
+      <div class="footer-logo">
+        Cherry Club 🍒
+      </div>
+
+      <div class="footer-links">
+        <a href="#">Instagram</a>
+        <a href="#">TikTok</a>
+        <a href="#">Contact</a>
+        <a href="#">Shipping</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+      <span>
+        © 2026 Cherry Club
+      </span>
+
+      <span>
+        Made with questionable financial decisions 🍒
+      </span>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =========================
+       JAVASCRIPT
+       ========================= -->
+
+  <script>
+
+    function openMenu() {
+      document
+        .getElementById("menuOverlay")
+        .classList.add("active");
+    }
+
+    function closeMenu() {
+      document
+        .getElementById("menuOverlay")
+        .classList.remove("active");
+    }
+
+    document
+      .getElementById("menuOverlay")
+      .addEventListener("click", function(event) {
+
+        if (event.target === this) {
+          closeMenu();
+        }
+
+      });
+
+  </script>
+
+
+</body>
+</html>
