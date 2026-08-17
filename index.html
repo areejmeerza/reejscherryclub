@@ -1341,13 +1341,15 @@ let cart = [];
 
 async function loadProducts() {
   const container = document.getElementById("products-container");
+const { data, error } = await supabaseClient
+  .from("products")
+  .select("*")
+  .eq("status", "available")
+  .order("created_at", { ascending: false });
 
-  const { data, error } = await supabaseClient
-    .from("products")
-    .select("*")
-    .eq("status", "available")
-    .order("created_at", { ascending: false });
-
+console.log("PRODUCT DATA:", data);
+console.log("PRODUCT ERROR:", error);
+  
   if (error) {
     console.error("Error loading products:", error);
     container.innerHTML =
