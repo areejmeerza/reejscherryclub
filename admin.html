@@ -1309,7 +1309,6 @@ async function loadOrderItems() {
 /* =========================================================
    PRODUCTS
 ========================================================= */
-
 async function loadAdminProducts() {
 
   const {
@@ -1319,13 +1318,7 @@ async function loadAdminProducts() {
     await supabaseClient
       .from("products")
       .select(
-        "id,name,category,price,size,status,image_url,description,created_at"
-      )
-      .order(
-        "created_at",
-        {
-          ascending: false
-        }
+        "id,name,category,price,size,status,image_url,description"
       );
 
   if (error) {
@@ -1334,6 +1327,15 @@ async function loadAdminProducts() {
       "Products error:",
       error
     );
+
+    document
+      .getElementById("products-container")
+      .innerHTML = `
+        <div class="empty" style="grid-column:1/-1;">
+          Couldn't load products.<br><br>
+          ${escapeHTML(error.message)}
+        </div>
+      `;
 
     adminProducts = [];
 
@@ -1346,6 +1348,7 @@ async function loadAdminProducts() {
       : [];
 
 }
+
 
 
 /* =========================================================
