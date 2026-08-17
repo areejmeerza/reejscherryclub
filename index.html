@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Cherry Club 🍒</title>
   <meta name="description" content="Cherry Club — Y2K pieces, one-of-one finds & clothes worth obsessing over.">
 
@@ -11,7 +10,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -158,15 +157,12 @@
       0% {
         transform: translateX(-150px) rotate(-25deg);
       }
-
       65% {
         transform: translateX(0) rotate(0);
       }
-
       78% {
         transform: translateX(5px) scale(1.15);
       }
-
       100% {
         transform: translateX(0) scale(1);
       }
@@ -176,15 +172,12 @@
       0% {
         transform: translateX(150px) rotate(25deg);
       }
-
       65% {
         transform: translateX(0) rotate(0);
       }
-
       78% {
         transform: translateX(-5px) scale(1.15);
       }
-
       100% {
         transform: translateX(0) scale(1);
       }
@@ -195,7 +188,6 @@
         opacity: 0;
         transform: translateY(20px);
       }
-
       to {
         opacity: 1;
         transform: translateY(0);
@@ -271,7 +263,7 @@
     }
 
     /* =========================
-       SIDE MENU
+       MENU
     ========================= */
 
     .menu-overlay {
@@ -458,14 +450,13 @@
       from {
         transform: translateX(0);
       }
-
       to {
         transform: translateX(-50%);
       }
     }
 
     /* =========================
-       SHOP
+       PRODUCTS
     ========================= */
 
     .section {
@@ -500,6 +491,7 @@
       letter-spacing: 2px;
       border-bottom: 1px solid;
       padding-bottom: 5px;
+      cursor: pointer;
     }
 
     .products {
@@ -911,6 +903,11 @@
       background: #a20f20;
     }
 
+    .primary-button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
     /* =========================
        PRODUCT DETAIL
     ========================= */
@@ -925,7 +922,7 @@
       transition: .45s cubic-bezier(.7,0,.2,1);
     }
 
-    .store-overlay.product-open .product-modal {
+    .store-overlay.active .product-modal {
       transform: translateY(0);
     }
 
@@ -1081,6 +1078,11 @@
       font-size: 13px;
     }
 
+    .field input:focus,
+    .field textarea:focus {
+      border-color: #111;
+    }
+
     .field textarea {
       min-height: 100px;
       resize: vertical;
@@ -1181,6 +1183,7 @@
       margin-top: 25px;
       font-size: 11px;
       letter-spacing: 1px;
+      word-break: break-all;
     }
 
     /* =========================
@@ -1188,7 +1191,6 @@
     ========================= */
 
     @media(max-width:700px) {
-
       nav {
         height: 64px;
         padding: 0 20px;
@@ -1328,13 +1330,11 @@
   </div>
 </div>
 
-
 <!-- =========================
-     SIDE MENU
+     MENU
 ========================= -->
 
 <div class="menu-overlay" id="menuOverlay">
-
   <div class="side-menu">
 
     <button class="close-menu" onclick="closeMenu()">×</button>
@@ -1342,8 +1342,7 @@
     <div class="menu-label">Shop</div>
 
     <div class="menu-links">
-
-      <a href="#shop" onclick="menuGo()">New Arrivals</a>
+      <a href="#shop" onclick="showAllProducts(); closeMenu();">New Arrivals</a>
       <a href="#shop" onclick="filterCategory('Dresses')">Dresses</a>
       <a href="#shop" onclick="filterCategory('Tops')">Tops</a>
       <a href="#shop" onclick="filterCategory('Jeans')">Jeans</a>
@@ -1354,14 +1353,13 @@
       <a href="#shop" onclick="filterCategory('Men')">Men</a>
       <a href="#shop" onclick="filterCategory('Unisex')">Unisex</a>
       <a href="#shop" onclick="filterCategory('Sale')">Sale</a>
-
     </div>
 
     <div class="menu-divider"></div>
 
     <div class="menu-label">Your Cherry Bag</div>
 
-    <button class="menu-cart-link" onclick="closeMenu();openCart();">
+    <button class="menu-cart-link" onclick="closeMenu(); openCart();">
       View Cart 🛍️
     </button>
 
@@ -1370,17 +1368,13 @@
     <div class="menu-label">The Club</div>
 
     <div class="menu-small">
-
       <a href="#about" onclick="closeMenu()">About Us</a>
       <a href="#contact-us" onclick="closeMenu()">Contact</a>
       <a href="#contact-us" onclick="closeMenu()">Shipping & Returns</a>
-
     </div>
 
   </div>
-
 </div>
-
 
 <!-- =========================
      NAV
@@ -1388,11 +1382,7 @@
 
 <nav>
 
-  <button
-    class="menu-button"
-    onclick="openMenu()"
-    aria-label="Open menu"
-  >
+  <button class="menu-button" onclick="openMenu()" aria-label="Open menu">
     <span class="menu-line"></span>
     <span class="menu-line"></span>
     <span class="menu-line"></span>
@@ -1402,22 +1392,17 @@
     Cherry <span>🍒</span> Club
   </a>
 
-  <button
-    class="bag-button"
-    onclick="openCart()"
-    aria-label="Open cart"
-  >
+  <button class="bag-button" onclick="openCart()" aria-label="Open cart">
     ♡
   </button>
 
 </nav>
 
-
-<!-- =========================
-     MAIN
-========================= -->
-
 <main>
+
+  <!-- =========================
+       HERO
+  ========================= -->
 
   <section class="hero">
 
@@ -1449,6 +1434,9 @@
 
   </section>
 
+  <!-- =========================
+       MARQUEE
+  ========================= -->
 
   <div class="marquee">
     <div class="marquee-track">
@@ -1461,8 +1449,9 @@
     </div>
   </div>
 
-
-  <!-- SHOP -->
+  <!-- =========================
+       SHOP
+  ========================= -->
 
   <section class="section" id="shop">
 
@@ -1484,10 +1473,7 @@
 
     </div>
 
-    <div
-      class="products"
-      id="products-container"
-    >
+    <div class="products" id="products-container">
       <p style="grid-column:1/-1;text-align:center;color:#888;">
         Loading the drop 🍒
       </p>
@@ -1495,18 +1481,17 @@
 
   </section>
 
-
-  <!-- ABOUT -->
+  <!-- =========================
+       ABOUT
+  ========================= -->
 
   <section class="about" id="about">
 
     <div>
-
       <h2>
         Not your<br>
         average <em>thrift.</em>
       </h2>
-
     </div>
 
     <div class="about-copy">
@@ -1536,8 +1521,9 @@
 
   </section>
 
-
-  <!-- CONTACT -->
+  <!-- =========================
+       CONTACT
+  ========================= -->
 
   <section class="contact-section" id="contact-us">
 
@@ -1558,7 +1544,6 @@
 
     </div>
 
-
     <div class="contact-grid">
 
       <div class="contact-card">
@@ -1578,13 +1563,13 @@
         <a
           href="https://instagram.com/reejscherryclub"
           target="_blank"
+          rel="noopener noreferrer"
           class="contact-link"
         >
           Message us →
         </a>
 
       </div>
-
 
       <div class="contact-card">
 
@@ -1609,7 +1594,6 @@
 
       </div>
 
-
       <div class="contact-card">
 
         <span class="contact-label">
@@ -1625,7 +1609,6 @@
         </p>
 
       </div>
-
 
       <div class="contact-card">
 
@@ -1645,7 +1628,6 @@
       </div>
 
     </div>
-
 
     <div class="policy-box">
 
@@ -1690,7 +1672,6 @@
 
 </main>
 
-
 <!-- =========================
      FOOTER
 ========================= -->
@@ -1708,6 +1689,7 @@
       <a
         href="https://instagram.com/reejscherryclub"
         target="_blank"
+        rel="noopener noreferrer"
       >
         Instagram
       </a>
@@ -1738,22 +1720,15 @@
 
 </footer>
 
-
 <!-- =========================
-     CART OVERLAY
+     CART
 ========================= -->
 
-<div
-  class="store-overlay"
-  id="cartOverlay"
->
+<div class="store-overlay" id="cartOverlay">
 
   <div class="cart-drawer">
 
-    <button
-      class="overlay-close"
-      onclick="closeCart()"
-    >
+    <button class="overlay-close" onclick="closeCart()">
       ×
     </button>
 
@@ -1767,15 +1742,11 @@
 
 </div>
 
-
 <!-- =========================
-     PRODUCT DETAIL OVERLAY
+     PRODUCT DETAIL
 ========================= -->
 
-<div
-  class="store-overlay"
-  id="productOverlay"
->
+<div class="store-overlay" id="productOverlay">
 
   <div class="product-modal">
 
@@ -1792,15 +1763,11 @@
 
 </div>
 
-
 <!-- =========================
-     CHECKOUT OVERLAY
+     CHECKOUT
 ========================= -->
 
-<div
-  class="store-overlay"
-  id="checkoutOverlay"
->
+<div class="store-overlay" id="checkoutOverlay">
 
   <div class="checkout-modal">
 
@@ -1859,7 +1826,10 @@
               </div>
 
               <div class="field">
-                <label>Complete Delivery Address</label>
+                <label>
+                  Complete Delivery Address
+                </label>
+
                 <textarea
                   id="customer-address"
                   required
@@ -1868,7 +1838,6 @@
               </div>
 
             </div>
-
 
             <div class="form-section">
 
@@ -1913,7 +1882,6 @@
 
               </div>
 
-
               <div class="field" style="margin-top:20px;">
 
                 <label>
@@ -1930,7 +1898,6 @@
 
             </div>
 
-
             <button
               class="primary-button"
               type="submit"
@@ -1942,7 +1909,6 @@
           </form>
 
         </div>
-
 
         <div class="order-summary-box">
 
@@ -1962,15 +1928,11 @@
 
 </div>
 
-
 <!-- =========================
-     SUCCESS OVERLAY
+     SUCCESS
 ========================= -->
 
-<div
-  class="store-overlay"
-  id="successOverlay"
->
+<div class="store-overlay" id="successOverlay">
 
   <div class="success-modal">
 
@@ -2014,98 +1976,115 @@
 
 </div>
 
-
 <script>
+/* =========================================================
+   SUPABASE
+========================================================= */
 
-  /* =====================================================
-     SUPABASE
-  ===================================================== */
+const SUPABASE_URL =
+  "https://jqpkvttexoekaoylwtkg.supabase.co";
 
-  const SUPABASE_URL =
-    "https://jqpkvttexoekaoylwtkg.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_QzAhQAxVVhrOdR0zhPbHBg_5c0LDxKF";
 
-  const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_QzAhQAxVVhrOdR0zhPbHBg_5c0LDxKF";
+const supabaseClient =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
 
-  const supabaseClient =
-    supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+const DELIVERY_FEE = 370;
+
+const JAZZCASH_NAME =
+  "Areej Fatima";
+
+const JAZZCASH_NUMBER =
+  "03054400537";
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let products = [];
+
+let cart = [];
+
+let activeCategory = "all";
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function escapeHTML(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+
+function formatPrice(value) {
+  return Number(value || 0)
+    .toLocaleString("en-PK");
+}
+
+
+function getProductImage(product) {
+  return product?.image_url || "";
+}
+
+
+/*
+  Products.id is BIGINT.
+
+  We keep IDs as strings while using them in
+  data attributes and compare them as strings.
+  This prevents any accidental type mismatch.
+*/
+function productIdString(id) {
+  return String(id);
+}
+
+
+/* =========================================================
+   LOAD PRODUCTS
+========================================================= */
+
+async function loadProducts() {
+
+  const container =
+    document.getElementById(
+      "products-container"
     );
 
+  container.innerHTML = `
+    <p style="
+      grid-column:1/-1;
+      text-align:center;
+      color:#888;
+    ">
+      Loading the drop 🍒
+    </p>
+  `;
 
-  /* =====================================================
-     STORE SETTINGS
-  ===================================================== */
-
-  const DELIVERY_FEE = 370;
-
-  const JAZZCASH_NAME =
-    "Areej Fatima";
-
-  const JAZZCASH_NUMBER =
-    "03054400537";
-
-
-  /* =====================================================
-     STATE
-  ===================================================== */
-
-  let products = [];
-
-  let cart = [];
-
-  let activeCategory = "all";
-
-
-  /* =====================================================
-     HELPERS
-  ===================================================== */
-
-  function escapeHTML(value) {
-
-    return String(value ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-
-  }
-
-
-  function formatPrice(value) {
-
-    return Number(value || 0)
-      .toLocaleString("en-PK");
-
-  }
-
-
-  function getProductImage(product) {
-
-    return product.image_url || "";
-
-  }
-
-
-  /* =====================================================
-     PRODUCTS
-  ===================================================== */
-
-  async function loadProducts() {
-
-    const container =
-      document.getElementById(
-        "products-container"
-      );
-
-    const {
-      data,
-      error
-    } = await supabaseClient
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
       .from("products")
-      .select("*")
+      .select(
+        "id,name,category,price,description,size,image_url,status,created_at"
+      )
       .eq("status", "available")
       .order(
         "created_at",
@@ -2114,66 +2093,69 @@
         }
       );
 
+  console.log(
+    "PRODUCT DATA:",
+    data
+  );
 
-    console.log(
-      "PRODUCT DATA:",
-      data
-    );
+  console.log(
+    "PRODUCT ERROR:",
+    error
+  );
 
-    console.log(
-      "PRODUCT ERROR:",
+  if (error) {
+
+    console.error(
+      "Product loading error:",
       error
     );
 
+    container.innerHTML = `
+      <p style="
+        grid-column:1/-1;
+        text-align:center;
+        color:#888;
+      ">
+        Unable to load the drop right now 🍒
+      </p>
+    `;
 
-    if (error) {
-
-      console.error(
-        "Product loading error:",
-        error
-      );
-
-      container.innerHTML = `
-        <p style="
-          grid-column:1/-1;
-          text-align:center;
-          color:#888;
-        ">
-          Unable to load the drop right now 🍒
-        </p>
-      `;
-
-      return;
-    }
-
-
-    products = data || [];
-
-    renderProducts();
-
+    return;
   }
 
+  products = Array.isArray(data)
+    ? data
+    : [];
 
-  function renderProducts() {
-
-    const container =
-      document.getElementById(
-        "products-container"
-      );
-
-    if (!container) return;
+  renderProducts();
+}
 
 
-    let visibleProducts =
-      products.slice();
+/* =========================================================
+   RENDER PRODUCTS
+========================================================= */
 
+function renderProducts() {
 
-    if (
-      activeCategory !== "all"
-    ) {
+  const container =
+    document.getElementById(
+      "products-container"
+    );
 
-      visibleProducts =
-        products.filter(product => {
+  if (!container) return;
+
+  let visibleProducts =
+    products.slice();
+
+  if (activeCategory !== "all") {
+
+    const wanted =
+      activeCategory
+        .toLowerCase();
+
+    visibleProducts =
+      products.filter(
+        product => {
 
           const category =
             String(
@@ -2185,1014 +2167,881 @@
               product.name || ""
             ).toLowerCase();
 
-          const wanted =
-            activeCategory.toLowerCase();
-
           return (
             category.includes(wanted) ||
             name.includes(wanted)
           );
-
-        });
-
-    }
-
-
-    if (!visibleProducts.length) {
-
-      container.innerHTML = `
-        <p style="
-          grid-column:1/-1;
-          text-align:center;
-          color:#888;
-          padding:50px 0;
-        ">
-          Nothing here yet 🍒
-        </p>
-      `;
-
-      return;
-
-    }
-
-
-    container.innerHTML =
-      visibleProducts
-        .map(productCard)
-        .join("");
-
+        }
+      );
   }
 
+  if (!visibleProducts.length) {
 
-  function productCard(product) {
-
-    const image =
-      getProductImage(product);
-
-
-    return `
-
-      <article
-        class="product"
-        onclick="openProduct(${Number(product.id)})"
-      >
-
-        <div class="product-image">
-
-          ${
-            image
-
-            ?
-
-            `
-              <img
-                src="${escapeHTML(image)}"
-                alt="${escapeHTML(product.name)}"
-                loading="lazy"
-              >
-            `
-
-            :
-
-            `
-              <div class="product-placeholder">
-                🍒
-              </div>
-            `
-          }
-
-
-          ${
-            product.status === "available"
-
-            ?
-
-            `<div class="tag">
-              Available
-            </div>`
-
-            :
-
-            ""
-          }
-
-        </div>
-
-
-        <div class="product-info">
-
-          <div>
-
-            <div class="product-name">
-              ${escapeHTML(product.name)}
-            </div>
-
-            <div class="product-meta">
-
-              ${escapeHTML(
-                product.category || ""
-              )}
-
-              ${
-                product.size
-                  ? " · " +
-                    escapeHTML(
-                      product.size
-                    )
-                  : ""
-              }
-
-            </div>
-
-          </div>
-
-
-          <div class="price">
-
-            Rs.
-            ${formatPrice(product.price)}
-
-          </div>
-
-        </div>
-
-      </article>
-
+    container.innerHTML = `
+      <p style="
+        grid-column:1/-1;
+        text-align:center;
+        color:#888;
+        padding:50px 0;
+      ">
+        Nothing here yet 🍒
+      </p>
     `;
 
+    return;
   }
 
+  container.innerHTML =
+    visibleProducts
+      .map(productCard)
+      .join("");
 
-  function filterCategory(category) {
-
-    closeMenu();
-
-    activeCategory =
-      String(category || "all");
-
-    const title =
-      document.getElementById(
-        "shop-title"
-      );
+  attachProductCardListeners(
+    container
+  );
+}
 
 
-    if (title) {
+/* =========================================================
+   PRODUCT CARD
+========================================================= */
 
-      title.textContent =
-        activeCategory === "all"
-          ? "The Drop"
-          : activeCategory;
+function productCard(product) {
 
-    }
+  const image =
+    getProductImage(product);
 
+  const id =
+    productIdString(product.id);
 
-    renderProducts();
+  return `
+    <article
+      class="product"
+      data-product-id="${escapeHTML(id)}"
+      role="button"
+      tabindex="0"
+      aria-label="View ${escapeHTML(product.name)}"
+    >
 
+      <div class="product-image">
 
-    setTimeout(() => {
+        ${
+          image
+          ?
+          `
+            <img
+              src="${escapeHTML(image)}"
+              alt="${escapeHTML(product.name)}"
+              loading="lazy"
+            >
+          `
+          :
+          `
+            <div class="product-placeholder">
+              🍒
+            </div>
+          `
+        }
 
-      document
-        .getElementById("shop")
-        ?.scrollIntoView({
-          behavior: "smooth"
-        });
+        <div class="tag">
+          Available
+        </div>
 
-    }, 100);
+      </div>
 
-  }
-
-
-  function showAllProducts() {
-
-    activeCategory = "all";
-
-    document.getElementById(
-      "shop-title"
-    ).textContent = "The Drop";
-
-    renderProducts();
-
-  }
-
-
-  /* =====================================================
-     PRODUCT DETAIL
-  ===================================================== */
-
-  function openProduct(productId) {
-
-    const product =
-      products.find(
-        item =>
-          Number(item.id) ===
-          Number(productId)
-      );
-
-
-    if (!product) return;
-
-
-    const overlay =
-      document.getElementById(
-        "productOverlay"
-      );
-
-
-    const content =
-      document.getElementById(
-        "product-detail-content"
-      );
-
-
-    const image =
-      getProductImage(product);
-
-
-    const suggestions =
-      products
-        .filter(
-          item =>
-            Number(item.id) !==
-            Number(product.id)
-        )
-        .slice(0, 4);
-
-
-    content.innerHTML = `
-
-      <div class="detail-grid">
+      <div class="product-info">
 
         <div>
 
-          ${
-            image
+          <div class="product-name">
+            ${escapeHTML(product.name)}
+          </div>
 
-            ?
+          <div class="product-meta">
 
-            `
-              <img
-                class="detail-image"
-                src="${escapeHTML(image)}"
-                alt="${escapeHTML(product.name)}"
-              >
-            `
+            ${escapeHTML(
+              product.category || ""
+            )}
 
-            :
+            ${
+              product.size
+              ?
+              " · " +
+              escapeHTML(product.size)
+              :
+              ""
+            }
 
-            `
-              <div class="detail-image"
-                style="
-                  display:flex;
-                  align-items:center;
-                  justify-content:center;
-                  font-size:80px;
-                "
-              >
-                🍒
-              </div>
-            `
-          }
+          </div>
 
         </div>
 
-
-        <div class="detail-info">
-
-          <div class="detail-category">
-
-            ${escapeHTML(
-              product.category ||
-              "Cherry Club"
-            )}
-
-          </div>
-
-
-          <h1 class="detail-name">
-
-            ${escapeHTML(
-              product.name
-            )}
-
-          </h1>
-
-
-          <div class="detail-price">
-
-            Rs.
-            ${formatPrice(product.price)}
-
-          </div>
-
-
-          <p class="detail-description">
-
-            ${escapeHTML(
-              product.description ||
-              "A carefully picked Cherry Club piece. One of one, made to be worn your way. 🍒"
-            )}
-
-          </p>
-
-
-          ${
-            product.size
-
-            ?
-
-            `
-              <div class="detail-info-row">
-
-                <span>Size</span>
-
-                <strong>
-                  ${escapeHTML(
-                    product.size
-                  )}
-                </strong>
-
-              </div>
-            `
-
-            :
-
-            ""
-          }
-
-
-          ${
-            product.condition
-
-            ?
-
-            `
-              <div class="detail-info-row">
-
-                <span>Condition</span>
-
-                <strong>
-                  ${escapeHTML(
-                    product.condition
-                  )}
-                </strong>
-
-              </div>
-            `
-
-            :
-
-            ""
-          }
-
-
-          <div class="detail-info-row">
-
-            <span>Delivery</span>
-
-            <strong>
-              Rs. ${DELIVERY_FEE}
-            </strong>
-
-          </div>
-
-
-          <button
-            class="primary-button"
-            onclick="addToBag(${Number(product.id)});closeProduct();"
-          >
-            Add to Bag →
-          </button>
-
+        <div class="price">
+          Rs.
+          ${formatPrice(product.price)}
         </div>
 
       </div>
 
+    </article>
+  `;
+}
 
-      <div class="suggestions">
 
-        <div class="section-kicker">
-          You might also like
-        </div>
+/* =========================================================
+   SAFE PRODUCT CLICK HANDLERS
+========================================================= */
 
-        <h2>
-          More cherries.
-        </h2>
+function attachProductCardListeners(container) {
 
-        <div class="products">
+  const cards =
+    container.querySelectorAll(
+      ".product[data-product-id]"
+    );
 
-          ${
-            suggestions
-              .map(productCard)
-              .join("")
-          }
+  cards.forEach(card => {
 
-        </div>
+    card.addEventListener(
+      "click",
+      function() {
+
+        openProduct(
+          this.dataset.productId
+        );
+
+      }
+    );
+
+    card.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (
+          event.key === "Enter" ||
+          event.key === " "
+        ) {
+
+          event.preventDefault();
+
+          openProduct(
+            this.dataset.productId
+          );
+        }
+
+      }
+    );
+
+  });
+}
+
+
+/* =========================================================
+   CATEGORY FILTER
+========================================================= */
+
+function filterCategory(category) {
+
+  activeCategory =
+    String(category || "all");
+
+  const title =
+    document.getElementById(
+      "shop-title"
+    );
+
+  if (title) {
+
+    title.textContent =
+      activeCategory === "all"
+        ? "The Drop"
+        : activeCategory;
+  }
+
+  closeMenu();
+
+  renderProducts();
+
+  setTimeout(() => {
+
+    document
+      .getElementById("shop")
+      ?.scrollIntoView({
+        behavior: "smooth"
+      });
+
+  }, 100);
+}
+
+
+function showAllProducts() {
+
+  activeCategory = "all";
+
+  const title =
+    document.getElementById(
+      "shop-title"
+    );
+
+  if (title) {
+    title.textContent =
+      "The Drop";
+  }
+
+  renderProducts();
+}
+
+
+/* =========================================================
+   FIND PRODUCT
+========================================================= */
+
+function findProduct(productId) {
+
+  const wanted =
+    String(productId);
+
+  return products.find(
+    product =>
+      String(product.id) === wanted
+  );
+}
+
+
+/* =========================================================
+   PRODUCT DETAIL
+========================================================= */
+
+function openProduct(productId) {
+
+  const product =
+    findProduct(productId);
+
+  if (!product) {
+
+    console.error(
+      "Product not found:",
+      productId,
+      products
+    );
+
+    alert(
+      "Sorry, this Cherry Club piece could not be found."
+    );
+
+    return;
+  }
+
+  const overlay =
+    document.getElementById(
+      "productOverlay"
+    );
+
+  const content =
+    document.getElementById(
+      "product-detail-content"
+    );
+
+  const image =
+    getProductImage(product);
+
+  const suggestions =
+    products
+      .filter(
+        item =>
+          String(item.id) !==
+          String(product.id)
+      )
+      .slice(0, 4);
+
+  content.innerHTML = `
+
+    <div class="detail-grid">
+
+      <div>
+
+        ${
+          image
+          ?
+          `
+            <img
+              class="detail-image"
+              src="${escapeHTML(image)}"
+              alt="${escapeHTML(product.name)}"
+            >
+          `
+          :
+          `
+            <div
+              class="detail-image"
+              style="
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                font-size:80px;
+              "
+            >
+              🍒
+            </div>
+          `
+        }
 
       </div>
 
-    `;
+      <div class="detail-info">
+
+        <div class="detail-category">
+          ${escapeHTML(
+            product.category ||
+            "Cherry Club"
+          )}
+        </div>
+
+        <h1 class="detail-name">
+          ${escapeHTML(
+            product.name
+          )}
+        </h1>
+
+        <div class="detail-price">
+          Rs.
+          ${formatPrice(product.price)}
+        </div>
+
+        <p class="detail-description">
+          ${escapeHTML(
+            product.description ||
+            "A carefully picked Cherry Club piece. One of one, made to be worn your way. 🍒"
+          )}
+        </p>
+
+        ${
+          product.size
+          ?
+          `
+            <div class="detail-info-row">
+              <span>Size</span>
+              <strong>
+                ${escapeHTML(product.size)}
+              </strong>
+            </div>
+          `
+          :
+          ""
+        }
+
+        <div class="detail-info-row">
+          <span>Delivery</span>
+          <strong>
+            Rs. ${DELIVERY_FEE}
+          </strong>
+        </div>
+
+        <button
+          class="primary-button"
+          id="detail-add-button"
+          type="button"
+        >
+          Add to Bag →
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="suggestions">
+
+      <div class="section-kicker">
+        You might also like
+      </div>
+
+      <h2>
+        More cherries.
+      </h2>
+
+      <div class="products" id="suggestion-products">
+
+        ${
+          suggestions.length
+          ?
+          suggestions
+            .map(productCard)
+            .join("")
+          :
+          `
+            <p style="color:#888;">
+              More cherries coming soon 🍒
+            </p>
+          `
+        }
+
+      </div>
+
+    </div>
+  `;
+
+  const addButton =
+    document.getElementById(
+      "detail-add-button"
+    );
+
+  if (addButton) {
+
+    addButton.addEventListener(
+      "click",
+      function() {
+
+        addToBag(product.id);
+
+        closeProduct();
+
+      }
+    );
+  }
+
+  const suggestionContainer =
+    document.getElementById(
+      "suggestion-products"
+    );
+
+  if (suggestionContainer) {
+
+    attachProductCardListeners(
+      suggestionContainer
+    );
+  }
+
+  overlay.classList.add("active");
+
+  document.body.classList.add(
+    "no-scroll"
+  );
+}
 
 
-    overlay.classList.add(
+function closeProduct() {
+
+  document
+    .getElementById(
+      "productOverlay"
+    )
+    .classList.remove(
       "active"
     );
 
-    document.body.classList.add(
-      "no-scroll"
-    );
-
-  }
-
-
-  function closeProduct() {
-
-    document
-      .getElementById(
-        "productOverlay"
-      )
-      .classList.remove(
-        "active"
-      );
-
-    document.body.classList.remove(
-      "no-scroll"
-    );
-
-  }
+  document.body.classList.remove(
+    "no-scroll"
+  );
+}
 
 
-  /* =====================================================
-     CART STORAGE
-  ===================================================== */
+/* =========================================================
+   CART STORAGE
+========================================================= */
 
-  function saveCart() {
+function saveCart() {
+
+  try {
 
     localStorage.setItem(
       "cherryClubCart",
       JSON.stringify(cart)
     );
 
+  } catch (error) {
+
+    console.error(
+      "Cart save error:",
+      error
+    );
+
   }
+}
 
 
-  function loadCart() {
+function loadCart() {
 
-    try {
+  try {
 
-      const saved =
-        localStorage.getItem(
-          "cherryClubCart"
-        );
+    const saved =
+      localStorage.getItem(
+        "cherryClubCart"
+      );
 
-
-      if (saved) {
-
-        cart =
-          JSON.parse(saved);
-
-      }
-
-    } catch {
-
+    if (!saved) {
       cart = [];
-
-    }
-
-  }
-
-
-  /* =====================================================
-     CART
-  ===================================================== */
-
-  function addToBag(productId) {
-
-    const product =
-      products.find(
-        item =>
-          Number(item.id) ===
-          Number(productId)
-      );
-
-
-    if (!product) {
-
-      alert(
-        "This piece could not be found."
-      );
-
       return;
-
     }
 
+    const parsed =
+      JSON.parse(saved);
 
-    const existing =
-      cart.find(
-        item =>
-          Number(item.id) ===
-          Number(productId)
-      );
+    cart =
+      Array.isArray(parsed)
+        ? parsed
+        : [];
 
+  } catch (error) {
 
-    if (existing) {
+    console.error(
+      "Cart loading error:",
+      error
+    );
 
-      existing.quantity += 1;
-
-    } else {
-
-      cart.push({
-
-        id: product.id,
-
-        name: product.name,
-
-        price: Number(
-          product.price
-        ),
-
-        size:
-          product.size || "",
-
-        image_url:
-          product.image_url || "",
-
-        quantity: 1
-
-      });
-
-    }
+    cart = [];
+  }
+}
 
 
-    saveCart();
+/* =========================================================
+   ADD TO BAG
+========================================================= */
 
-    updateBagButton();
+function addToBag(productId) {
 
-    openCart();
+  const product =
+    findProduct(productId);
 
+  if (!product) {
+
+    alert(
+      "This piece could not be found."
+    );
+
+    return;
   }
 
+  const existing =
+    cart.find(
+      item =>
+        String(item.id) ===
+        String(product.id)
+    );
 
-  function changeQuantity(
-    productId,
-    amount
-  ) {
+  if (existing) {
 
-    const item =
-      cart.find(
-        item =>
-          Number(item.id) ===
-          Number(productId)
-      );
+    existing.quantity += 1;
 
+  } else {
 
-    if (!item) return;
+    cart.push({
 
+      id: product.id,
 
-    item.quantity += amount;
+      name:
+        product.name,
 
+      price:
+        Number(product.price),
 
-    if (item.quantity <= 0) {
+      size:
+        product.size || "",
 
-      cart =
-        cart.filter(
-          item =>
-            Number(item.id) !==
-            Number(productId)
-        );
+      image_url:
+        product.image_url || "",
 
-    }
+      quantity: 1
 
-
-    saveCart();
-
-    renderCart();
-
-    updateBagButton();
-
+    });
   }
 
+  saveCart();
 
-  function removeFromBag(
-    productId
-  ) {
+  updateBagButton();
+
+  openCart();
+}
+
+
+/* =========================================================
+   QUANTITY
+========================================================= */
+
+function changeQuantity(
+  productId,
+  amount
+) {
+
+  const item =
+    cart.find(
+      item =>
+        String(item.id) ===
+        String(productId)
+    );
+
+  if (!item) return;
+
+  item.quantity += amount;
+
+  if (item.quantity <= 0) {
 
     cart =
       cart.filter(
         item =>
-          Number(item.id) !==
-          Number(productId)
+          String(item.id) !==
+          String(productId)
       );
-
-
-    saveCart();
-
-    renderCart();
-
-    updateBagButton();
-
   }
 
+  saveCart();
 
-  function cartSubtotal() {
+  renderCart();
 
-    return cart.reduce(
+  updateBagButton();
+}
+
+
+function removeFromBag(productId) {
+
+  cart =
+    cart.filter(
+      item =>
+        String(item.id) !==
+        String(productId)
+    );
+
+  saveCart();
+
+  renderCart();
+
+  updateBagButton();
+}
+
+
+/* =========================================================
+   TOTALS
+========================================================= */
+
+function cartSubtotal() {
+
+  return cart.reduce(
+    (
+      total,
+      item
+    ) =>
+      total +
+      Number(item.price) *
+      Number(item.quantity),
+    0
+  );
+}
+
+
+function cartTotal() {
+
+  if (!cart.length) {
+    return 0;
+  }
+
+  return (
+    cartSubtotal() +
+    DELIVERY_FEE
+  );
+}
+
+
+/* =========================================================
+   BAG BUTTON
+========================================================= */
+
+function updateBagButton() {
+
+  const button =
+    document.querySelector(
+      ".bag-button"
+    );
+
+  if (!button) return;
+
+  const count =
+    cart.reduce(
       (
         total,
         item
       ) =>
         total +
-        Number(item.price) *
         Number(item.quantity),
       0
     );
 
-  }
+  button.innerHTML =
+    count > 0
+      ? `♡ ${count}`
+      : "♡";
+}
 
 
-  function cartTotal() {
+/* =========================================================
+   RENDER CART
+========================================================= */
 
-    if (!cart.length) {
+function renderCart() {
 
-      return 0;
-
-    }
-
-
-    return (
-      cartSubtotal() +
-      DELIVERY_FEE
+  const container =
+    document.getElementById(
+      "cart-items"
     );
 
-  }
+  if (!container) return;
 
+  if (!cart.length) {
 
-  function updateBagButton() {
+    container.innerHTML = `
 
-    const button =
-      document.querySelector(
-        ".bag-button"
-      );
+      <div class="empty-cart">
 
-
-    if (!button) return;
-
-
-    const count =
-      cart.reduce(
-        (
-          total,
-          item
-        ) =>
-          total +
-          Number(item.quantity),
-        0
-      );
-
-
-    button.innerHTML =
-      count > 0
-        ? `♡ ${count}`
-        : "♡";
-
-  }
-
-
-  function renderCart() {
-
-    const container =
-      document.getElementById(
-        "cart-items"
-      );
-
-
-    if (!container) return;
-
-
-    if (!cart.length) {
-
-      container.innerHTML = `
-
-        <div class="empty-cart">
-
-          <div style="
-            font-size:45px;
-            margin-bottom:15px;
-          ">
-            🍒
-          </div>
-
-          <p>
-            Your bag is empty.
-          </p>
-
-          <button
-            class="primary-button"
-            onclick="closeCart();document.getElementById('shop').scrollIntoView({behavior:'smooth'});"
-          >
-            Shop the drop →
-          </button>
-
+        <div style="
+          font-size:45px;
+          margin-bottom:15px;
+        ">
+          🍒
         </div>
 
-      `;
-
-      return;
-
-    }
-
-
-    let html = "";
-
-
-    cart.forEach(item => {
-
-      html += `
-
-        <div class="cart-item">
-
-          ${
-            item.image_url
-
-            ?
-
-            `
-              <img
-                class="cart-image"
-                src="${escapeHTML(item.image_url)}"
-                alt="${escapeHTML(item.name)}"
-              >
-            `
-
-            :
-
-            `
-              <div class="cart-image"
-                style="
-                  display:flex;
-                  align-items:center;
-                  justify-content:center;
-                  font-size:25px;
-                "
-              >
-                🍒
-              </div>
-            `
-          }
-
-
-          <div>
-
-            <div class="cart-name">
-
-              ${escapeHTML(
-                item.name
-              )}
-
-            </div>
-
-
-            ${
-              item.size
-
-              ?
-
-              `
-                <div class="cart-meta">
-                  Size:
-                  ${escapeHTML(
-                    item.size
-                  )}
-                </div>
-              `
-
-              :
-
-              ""
-            }
-
-
-            <div class="cart-price">
-
-              Rs.
-              ${formatPrice(
-                item.price
-              )}
-
-            </div>
-
-
-            <div class="quantity-row">
-
-              <button
-                onclick="changeQuantity(${Number(item.id)},-1)"
-              >
-                −
-              </button>
-
-              <span>
-                ${item.quantity}
-              </span>
-
-              <button
-                onclick="changeQuantity(${Number(item.id)},1)"
-              >
-                +
-              </button>
-
-              <button
-                class="remove"
-                onclick="removeFromBag(${Number(item.id)})"
-              >
-                Remove
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      `;
-
-    });
-
-
-    html += `
-
-      <div class="summary">
-
-        <div class="summary-row">
-
-          <span>
-            Subtotal
-          </span>
-
-          <span>
-            Rs.
-            ${formatPrice(
-              cartSubtotal()
-            )}
-          </span>
-
-        </div>
-
-
-        <div class="summary-row">
-
-          <span>
-            Delivery
-          </span>
-
-          <span>
-            Rs.
-            ${formatPrice(
-              DELIVERY_FEE
-            )}
-          </span>
-
-        </div>
-
-
-        <div class="summary-row summary-total">
-
-          <span>
-            Total
-          </span>
-
-          <span>
-            Rs.
-            ${formatPrice(
-              cartTotal()
-            )}
-          </span>
-
-        </div>
-
+        <p>
+          Your bag is empty.
+        </p>
 
         <button
           class="primary-button"
-          onclick="openCheckout()"
+          onclick="
+            closeCart();
+            document
+              .getElementById('shop')
+              .scrollIntoView({behavior:'smooth'});
+          "
         >
-          Proceed to Checkout →
+          Shop the drop →
         </button>
 
       </div>
-
     `;
 
-
-    container.innerHTML =
-      html;
-
+    return;
   }
 
+  let html = "";
 
-  function openCart() {
-
-    renderCart();
-
-    document
-      .getElementById(
-        "cartOverlay"
-      )
-      .classList.add(
-        "active"
-      );
-
-    document.body.classList.add(
-      "no-scroll"
-    );
-
-  }
-
-
-  function closeCart() {
-
-    document
-      .getElementById(
-        "cartOverlay"
-      )
-      .classList.remove(
-        "active"
-      );
-
-    document.body.classList.remove(
-      "no-scroll"
-    );
-
-  }
-
-
-  /* =====================================================
-     CHECKOUT
-  ===================================================== */
-
-  function renderCheckoutSummary() {
-
-    const container =
-      document.getElementById(
-        "checkout-summary"
-      );
-
-
-    if (!container) return;
-
-
-    let html = "";
-
-
-    cart.forEach(item => {
-
-      html += `
-
-        <div class="summary-product">
-
-          <span>
-
-            ${escapeHTML(
-              item.name
-            )}
-
-            × ${item.quantity}
-
-          </span>
-
-          <strong>
-
-            Rs.
-            ${formatPrice(
-              item.price *
-              item.quantity
-            )}
-
-          </strong>
-
-        </div>
-
-      `;
-
-    });
-
+  cart.forEach(item => {
 
     html += `
 
-      <div class="summary-product">
+      <div class="cart-item">
 
+        ${
+          item.image_url
+          ?
+          `
+            <img
+              class="cart-image"
+              src="${escapeHTML(item.image_url)}"
+              alt="${escapeHTML(item.name)}"
+            >
+          `
+          :
+          `
+            <div
+              class="cart-image"
+              style="
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                font-size:25px;
+              "
+            >
+              🍒
+            </div>
+          `
+        }
+
+        <div>
+
+          <div class="cart-name">
+            ${escapeHTML(item.name)}
+          </div>
+
+          ${
+            item.size
+            ?
+            `
+              <div class="cart-meta">
+                Size:
+                ${escapeHTML(item.size)}
+              </div>
+            `
+            :
+            ""
+          }
+
+          <div class="cart-price">
+            Rs.
+            ${formatPrice(item.price)}
+          </div>
+
+          <div class="quantity-row">
+
+            <button
+              type="button"
+              data-action="minus"
+              data-id="${escapeHTML(item.id)}"
+            >
+              −
+            </button>
+
+            <span>
+              ${item.quantity}
+            </span>
+
+            <button
+              type="button"
+              data-action="plus"
+              data-id="${escapeHTML(item.id)}"
+            >
+              +
+            </button>
+
+            <button
+              class="remove"
+              type="button"
+              data-action="remove"
+              data-id="${escapeHTML(item.id)}"
+            >
+              Remove
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+    `;
+  });
+
+  html += `
+
+    <div class="summary">
+
+      <div class="summary-row">
+        <span>
+          Subtotal
+        </span>
+
+        <span>
+          Rs.
+          ${formatPrice(cartSubtotal())}
+        </span>
+      </div>
+
+      <div class="summary-row">
         <span>
           Delivery
         </span>
 
-        <strong>
+        <span>
           Rs.
-          ${formatPrice(
-            DELIVERY_FEE
-          )}
-        </strong>
-
+          ${formatPrice(DELIVERY_FEE)}
+        </span>
       </div>
 
-
-      <div class="checkout-total">
+      <div class="summary-row summary-total">
 
         <span>
           Total
@@ -3200,104 +3049,395 @@
 
         <span>
           Rs.
-          ${formatPrice(
-            cartTotal()
-          )}
+          ${formatPrice(cartTotal())}
         </span>
 
       </div>
 
+      <button
+        class="primary-button"
+        type="button"
+        id="checkout-button"
+      >
+        Proceed to Checkout →
+      </button>
+
+    </div>
+  `;
+
+  container.innerHTML = html;
+
+  container
+    .querySelectorAll(
+      "[data-action]"
+    )
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        function() {
+
+          const id =
+            this.dataset.id;
+
+          const action =
+            this.dataset.action;
+
+          if (action === "minus") {
+
+            changeQuantity(id, -1);
+
+          } else if (action === "plus") {
+
+            changeQuantity(id, 1);
+
+          } else if (action === "remove") {
+
+            removeFromBag(id);
+
+          }
+
+        }
+      );
+
+    });
+
+  const checkoutButton =
+    document.getElementById(
+      "checkout-button"
+    );
+
+  if (checkoutButton) {
+
+    checkoutButton.addEventListener(
+      "click",
+      openCheckout
+    );
+  }
+}
+
+
+/* =========================================================
+   CART OPEN/CLOSE
+========================================================= */
+
+function openCart() {
+
+  renderCart();
+
+  document
+    .getElementById(
+      "cartOverlay"
+    )
+    .classList.add(
+      "active"
+    );
+
+  document.body.classList.add(
+    "no-scroll"
+  );
+}
+
+
+function closeCart() {
+
+  document
+    .getElementById(
+      "cartOverlay"
+    )
+    .classList.remove(
+      "active"
+    );
+
+  document.body.classList.remove(
+    "no-scroll"
+  );
+}
+
+
+/* =========================================================
+   CHECKOUT SUMMARY
+========================================================= */
+
+function renderCheckoutSummary() {
+
+  const container =
+    document.getElementById(
+      "checkout-summary"
+    );
+
+  if (!container) return;
+
+  let html = "";
+
+  cart.forEach(item => {
+
+    html += `
+
+      <div class="summary-product">
+
+        <span>
+          ${escapeHTML(item.name)}
+          × ${item.quantity}
+        </span>
+
+        <strong>
+          Rs.
+          ${formatPrice(
+            Number(item.price) *
+            Number(item.quantity)
+          )}
+        </strong>
+
+      </div>
     `;
+  });
+
+  html += `
+
+    <div class="summary-product">
+
+      <span>
+        Delivery
+      </span>
+
+      <strong>
+        Rs.
+        ${formatPrice(DELIVERY_FEE)}
+      </strong>
+
+    </div>
+
+    <div class="checkout-total">
+
+      <span>
+        Total
+      </span>
+
+      <span>
+        Rs.
+        ${formatPrice(cartTotal())}
+      </span>
+
+    </div>
+  `;
+
+  container.innerHTML =
+    html;
+}
 
 
-    container.innerHTML =
-      html;
+/* =========================================================
+   CHECKOUT
+========================================================= */
 
+function openCheckout() {
+
+  if (!cart.length) {
+
+    alert(
+      "Your bag is empty 🍒"
+    );
+
+    return;
   }
 
+  closeCart();
 
-  function openCheckout() {
+  renderCheckoutSummary();
 
-    if (!cart.length) {
+  document
+    .getElementById(
+      "checkoutOverlay"
+    )
+    .classList.add(
+      "active"
+    );
 
-      alert(
-        "Your bag is empty 🍒"
+  document.body.classList.add(
+    "no-scroll"
+  );
+}
+
+
+function closeCheckout() {
+
+  document
+    .getElementById(
+      "checkoutOverlay"
+    )
+    .classList.remove(
+      "active"
+    );
+
+  document.body.classList.remove(
+    "no-scroll"
+  );
+}
+
+
+/* =========================================================
+   VALIDATE CART AGAINST DATABASE
+========================================================= */
+
+async function validateCartBeforeOrder() {
+
+  if (!cart.length) {
+    return {
+      valid: false,
+      message: "Your bag is empty."
+    };
+  }
+
+  const ids =
+    cart.map(
+      item =>
+        Number(item.id)
+    );
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("products")
+      .select(
+        "id,name,price,size,image_url,status"
+      )
+      .in(
+        "id",
+        ids
       );
 
-      return;
+  if (error) {
 
+    console.error(
+      "Cart validation error:",
+      error
+    );
+
+    return {
+      valid: false,
+      message:
+        "We couldn't verify your items. Please try again."
+    };
+  }
+
+  const available =
+    data || [];
+
+  for (const item of cart) {
+
+    const current =
+      available.find(
+        product =>
+          String(product.id) ===
+          String(item.id)
+      );
+
+    if (!current) {
+
+      return {
+        valid: false,
+        message:
+          `${item.name} is no longer available.`
+      };
+    }
+
+    if (
+      current.status !==
+      "available"
+    ) {
+
+      return {
+        valid: false,
+        message:
+          `${item.name} is no longer available.`
+      };
+    }
+
+    /*
+      Use the CURRENT database price,
+      not an old price saved in localStorage.
+    */
+
+    item.price =
+      Number(current.price);
+
+    item.name =
+      current.name;
+
+    item.size =
+      current.size || "";
+
+    item.image_url =
+      current.image_url || "";
+  }
+
+  saveCart();
+
+  return {
+    valid: true
+  };
+}
+
+
+/* =========================================================
+   ORDER SUBMISSION
+========================================================= */
+
+async function submitOrder(event) {
+
+  event.preventDefault();
+
+  if (!cart.length) {
+
+    alert(
+      "Your bag is empty."
+    );
+
+    return;
+  }
+
+  const button =
+    document.getElementById(
+      "place-order-button"
+    );
+
+  button.disabled = true;
+
+  button.textContent =
+    "Checking your order...";
+
+  try {
+
+    /* -----------------------------------------------
+       RECHECK PRODUCTS
+    ----------------------------------------------- */
+
+    const validation =
+      await validateCartBeforeOrder();
+
+    if (!validation.valid) {
+
+      alert(
+        validation.message
+      );
+
+      button.disabled = false;
+
+      button.textContent =
+        "Place Order →";
+
+      renderCheckoutSummary();
+
+      return;
     }
 
 
-    closeCart();
-
-    renderCheckoutSummary();
-
-
-    document
-      .getElementById(
-        "checkoutOverlay"
-      )
-      .classList.add(
-        "active"
-      );
-
-
-    document.body.classList.add(
-      "no-scroll"
-    );
-
-  }
-
-
-  function closeCheckout() {
-
-    document
-      .getElementById(
-        "checkoutOverlay"
-      )
-      .classList.remove(
-        "active"
-      );
-
-    document.body.classList.remove(
-      "no-scroll"
-    );
-
-  }
-
-
-  /* =====================================================
-     SUBMIT ORDER
-  ===================================================== */
-
-  async function submitOrder(event) {
-
-    event.preventDefault();
-
-
-    if (!cart.length) {
-
-      alert(
-        "Your bag is empty."
-      );
-
-      return;
-
-    }
-
-
-    const button =
-      document.getElementById(
-        "place-order-button"
-      );
-
-
-    button.disabled = true;
-
-    button.textContent =
-      "Submitting order...";
-
+    /* -----------------------------------------------
+       CUSTOMER DATA
+    ----------------------------------------------- */
 
     const customerName =
       document
@@ -3307,7 +3447,6 @@
         .value
         .trim();
 
-
     const customerPhone =
       document
         .getElementById(
@@ -3315,7 +3454,6 @@
         )
         .value
         .trim();
-
 
     const customerCity =
       document
@@ -3325,7 +3463,6 @@
         .value
         .trim();
 
-
     const customerAddress =
       document
         .getElementById(
@@ -3333,7 +3470,6 @@
         )
         .value
         .trim();
-
 
     const transactionId =
       document
@@ -3344,275 +3480,294 @@
         .trim();
 
 
-    try {
-
-      /*
-        CREATE ORDER
-      */
-
-      const {
-        data: order,
-        error: orderError
-      } = await supabaseClient
-        .from("orders")
-        .insert({
-
-          customer_name:
-            customerName,
-
-          phone:
-            customerPhone,
-
-          address:
-            customerAddress,
-
-          city:
-            customerCity,
-
-          payment_method:
-            "JazzCash",
-
-          transaction_id:
-            transactionId,
-
-          total:
-            cartTotal(),
-
-          status:
-            "pending"
-
-        })
-        .select()
-        .single();
-
-
-      if (orderError) {
-
-        console.error(
-          "Order error:",
-          orderError
-        );
-
-        throw new Error(
-          orderError.message
-        );
-
-      }
-
-
-      /*
-        CREATE ORDER ITEMS
-      */
-
-      const items =
-        cart.map(item => ({
-
-          order_id:
-            order.id,
-
-          product_id:
-            item.id,
-
-          product_name:
-            item.name,
-
-          size:
-            item.size,
-
-          price:
-            item.price,
-
-          quantity:
-            item.quantity
-
-        }));
-
-
-      const {
-        error: itemsError
-      } = await supabaseClient
-        .from("order_items")
-        .insert(items);
-
-
-      if (itemsError) {
-
-        console.error(
-          "Order items error:",
-          itemsError
-        );
-
-        throw new Error(
-          "Your order was created, but the products could not be saved."
-        );
-
-      }
-
-
-      /*
-        EMAIL NOTIFICATION
-      */
-
-      try {
-
-        const {
-          error: emailError
-        } =
-          await supabaseClient
-            .functions
-            .invoke(
-              "smooth-worker",
-              {
-
-                body: {
-
-                  customer_name:
-                    customerName,
-
-                  phone:
-                    customerPhone,
-
-                  address:
-                    customerAddress,
-
-                  city:
-                    customerCity,
-
-                  transaction_id:
-                    transactionId,
-
-                  total:
-                    cartTotal(),
-
-                  order_id:
-                    order.id
-
-                }
-
-              }
-            );
-
-
-        if (emailError) {
-
-          console.error(
-            "Email error:",
-            emailError
-          );
-
-        }
-
-      } catch (emailError) {
-
-        console.error(
-          "Email function error:",
-          emailError
-        );
-
-      }
-
-
-      /*
-        CLEAR CART
-      */
-
-      cart = [];
-
-      localStorage.removeItem(
-        "cherryClubCart"
-      );
-
-      updateBagButton();
-
-
-      document
-        .getElementById(
-          "checkout-form"
-        )
-        .reset();
-
-
-      closeCheckout();
-
-
-      /*
-        SUCCESS
-      */
-
-      document
-        .getElementById(
-          "success-order-id"
-        )
-        .textContent =
-        "Order ID: " +
-        order.id;
-
-
-      document
-        .getElementById(
-          "successOverlay"
-        )
-        .classList.add(
-          "active"
-        );
-
-
-    } catch (error) {
-
-      console.error(
-        "Order submission error:",
-        error
-      );
-
+    /* -----------------------------------------------
+       BASIC VALIDATION
+    ----------------------------------------------- */
+
+    if (
+      !customerName ||
+      !customerPhone ||
+      !customerCity ||
+      !customerAddress ||
+      !transactionId
+    ) {
 
       alert(
-        error.message ||
-        "Something went wrong while placing your order."
+        "Please fill in all required details."
       );
 
-    } finally {
-
-      button.disabled =
-        false;
+      button.disabled = false;
 
       button.textContent =
         "Place Order →";
 
+      return;
     }
 
-  }
+
+    /* -----------------------------------------------
+       GENERATE ORDER UUID
+       
+       Matches:
+       orders.id = uuid
+       order_items.order_id = uuid
+    ----------------------------------------------- */
+
+    const orderId =
+      crypto.randomUUID();
 
 
-  /* =====================================================
-     SUCCESS
-  ===================================================== */
+    /* -----------------------------------------------
+       FREEZE THE TOTAL
+    ----------------------------------------------- */
 
-  function closeSuccess() {
+    const subtotal =
+      cartSubtotal();
+
+    const total =
+      subtotal +
+      DELIVERY_FEE;
+
+
+    /* -----------------------------------------------
+       CREATE ORDER
+       
+       Exact orders schema:
+       id
+       customer_name
+       phone
+       address
+       city
+       payment_method
+       transaction_id
+       total
+       status
+    ----------------------------------------------- */
+
+    const orderData = {
+
+      id:
+        orderId,
+
+      customer_name:
+        customerName,
+
+      phone:
+        customerPhone,
+
+      address:
+        customerAddress,
+
+      city:
+        customerCity,
+
+      payment_method:
+        "JazzCash",
+
+      transaction_id:
+        transactionId,
+
+      total:
+        total,
+
+      status:
+        "pending"
+
+    };
+
+
+    button.textContent =
+      "Creating your order...";
+
+
+    const {
+      error: orderError
+    } =
+      await supabaseClient
+        .from("orders")
+        .insert(
+          orderData
+        );
+
+
+    if (orderError) {
+
+      console.error(
+        "ORDER INSERT ERROR:",
+        orderError
+      );
+
+      throw new Error(
+        "ORDER_ERROR: " +
+        orderError.message
+      );
+    }
+
+
+    /* -----------------------------------------------
+       CREATE ORDER ITEMS
+       
+       Exact order_items schema:
+       id
+       order_id
+       product_id
+       product_name
+       size
+       price
+       quantity
+    ----------------------------------------------- */
+
+    const items =
+      cart.map(item => ({
+
+        order_id:
+          orderId,
+
+        product_id:
+          Number(item.id),
+
+        product_name:
+          item.name,
+
+        size:
+          item.size || "",
+
+        price:
+          Number(item.price),
+
+        quantity:
+          Number(item.quantity)
+
+      }));
+
+
+    button.textContent =
+      "Saving your items...";
+
+
+    const {
+      error: itemsError
+    } =
+      await supabaseClient
+        .from("order_items")
+        .insert(
+          items
+        );
+
+
+    if (itemsError) {
+
+      console.error(
+        "ORDER ITEMS INSERT ERROR:",
+        itemsError
+      );
+
+      /*
+        IMPORTANT:
+        The order itself has already been created.
+        We therefore DO NOT show "success".
+
+        The customer gets a clear message instead,
+        so you don't accidentally think the order
+        is fully recorded.
+      */
+
+      throw new Error(
+        "ITEMS_ERROR: " +
+        itemsError.message
+      );
+    }
+
+
+    /* -----------------------------------------------
+       OPTIONAL EMAIL FUNCTION
+    ----------------------------------------------- */
+
+    try {
+
+      const {
+        error: emailError
+      } =
+        await supabaseClient
+          .functions
+          .invoke(
+            "smooth-worker",
+            {
+              body: {
+
+                customer_name:
+                  customerName,
+
+                phone:
+                  customerPhone,
+
+                address:
+                  customerAddress,
+
+                city:
+                  customerCity,
+
+                transaction_id:
+                  transactionId,
+
+                total:
+                  total,
+
+                order_id:
+                  orderId
+
+              }
+            }
+          );
+
+      if (emailError) {
+
+        console.warn(
+          "Email function error:",
+          emailError
+        );
+      }
+
+    } catch (emailError) {
+
+      console.warn(
+        "Email function unavailable:",
+        emailError
+      );
+    }
+
+
+    /* -----------------------------------------------
+       SUCCESS
+    ----------------------------------------------- */
+
+    cart = [];
+
+    localStorage.removeItem(
+      "cherryClubCart"
+    );
+
+    updateBagButton();
+
+    document
+      .getElementById(
+        "checkout-form"
+      )
+      .reset();
+
+    closeCheckout();
+
+    document
+      .getElementById(
+        "success-order-id"
+      )
+      .textContent =
+      "Order ID: " +
+      orderId;
 
     document
       .getElementById(
         "successOverlay"
-      )
-      .classList.remove(
-        "active"
-      );
-
-    document.body.classList.remove(
-      "no-scroll"
-    );
-
-  }
-
-
-  /* =====================================================
-     MENU
-  ===================================================== */
-
-  function openMenu() {
-
-    document
-      .getElementById(
-        "menuOverlay"
       )
       .classList.add(
         "active"
@@ -3622,126 +3777,267 @@
       "no-scroll"
     );
 
-  }
 
+  } catch (error) {
 
-  function closeMenu() {
-
-    document
-      .getElementById(
-        "menuOverlay"
-      )
-      .classList.remove(
-        "active"
-      );
-
-    document.body.classList.remove(
-      "no-scroll"
+    console.error(
+      "Order submission error:",
+      error
     );
 
+    const message =
+      String(
+        error?.message || ""
+      );
+
+    if (
+      message.startsWith(
+        "ITEMS_ERROR:"
+      )
+    ) {
+
+      alert(
+        "Your order was created, but the items could not be attached to it.\n\nPlease DO NOT submit the order again yet. Check your Supabase order and contact Cherry Club."
+      );
+
+    } else if (
+      message.startsWith(
+        "ORDER_ERROR:"
+      )
+    ) {
+
+      alert(
+        "We couldn't create your order.\n\n" +
+        message.replace(
+          "ORDER_ERROR:",
+          ""
+        )
+      );
+
+    } else {
+
+      alert(
+        "Something went wrong while submitting your order. Please try again."
+      );
+    }
+
+  } finally {
+
+    button.disabled = false;
+
+    button.textContent =
+      "Place Order →";
   }
+}
 
 
-  function menuGo() {
+/* =========================================================
+   SUCCESS
+========================================================= */
 
-    closeMenu();
+function closeSuccess() {
 
-  }
+  document
+    .getElementById(
+      "successOverlay"
+    )
+    .classList.remove(
+      "active"
+    );
+
+  document.body.classList.remove(
+    "no-scroll"
+  );
+}
 
 
-  /* =====================================================
-     OVERLAY CLICK HANDLERS
-  ===================================================== */
+/* =========================================================
+   MENU
+========================================================= */
+
+function openMenu() {
 
   document
     .getElementById(
       "menuOverlay"
     )
-    .addEventListener(
-      "click",
-      function(event) {
-
-        if (
-          event.target ===
-          this
-        ) {
-
-          closeMenu();
-
-        }
-
-      }
+    .classList.add(
+      "active"
     );
 
+  document.body.classList.add(
+    "no-scroll"
+  );
+}
+
+
+function closeMenu() {
 
   document
     .getElementById(
-      "cartOverlay"
+      "menuOverlay"
     )
-    .addEventListener(
-      "click",
-      function(event) {
-
-        if (
-          event.target ===
-          this
-        ) {
-
-          closeCart();
-
-        }
-
-      }
+    .classList.remove(
+      "active"
     );
 
-
-  /* =====================================================
-     CHECKOUT FORM
-  ===================================================== */
-
-  document
-    .getElementById(
-      "checkout-form"
-    )
-    .addEventListener(
-      "submit",
-      submitOrder
-    );
+  document.body.classList.remove(
+    "no-scroll"
+  );
+}
 
 
-  /* =====================================================
-     ESC KEY
-  ===================================================== */
+/* =========================================================
+   OVERLAY CLICK HANDLERS
+========================================================= */
 
-  document.addEventListener(
-    "keydown",
+document
+  .getElementById(
+    "menuOverlay"
+  )
+  .addEventListener(
+    "click",
     function(event) {
 
       if (
-        event.key === "Escape"
+        event.target ===
+        this
       ) {
 
         closeMenu();
-        closeCart();
-        closeProduct();
-        closeCheckout();
-        closeSuccess();
-
       }
 
     }
   );
 
 
-  /* =====================================================
-     START WEBSITE
-  ===================================================== */
+document
+  .getElementById(
+    "cartOverlay"
+  )
+  .addEventListener(
+    "click",
+    function(event) {
 
-  loadCart();
+      if (
+        event.target ===
+        this
+      ) {
 
-  updateBagButton();
+        closeCart();
+      }
 
-  loadProducts();
+    }
+  );
+
+
+document
+  .getElementById(
+    "productOverlay"
+  )
+  .addEventListener(
+    "click",
+    function(event) {
+
+      if (
+        event.target ===
+        this
+      ) {
+
+        closeProduct();
+      }
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "checkoutOverlay"
+  )
+  .addEventListener(
+    "click",
+    function(event) {
+
+      if (
+        event.target ===
+        this
+      ) {
+
+        closeCheckout();
+      }
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "successOverlay"
+  )
+  .addEventListener(
+    "click",
+    function(event) {
+
+      if (
+        event.target ===
+        this
+      ) {
+
+        closeSuccess();
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   CHECKOUT FORM
+========================================================= */
+
+document
+  .getElementById(
+    "checkout-form"
+  )
+  .addEventListener(
+    "submit",
+    submitOrder
+  );
+
+
+/* =========================================================
+   ESC KEY
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  function(event) {
+
+    if (
+      event.key === "Escape"
+    ) {
+
+      closeMenu();
+      closeCart();
+      closeProduct();
+      closeCheckout();
+      closeSuccess();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+loadCart();
+
+updateBagButton();
+
+loadProducts();
 
 </script>
 
