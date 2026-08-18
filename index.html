@@ -3,20 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cherry Club 🍒</title>
-  <meta name="description" content="Cherry Club — Y2K pieces, one-of-one finds & clothes worth obsessing over.">
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <title>Cherry Club 🍒</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
 
     html {
@@ -34,19 +39,19 @@
       overflow: hidden;
     }
 
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
     button,
     input,
     textarea {
-      font: inherit;
+      font-family: inherit;
     }
 
     button {
       cursor: pointer;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
     }
 
     /* =========================
@@ -56,149 +61,81 @@
     .intro {
       position: fixed;
       inset: 0;
-      z-index: 99999;
+      z-index: 9999;
       background: #111;
+      color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
-      animation: introExit 1s ease forwards;
-      animation-delay: 3.7s;
+      flex-direction: column;
+      animation: introOut 1s ease 2.3s forwards;
+      pointer-events: none;
     }
 
     .cherry-stage {
       position: relative;
-      width: 260px;
-      height: 240px;
+      width: 100px;
+      height: 100px;
+      margin-bottom: 25px;
     }
 
     .cherry {
       position: absolute;
-      width: 88px;
-      height: 88px;
-      background: #a20f20;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
-      top: 90px;
-      box-shadow:
-        inset -12px -10px 0 rgba(0,0,0,.12),
-        0 12px 35px rgba(162,15,32,.25);
+      background: #a20f20;
+      bottom: 15px;
     }
 
     .cherry.left {
-      left: 10px;
-      animation: cherryLeft 2s cubic-bezier(.7,0,.2,1) forwards;
+      left: 12px;
     }
 
     .cherry.right {
-      right: 10px;
-      animation: cherryRight 2s cubic-bezier(.7,0,.2,1) forwards;
+      right: 12px;
     }
 
     .cherry::before {
       content: "";
       position: absolute;
-      width: 3px;
-      height: 75px;
-      background: #7a5b35;
-      top: -55px;
-      left: 51px;
-      transform: rotate(-22deg);
+      width: 2px;
+      height: 55px;
+      background: #777;
+      left: 20px;
+      bottom: 27px;
+      transform: rotate(-25deg);
       transform-origin: bottom;
     }
 
     .cherry.right::before {
-      transform: rotate(22deg);
-      left: 34px;
-    }
-
-    .cherry::after {
-      content: "";
-      position: absolute;
-      width: 19px;
-      height: 10px;
-      background: #71844b;
-      border-radius: 100% 0 100% 0;
-      top: -59px;
-      left: 50px;
-      transform: rotate(-15deg);
-    }
-
-    .cherry.right::after {
-      left: 20px;
-      transform: rotate(15deg) scaleX(-1);
+      transform: rotate(25deg);
+      left: 16px;
     }
 
     .intro-logo {
-      position: absolute;
-      color: white;
       text-align: center;
-      opacity: 0;
-      animation: logoReveal 1s ease forwards;
-      animation-delay: 2.1s;
     }
 
     .intro-logo h1 {
       font-family: "Playfair Display", serif;
-      font-size: clamp(50px, 11vw, 105px);
+      font-size: clamp(55px, 10vw, 100px);
       font-weight: 500;
-      font-style: italic;
-      letter-spacing: -4px;
+      line-height: .9;
     }
 
     .intro-logo p {
-      margin-top: 8px;
-      font-size: 9px;
+      margin-top: 15px;
       text-transform: uppercase;
-      letter-spacing: 5px;
+      letter-spacing: 4px;
+      font-size: 9px;
       color: #aaa;
     }
 
-    @keyframes cherryLeft {
-      0% {
-        transform: translateX(-150px) rotate(-25deg);
-      }
-      65% {
-        transform: translateX(0) rotate(0);
-      }
-      78% {
-        transform: translateX(5px) scale(1.15);
-      }
-      100% {
-        transform: translateX(0) scale(1);
-      }
-    }
-
-    @keyframes cherryRight {
-      0% {
-        transform: translateX(150px) rotate(25deg);
-      }
-      65% {
-        transform: translateX(0) rotate(0);
-      }
-      78% {
-        transform: translateX(-5px) scale(1.15);
-      }
-      100% {
-        transform: translateX(0) scale(1);
-      }
-    }
-
-    @keyframes logoReveal {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes introExit {
+    @keyframes introOut {
       to {
         opacity: 0;
         visibility: hidden;
-        pointer-events: none;
       }
     }
 
@@ -207,59 +144,47 @@
     ========================= */
 
     nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 72px;
-      padding: 0 5vw;
+      height: 80px;
+      padding: 0 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(245,241,235,.88);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(17,17,17,.08);
-      z-index: 3000;
+      border-bottom: 1px solid #ddd7d0;
+      background: #f5f1eb;
+      position: relative;
+      z-index: 100;
     }
 
     .menu-button,
     .bag-button {
       border: 0;
       background: none;
-      color: #111;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .menu-button {
-      display: flex;
       flex-direction: column;
       gap: 5px;
-      width: 25px;
     }
 
     .menu-line {
-      height: 1.5px;
+      width: 21px;
+      height: 1px;
       background: #111;
-      width: 100%;
-      transition: .25s;
-    }
-
-    .logo {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: "Playfair Display", serif;
-      font-size: 23px;
-      font-style: italic;
-      white-space: nowrap;
-    }
-
-    .logo span {
-      color: #a20f20;
     }
 
     .bag-button {
-      font-size: 19px;
+      font-size: 25px;
+    }
+
+    .logo {
+      font-family: "Playfair Display", serif;
+      font-size: 25px;
+      font-style: italic;
     }
 
     /* =========================
@@ -269,7 +194,7 @@
     .menu-overlay {
       position: fixed;
       inset: 0;
-      z-index: 5000;
+      z-index: 8000;
       background: rgba(0,0,0,.45);
       opacity: 0;
       visibility: hidden;
@@ -282,13 +207,13 @@
     }
 
     .side-menu {
-      width: min(410px, 90vw);
+      width: min(430px, 92vw);
       height: 100%;
       background: #f5f1eb;
-      padding: 100px 35px 40px;
-      overflow-y: auto;
+      padding: 100px 45px 40px;
       transform: translateX(-100%);
       transition: .45s cubic-bezier(.7,0,.2,1);
+      overflow-y: auto;
     }
 
     .menu-overlay.active .side-menu {
@@ -298,54 +223,50 @@
     .close-menu {
       position: absolute;
       top: 25px;
-      right: 25px;
-      background: none;
+      left: 35px;
       border: 0;
-      font-size: 27px;
+      background: none;
+      font-size: 28px;
     }
 
     .menu-label {
       color: #888;
-      font-size: 9px;
       text-transform: uppercase;
-      letter-spacing: 3px;
-      margin-bottom: 18px;
+      letter-spacing: 2px;
+      font-size: 9px;
+      margin-bottom: 20px;
     }
 
     .menu-links {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
     }
 
-    .menu-links a,
-    .menu-cart-link {
+    .menu-links a {
       font-family: "Playfair Display", serif;
-      font-size: 29px;
+      font-size: 30px;
+    }
+
+    .menu-cart-link {
       border: 0;
       background: none;
-      text-align: left;
-    }
-
-    .menu-links a:hover,
-    .menu-cart-link:hover {
-      color: #a20f20;
-      padding-left: 7px;
+      font-family: "Playfair Display", serif;
+      font-size: 30px;
+      padding: 0;
     }
 
     .menu-divider {
       height: 1px;
       background: #ddd7d0;
-      margin: 32px 0;
+      margin: 35px 0;
     }
 
     .menu-small {
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
+      gap: 12px;
+      font-size: 12px;
     }
 
     /* =========================
@@ -353,12 +274,11 @@
     ========================= */
 
     .hero {
-      min-height: 100vh;
-      padding: 140px 6vw 70px;
+      min-height: calc(100vh - 80px);
+      padding: 150px 7vw 90px;
       display: flex;
-      align-items: center;
+      flex-direction: column;
       justify-content: center;
-      text-align: center;
       position: relative;
     }
 
@@ -366,61 +286,58 @@
       max-width: 900px;
     }
 
-    .eyebrow {
-      font-size: 10px;
-      letter-spacing: 4px;
+    .eyebrow,
+    .section-kicker {
+      color: #888;
       text-transform: uppercase;
-      color: #777;
-      margin-bottom: 25px;
+      letter-spacing: 3px;
+      font-size: 9px;
     }
 
     .hero h2 {
       font-family: "Playfair Display", serif;
-      font-size: clamp(60px,12vw,150px);
-      line-height: .85;
+      font-size: clamp(75px, 12vw, 150px);
       font-weight: 500;
-      letter-spacing: -6px;
+      line-height: .82;
+      letter-spacing: -7px;
+      margin: 25px 0;
     }
 
     .hero h2 em {
       color: #a20f20;
-      font-weight: 500;
+      font-weight: 400;
     }
 
     .hero-text {
-      max-width: 430px;
-      margin: 35px auto 0;
+      max-width: 390px;
       color: #666;
-      line-height: 1.7;
-      font-size: 14px;
+      font-size: 13px;
+      line-height: 1.8;
+      margin-bottom: 35px;
     }
 
     .shop-button {
       display: inline-block;
-      margin-top: 30px;
-      padding: 17px 28px;
       background: #111;
       color: white;
-      font-size: 10px;
-      letter-spacing: 2px;
+      padding: 17px 28px;
       text-transform: uppercase;
-      transition: .3s;
+      letter-spacing: 2px;
+      font-size: 10px;
     }
 
     .shop-button:hover {
       background: #a20f20;
-      transform: translateY(-3px);
     }
 
     .scroll-note {
       position: absolute;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 9px;
-      letter-spacing: 3px;
+      bottom: 35px;
+      right: 7vw;
       color: #888;
+      font-size: 9px;
       text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
     /* =========================
@@ -428,83 +345,77 @@
     ========================= */
 
     .marquee {
-      background: #a20f20;
-      color: white;
       overflow: hidden;
-      white-space: nowrap;
-      padding: 14px 0;
-      font-size: 10px;
-      letter-spacing: 3px;
+      background: #111;
+      color: white;
+      padding: 17px 0;
     }
 
     .marquee-track {
-      display: inline-block;
-      animation: move 22s linear infinite;
+      display: flex;
+      width: max-content;
+      animation: marquee 20s linear infinite;
     }
 
-    .marquee span {
-      margin: 0 28px;
+    .marquee-track span {
+      padding: 0 35px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
-    @keyframes move {
+    @keyframes marquee {
       from {
         transform: translateX(0);
       }
+
       to {
         transform: translateX(-50%);
       }
     }
 
     /* =========================
-       PRODUCTS
+       SHOP
     ========================= */
 
     .section {
-      padding: 110px 6vw;
+      padding: 120px 6vw;
     }
 
     .section-header {
       display: flex;
       justify-content: space-between;
-      align-items: end;
+      align-items: flex-end;
       margin-bottom: 45px;
-    }
-
-    .section-kicker {
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #777;
-      margin-bottom: 12px;
     }
 
     .section-title {
       font-family: "Playfair Display", serif;
-      font-size: clamp(48px,7vw,82px);
+      font-size: clamp(55px, 8vw, 90px);
       font-weight: 500;
-      letter-spacing: -3px;
+      line-height: .9;
+      margin-top: 10px;
     }
 
     .view-all {
-      font-size: 10px;
       text-transform: uppercase;
+      font-size: 9px;
       letter-spacing: 2px;
-      border-bottom: 1px solid;
-      padding-bottom: 5px;
-      cursor: pointer;
     }
 
     .products {
       display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 20px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
     }
 
     .product {
       cursor: pointer;
+      outline: none;
     }
 
     .product-image {
+      width: 100%;
       aspect-ratio: 4 / 5;
       background: #ddd6cf;
       position: relative;
@@ -515,8 +426,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
-      transition: .45s;
+      transition: transform .5s ease;
     }
 
     .product:hover .product-image img {
@@ -524,47 +434,45 @@
     }
 
     .product-placeholder {
-      width: 100%;
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: "Playfair Display", serif;
       font-size: 60px;
-      color: rgba(17,17,17,.15);
     }
 
     .tag {
       position: absolute;
-      top: 14px;
-      left: 14px;
-      background: white;
+      top: 12px;
+      left: 12px;
+      background: #f5f1eb;
       padding: 7px 10px;
-      font-size: 8px;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      z-index: 2;
+      font-size: 8px;
     }
 
     .product-info {
-      padding: 15px 2px;
       display: flex;
       justify-content: space-between;
       gap: 15px;
+      padding-top: 13px;
     }
 
     .product-name {
-      font-size: 13px;
+      font-size: 12px;
     }
 
     .product-meta {
-      font-size: 10px;
       color: #888;
+      font-size: 9px;
       margin-top: 5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     .price {
-      font-size: 13px;
+      font-size: 11px;
       white-space: nowrap;
     }
 
@@ -575,30 +483,29 @@
     .about {
       background: #111;
       color: white;
-      padding: 120px 6vw;
+      padding: 130px 8vw;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10vw;
-      align-items: center;
     }
 
     .about h2 {
       font-family: "Playfair Display", serif;
-      font-size: clamp(50px,7vw,95px);
-      line-height: .92;
+      font-size: clamp(55px, 8vw, 100px);
       font-weight: 500;
-      letter-spacing: -4px;
+      line-height: .9;
     }
 
     .about h2 em {
-      color: #d83b4c;
+      color: #d49aa2;
     }
 
     .about-copy {
-      max-width: 440px;
       color: #aaa;
-      font-size: 14px;
+      font-size: 13px;
       line-height: 1.9;
+      max-width: 450px;
+      padding-top: 20px;
     }
 
     .about-copy strong {
@@ -610,21 +517,20 @@
     ========================= */
 
     .contact-section {
-      padding: 110px 6vw;
-      border-top: 1px solid #ddd7d0;
+      padding: 120px 6vw;
     }
 
     .contact-header {
-      max-width: 650px;
+      max-width: 700px;
       margin-bottom: 55px;
     }
 
     .contact-header h2 {
       font-family: "Playfair Display", serif;
-      font-size: clamp(52px,7vw,90px);
+      font-size: clamp(55px, 8vw, 95px);
       font-weight: 500;
-      line-height: .95;
-      letter-spacing: -4px;
+      line-height: .9;
+      margin: 15px 0 25px;
     }
 
     .contact-header h2 em {
@@ -632,33 +538,29 @@
     }
 
     .contact-header p {
-      max-width: 450px;
-      margin-top: 25px;
       color: #666;
-      font-size: 14px;
+      font-size: 13px;
       line-height: 1.8;
     }
 
     .contact-grid {
       display: grid;
-      grid-template-columns: repeat(2,1fr);
-      gap: 1px;
-      background: #d8d1ca;
-      border: 1px solid #d8d1ca;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
     }
 
     .contact-card {
-      background: #f5f1eb;
-      padding: 38px;
-      min-height: 220px;
+      background: white;
+      padding: 35px;
+      min-height: 210px;
     }
 
     .contact-label {
       display: block;
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 2.5px;
       color: #888;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 9px;
       margin-bottom: 15px;
     }
 
@@ -670,29 +572,26 @@
     }
 
     .contact-card p {
-      color: #666;
-      font-size: 12px;
+      color: #777;
+      font-size: 11px;
       line-height: 1.7;
+      margin-bottom: 18px;
     }
 
     .contact-link {
-      display: inline-block;
-      margin-top: 22px;
-      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 1.8px;
-      border-bottom: 1px solid;
-      padding-bottom: 5px;
+      font-size: 9px;
+      letter-spacing: 1.5px;
     }
 
     .policy-box {
-      margin-top: 1px;
-      padding: 45px 38px;
       background: #111;
       color: white;
+      padding: 45px;
+      margin-top: 15px;
       display: grid;
-      grid-template-columns: .7fr 1.3fr;
-      gap: 8vw;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 50px;
     }
 
     .policy-box h3 {
@@ -703,12 +602,12 @@
 
     .policy-text {
       color: #aaa;
-      font-size: 12px;
-      line-height: 1.9;
+      font-size: 11px;
+      line-height: 1.8;
     }
 
-    .policy-text p + p {
-      margin-top: 18px;
+    .policy-text p {
+      margin-bottom: 15px;
     }
 
     .policy-text strong {
@@ -722,14 +621,13 @@
     footer {
       background: #111;
       color: white;
-      border-top: 1px solid #333;
-      padding: 60px 6vw 30px;
+      padding: 55px 6vw 30px;
     }
 
     .footer-top {
       display: flex;
       justify-content: space-between;
-      gap: 30px;
+      align-items: flex-start;
       padding-bottom: 60px;
     }
 
@@ -1191,6 +1089,7 @@
     ========================= */
 
     @media(max-width:700px) {
+
       nav {
         height: 64px;
         padding: 0 20px;
@@ -1308,7 +1207,9 @@
         position: static;
         order: -1;
       }
+
     }
+
   </style>
 </head>
 
@@ -1319,62 +1220,119 @@
 ========================= -->
 
 <div class="intro">
+
   <div class="cherry-stage">
+
     <div class="cherry left"></div>
     <div class="cherry right"></div>
+
   </div>
 
   <div class="intro-logo">
-    <h1>Cherry Club</h1>
-    <p>Welcome to the club</p>
+
+    <h1>
+      Cherry Club
+    </h1>
+
+    <p>
+      Welcome to the club
+    </p>
+
   </div>
+
 </div>
+
 
 <!-- =========================
      MENU
 ========================= -->
 
 <div class="menu-overlay" id="menuOverlay">
+
   <div class="side-menu">
 
-    <button class="close-menu" onclick="closeMenu()">×</button>
+    <button
+      class="close-menu"
+      onclick="closeMenu()"
+    >
+      ×
+    </button>
 
-    <div class="menu-label">Shop</div>
-<div class="menu-links" id="category-menu">
-  <a href="#shop" onclick="showAllProducts(); closeMenu();">
-    New Arrivals
-  </a>
+    <div class="menu-label">
+      Shop
+    </div>
 
-  <span style="
-    color:#999;
-    font-size:10px;
-    text-transform:uppercase;
-    letter-spacing:1px;
-  ">
-    Loading categories...
-  </span>
-</div>
- 
+    <div
+      class="menu-links"
+      id="category-menu"
+    >
+
+      <a
+        href="#shop"
+        onclick="showAllProducts(); closeMenu();"
+      >
+        New Arrivals
+      </a>
+
+      <span style="
+        color:#999;
+        font-size:10px;
+        text-transform:uppercase;
+        letter-spacing:1px;
+      ">
+        Loading categories...
+      </span>
+
+    </div>
+
     <div class="menu-divider"></div>
 
-    <div class="menu-label">Your Cherry Bag</div>
+    <div class="menu-label">
+      Your Cherry Bag
+    </div>
 
-    <button class="menu-cart-link" onclick="closeMenu(); openCart();">
+    <button
+      class="menu-cart-link"
+      onclick="closeMenu(); openCart();"
+    >
       View Cart 🛍️
     </button>
 
     <div class="menu-divider"></div>
 
-    <div class="menu-label">The Club</div>
+    <div class="menu-label">
+      The Club
+    </div>
 
     <div class="menu-small">
-      <a href="#about" onclick="closeMenu()">About Us</a>
-      <a href="#contact-us" onclick="closeMenu()">Contact</a>
-      <a href="#contact-us" onclick="closeMenu()">Shipping & Returns</a>
+
+      <a
+        href="#about"
+        onclick="closeMenu()"
+      >
+        About Us
+      </a>
+
+      <a
+        href="#contact-us"
+        onclick="closeMenu()"
+      >
+        Contact
+      </a>
+
+      <a
+        href="#contact-us"
+        onclick="closeMenu()"
+      >
+        Shipping & Returns
+      </a>
+
     </div>
 
   </div>
+
 </div>
+
 
 <!-- =========================
      NAV
@@ -1382,295 +1340,374 @@
 
 <nav>
 
-  <button class="menu-button" onclick="openMenu()" aria-label="Open menu">
+  <button
+    class="menu-button"
+    onclick="openMenu()"
+    aria-label="Open menu"
+  >
+
     <span class="menu-line"></span>
     <span class="menu-line"></span>
     <span class="menu-line"></span>
+
   </button>
 
-  <a href="#" class="logo">
+  <a
+    href="#"
+    class="logo"
+  >
     Cherry <span>🍒</span> Club
   </a>
 
-  <button class="bag-button" onclick="openCart()" aria-label="Open cart">
+  <button
+    class="bag-button"
+    onclick="openCart()"
+    aria-label="Open cart"
+  >
     ♡
   </button>
 
 </nav>
 
+
 <main>
 
-  <!-- =========================
-       HERO
-  ========================= -->
+<!-- =========================
+     HERO
+========================= -->
 
-  <section class="hero">
+<section class="hero">
 
-    <div class="hero-content">
+  <div class="hero-content">
 
-      <div class="eyebrow">
-        Est. 2026 · Pakistan
-      </div>
-
-      <h2>
-        Dress<br>
-        <em>different.</em>
-      </h2>
-
-      <p class="hero-text">
-        Y2K pieces, one-of-one finds & clothes
-        you probably shouldn't be this obsessed with.
-      </p>
-
-      <a href="#shop" class="shop-button">
-        Shop the drop →
-      </a>
-
+    <div class="eyebrow">
+      Est. 2026 · Pakistan
     </div>
 
-    <div class="scroll-note">
-      Scroll to explore ↓
-    </div>
+    <h2>
+      Dress<br>
+      <em>different.</em>
+    </h2>
 
-  </section>
+    <p class="hero-text">
+      Y2K pieces, one-of-one finds & clothes
+      you probably shouldn't be this obsessed with.
+    </p>
 
-  <!-- =========================
-       MARQUEE
-  ========================= -->
+    <a
+      href="#shop"
+      class="shop-button"
+    >
+      Shop the drop →
+    </a>
 
-  <div class="marquee">
-    <div class="marquee-track">
-      <span>🍒 CHERRY CLUB</span>
-      <span>Y2K · THRIFT · ONE OF ONE</span>
-      <span>🍒 CHERRY CLUB</span>
-      <span>Y2K · THRIFT · ONE OF ONE</span>
-      <span>🍒 CHERRY CLUB</span>
-      <span>Y2K · THRIFT · ONE OF ONE</span>
-    </div>
   </div>
 
-  <!-- =========================
-       SHOP
-  ========================= -->
+  <div class="scroll-note">
+    Scroll to explore ↓
+  </div>
 
-  <section class="section" id="shop">
+</section>
 
-    <div class="section-header">
 
-      <div>
-        <div class="section-kicker">
-          Freshly picked
-        </div>
+<!-- =========================
+     MARQUEE
+========================= -->
 
-        <h2 class="section-title" id="shop-title">
-          The Drop
-        </h2>
+<div class="marquee">
+
+  <div class="marquee-track">
+
+    <span>
+      🍒 CHERRY CLUB
+    </span>
+
+    <span>
+      Y2K · THRIFT · ONE OF ONE
+    </span>
+
+    <span>
+      🍒 CHERRY CLUB
+    </span>
+
+    <span>
+      Y2K · THRIFT · ONE OF ONE
+    </span>
+
+    <span>
+      🍒 CHERRY CLUB
+    </span>
+
+    <span>
+      Y2K · THRIFT · ONE OF ONE
+    </span>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     SHOP
+========================= -->
+
+<section
+  class="section"
+  id="shop"
+>
+
+  <div class="section-header">
+
+    <div>
+
+      <div class="section-kicker">
+        Freshly picked
       </div>
 
-      <a href="#shop" class="view-all" onclick="showAllProducts()">
-        View all →
+      <h2
+        class="section-title"
+        id="shop-title"
+      >
+        The Drop
+      </h2>
+
+    </div>
+
+    <a
+      href="#shop"
+      class="view-all"
+      onclick="showAllProducts()"
+    >
+      View all →
+    </a>
+
+  </div>
+
+  <div
+    class="products"
+    id="products-container"
+  >
+
+    <p style="
+      grid-column:1/-1;
+      text-align:center;
+      color:#888;
+    ">
+      Loading the drop 🍒
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     ABOUT
+========================= -->
+
+<section
+  class="about"
+  id="about"
+>
+
+  <div>
+
+    <h2>
+      Not your<br>
+      average <em>thrift.</em>
+    </h2>
+
+  </div>
+
+  <div class="about-copy">
+
+    <p>
+      <strong>Cherry Club</strong> is a curated little
+      corner of the internet for people who refuse
+      to dress boring.
+    </p>
+
+    <br>
+
+    <p>
+      Every piece is picked because we'd want it
+      in our own wardrobe — from Y2K finds to
+      reworked one-of-one pieces.
+    </p>
+
+    <br>
+
+    <p>
+      Once it's gone, it's gone.
+      <strong>
+        So if you like it, don't sleep on it. 🍒
+      </strong>
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     CONTACT
+========================= -->
+
+<section
+  class="contact-section"
+  id="contact-us"
+>
+
+  <div class="contact-header">
+
+    <div class="section-kicker">
+      Need us?
+    </div>
+
+    <h2>
+      Contact <em>Cherry.</em>
+    </h2>
+
+    <p>
+      Questions about a piece, your order, sizing,
+      or delivery? We're here.
+    </p>
+
+  </div>
+
+
+  <div class="contact-grid">
+
+    <div class="contact-card">
+
+      <span class="contact-label">
+        Instagram
+      </span>
+
+      <h3>
+        @reejscherryclub
+      </h3>
+
+      <p>
+        For orders, questions & updates.
+      </p>
+
+      <a
+        href="https://instagram.com/reejscherryclub"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="contact-link"
+      >
+        Message us →
       </a>
 
     </div>
 
-    <div class="products" id="products-container">
-      <p style="grid-column:1/-1;text-align:center;color:#888;">
-        Loading the drop 🍒
+
+    <div class="contact-card">
+
+      <span class="contact-label">
+        Email
+      </span>
+
+      <h3>
+        reejscherryclub@gmail.com
+      </h3>
+
+      <p>
+        For enquiries & order-related questions.
       </p>
+
+      <a
+        href="mailto:reejscherryclub@gmail.com"
+        class="contact-link"
+      >
+        Email Cherry Club →
+      </a>
+
     </div>
 
-  </section>
 
-  <!-- =========================
-       ABOUT
-  ========================= -->
+    <div class="contact-card">
 
-  <section class="about" id="about">
+      <span class="contact-label">
+        Delivery
+      </span>
+
+      <h3>
+        Pakistan-wide
+      </h3>
+
+      <p>
+        Flat delivery fee of Rs. 370.
+      </p>
+
+    </div>
+
+
+    <div class="contact-card">
+
+      <span class="contact-label">
+        Payments
+      </span>
+
+      <h3>
+        JazzCash
+      </h3>
+
+      <p>
+        Orders are confirmed after payment
+        is submitted and verified.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="policy-box">
 
     <div>
-      <h2>
-        Not your<br>
-        average <em>thrift.</em>
-      </h2>
-    </div>
 
-    <div class="about-copy">
+      <span class="contact-label">
+        Please note
+      </span>
 
-      <p>
-        <strong>Cherry Club</strong> is a curated little
-        corner of the internet for people who refuse
-        to dress boring.
-      </p>
-
-      <br>
-
-      <p>
-        Every piece is picked because we'd want it
-        in our own wardrobe — from Y2K finds to
-        reworked one-of-one pieces.
-      </p>
-
-      <br>
-
-      <p>
-        Once it's gone, it's gone.
-        <strong>So if you like it, don't sleep on it. 🍒</strong>
-      </p>
+      <h3>
+        Before you order 🍒
+      </h3>
 
     </div>
 
-  </section>
-
-  <!-- =========================
-       CONTACT
-  ========================= -->
-
-  <section class="contact-section" id="contact-us">
-
-    <div class="contact-header">
-
-      <div class="section-kicker">
-        Need us?
-      </div>
-
-      <h2>
-        Contact <em>Cherry.</em>
-      </h2>
+    <div class="policy-text">
 
       <p>
-        Questions about a piece, your order, sizing,
-        or delivery? We're here.
+        All sales are final. We do not accept returns
+        or exchanges for change of mind, sizing, fit,
+        or preference.
+      </p>
+
+      <p>
+        Exchanges are only considered if an item arrives
+        genuinely defective or damaged. Any defect must
+        be reported within <strong>24 hours of delivery</strong>
+        with clear photos or videos.
+      </p>
+
+      <p>
+        Please make sure your delivery information
+        and contact details are correct before submitting
+        your order.
       </p>
 
     </div>
 
-    <div class="contact-grid">
+  </div>
 
-      <div class="contact-card">
-
-        <span class="contact-label">
-          Instagram
-        </span>
-
-        <h3>
-          @reejscherryclub
-        </h3>
-
-        <p>
-          For orders, questions & updates.
-        </p>
-
-        <a
-          href="https://instagram.com/reejscherryclub"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="contact-link"
-        >
-          Message us →
-        </a>
-
-      </div>
-
-      <div class="contact-card">
-
-        <span class="contact-label">
-          Email
-        </span>
-
-        <h3>
-          reejscherryclub@gmail.com
-        </h3>
-
-        <p>
-          For enquiries & order-related questions.
-        </p>
-
-        <a
-          href="mailto:reejscherryclub@gmail.com"
-          class="contact-link"
-        >
-          Email Cherry Club →
-        </a>
-
-      </div>
-
-      <div class="contact-card">
-
-        <span class="contact-label">
-          Delivery
-        </span>
-
-        <h3>
-          Pakistan-wide
-        </h3>
-
-        <p>
-          Flat delivery fee of Rs. 370.
-        </p>
-
-      </div>
-
-      <div class="contact-card">
-
-        <span class="contact-label">
-          Payments
-        </span>
-
-        <h3>
-          JazzCash
-        </h3>
-
-        <p>
-          Orders are confirmed after payment
-          is submitted and verified.
-        </p>
-
-      </div>
-
-    </div>
-
-    <div class="policy-box">
-
-      <div>
-
-        <span class="contact-label">
-          Please note
-        </span>
-
-        <h3>
-          Before you order 🍒
-        </h3>
-
-      </div>
-
-      <div class="policy-text">
-
-        <p>
-          All sales are final. We do not accept returns
-          or exchanges for change of mind, sizing, fit,
-          or preference.
-        </p>
-
-        <p>
-          Exchanges are only considered if an item arrives
-          genuinely defective or damaged. Any defect must
-          be reported within <strong>24 hours of delivery</strong>
-          with clear photos or videos.
-        </p>
-
-        <p>
-          Please make sure your delivery information
-          and contact details are correct before submitting
-          your order.
-        </p>
-
-      </div>
-
-    </div>
-
-  </section>
+</section>
 
 </main>
+
 
 <!-- =========================
      FOOTER
@@ -1720,15 +1757,22 @@
 
 </footer>
 
+
 <!-- =========================
      CART
 ========================= -->
 
-<div class="store-overlay" id="cartOverlay">
+<div
+  class="store-overlay"
+  id="cartOverlay"
+>
 
   <div class="cart-drawer">
 
-    <button class="overlay-close" onclick="closeCart()">
+    <button
+      class="overlay-close"
+      onclick="closeCart()"
+    >
       ×
     </button>
 
@@ -1742,11 +1786,15 @@
 
 </div>
 
+
 <!-- =========================
      PRODUCT DETAIL
 ========================= -->
 
-<div class="store-overlay" id="productOverlay">
+<div
+  class="store-overlay"
+  id="productOverlay"
+>
 
   <div class="product-modal">
 
@@ -1763,11 +1811,15 @@
 
 </div>
 
+
 <!-- =========================
      CHECKOUT
 ========================= -->
 
-<div class="store-overlay" id="checkoutOverlay">
+<div
+  class="store-overlay"
+  id="checkoutOverlay"
+>
 
   <div class="checkout-modal">
 
@@ -1782,7 +1834,9 @@
 
       <h1 class="checkout-heading">
         Almost<br>
-        <span style="color:#a20f20;">cherry.</span>
+        <span style="color:#a20f20;">
+          cherry.
+        </span>
       </h1>
 
       <div class="checkout-layout">
@@ -1798,34 +1852,53 @@
               </div>
 
               <div class="field">
-                <label>Full Name</label>
+
+                <label>
+                  Full Name
+                </label>
+
                 <input
                   id="customer-name"
                   required
                   autocomplete="name"
                 >
+
               </div>
 
+
               <div class="field">
-                <label>Phone Number</label>
+
+                <label>
+                  Phone Number
+                </label>
+
                 <input
                   id="customer-phone"
                   type="tel"
                   required
                   autocomplete="tel"
                 >
+
               </div>
 
+
               <div class="field">
-                <label>City</label>
+
+                <label>
+                  City
+                </label>
+
                 <input
                   id="customer-city"
                   required
                   autocomplete="address-level2"
                 >
+
               </div>
 
+
               <div class="field">
+
                 <label>
                   Complete Delivery Address
                 </label>
@@ -1835,9 +1908,11 @@
                   required
                   autocomplete="street-address"
                 ></textarea>
+
               </div>
 
             </div>
+
 
             <div class="form-section">
 
@@ -1853,12 +1928,18 @@
 
                 <div class="payment-details">
 
-                  <strong>Account name:</strong>
+                  <strong>
+                    Account name:
+                  </strong>
+
                   Areej Fatima
 
                   <br>
 
-                  <strong>JazzCash number:</strong>
+                  <strong>
+                    JazzCash number:
+                  </strong>
+
                   03054400537
 
                 </div>
@@ -1882,7 +1963,11 @@
 
               </div>
 
-              <div class="field" style="margin-top:20px;">
+
+              <div
+                class="field"
+                style="margin-top:20px;"
+              >
 
                 <label>
                   JazzCash Transaction / Reference Number
@@ -1898,6 +1983,7 @@
 
             </div>
 
+
             <button
               class="primary-button"
               type="submit"
@@ -1909,6 +1995,7 @@
           </form>
 
         </div>
+
 
         <div class="order-summary-box">
 
@@ -1928,17 +2015,24 @@
 
 </div>
 
+
 <!-- =========================
      SUCCESS
 ========================= -->
 
-<div class="store-overlay" id="successOverlay">
+<div
+  class="store-overlay"
+  id="successOverlay"
+>
 
   <div class="success-modal">
 
     <div class="success-content">
 
-      <div style="font-size:55px;margin-bottom:20px;">
+      <div style="
+        font-size:55px;
+        margin-bottom:20px;
+      ">
         🍒
       </div>
 
@@ -1976,7 +2070,9 @@
 
 </div>
 
+
 <script>
+
 /* =========================================================
    SUPABASE
 ========================================================= */
@@ -2023,35 +2119,36 @@ let activeCategory = "all";
 ========================================================= */
 
 function escapeHTML(value) {
+
   return String(value ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+
 }
 
 
 function formatPrice(value) {
+
   return Number(value || 0)
     .toLocaleString("en-PK");
+
 }
 
 
 function getProductImage(product) {
+
   return product?.image_url || "";
+
 }
 
 
-/*
-  Products.id is BIGINT.
-
-  We keep IDs as strings while using them in
-  data attributes and compare them as strings.
-  This prevents any accidental type mismatch.
-*/
 function productIdString(id) {
+
   return String(id);
+
 }
 
 
@@ -2076,6 +2173,7 @@ async function loadProducts() {
     </p>
   `;
 
+
   const {
     data,
     error
@@ -2093,6 +2191,7 @@ async function loadProducts() {
         }
       );
 
+
   console.log(
     "PRODUCT DATA:",
     data
@@ -2102,6 +2201,7 @@ async function loadProducts() {
     "PRODUCT ERROR:",
     error
   );
+
 
   if (error) {
 
@@ -2123,12 +2223,18 @@ async function loadProducts() {
     return;
   }
 
-  products = Array.isArray(data)
-    ? data
-    : [];
-  
-load categories();
+
+  products =
+    Array.isArray(data)
+      ? data
+      : [];
+
+
+  /* FIXED */
+  loadCategories();
+
   renderProducts();
+
 }
 
 
@@ -2145,14 +2251,17 @@ function renderProducts() {
 
   if (!container) return;
 
+
   let visibleProducts =
     products.slice();
+
 
   if (activeCategory !== "all") {
 
     const wanted =
       activeCategory
         .toLowerCase();
+
 
     visibleProducts =
       products.filter(
@@ -2168,13 +2277,17 @@ function renderProducts() {
               product.name || ""
             ).toLowerCase();
 
+
           return (
             category.includes(wanted) ||
             name.includes(wanted)
           );
+
         }
       );
+
   }
+
 
   if (!visibleProducts.length) {
 
@@ -2192,14 +2305,17 @@ function renderProducts() {
     return;
   }
 
+
   container.innerHTML =
     visibleProducts
       .map(productCard)
       .join("");
 
+
   attachProductCardListeners(
     container
   );
+
 }
 
 
@@ -2214,6 +2330,7 @@ function productCard(product) {
 
   const id =
     productIdString(product.id);
+
 
   return `
     <article
@@ -2250,6 +2367,7 @@ function productCard(product) {
 
       </div>
 
+
       <div class="product-info">
 
         <div>
@@ -2277,15 +2395,19 @@ function productCard(product) {
 
         </div>
 
+
         <div class="price">
+
           Rs.
           ${formatPrice(product.price)}
+
         </div>
 
       </div>
 
     </article>
   `;
+
 }
 
 
@@ -2300,6 +2422,7 @@ function attachProductCardListeners(container) {
       ".product[data-product-id]"
     );
 
+
   cards.forEach(card => {
 
     card.addEventListener(
@@ -2312,6 +2435,7 @@ function attachProductCardListeners(container) {
 
       }
     );
+
 
     card.addEventListener(
       "keydown",
@@ -2327,68 +2451,113 @@ function attachProductCardListeners(container) {
           openProduct(
             this.dataset.productId
           );
+
         }
 
       }
     );
 
   });
+
 }
+
+
+/* =========================================================
+   LOAD CATEGORIES
+========================================================= */
 
 function loadCategories() {
 
   const menu =
-    document.getElementById("category-menu");
+    document.getElementById(
+      "category-menu"
+    );
 
   if (!menu) return;
+
 
   const categories = [
     ...new Set(
       products
         .map(product =>
-          String(product.category || "").trim()
+          String(
+            product.category || ""
+          ).trim()
         )
         .filter(Boolean)
     )
   ];
 
+
   categories.sort((a, b) =>
     a.localeCompare(b)
   );
 
-  menu.innerHTML = `
-    <a
-      href="#shop"
-      onclick="showAllProducts(); closeMenu();"
-    >
-      New Arrivals
-    </a>
 
-    ${
-      categories.length
-      ?
-      categories.map(category => `
-        <a
-          href="#shop"
-          onclick="filterCategory('${escapeHTML(category).replace(/'/g, "\\'")}')"
-        >
-          ${escapeHTML(category)}
-        </a>
-      `).join("")
-      :
-      `
-        <span style="
-          color:#999;
-          font-size:10px;
-          text-transform:uppercase;
-          letter-spacing:1px;
-        ">
-          No categories yet
-        </span>
-      `
+  menu.innerHTML = "";
+
+
+  const allLink =
+    document.createElement("a");
+
+
+  allLink.href =
+    "#shop";
+
+
+  allLink.textContent =
+    "New Arrivals";
+
+
+  allLink.addEventListener(
+    "click",
+    function() {
+
+      showAllProducts();
+      closeMenu();
+
     }
-  `;
+  );
+
+
+  menu.appendChild(
+    allLink
+  );
+
+
+  categories.forEach(function(category) {
+
+    const link =
+      document.createElement("a");
+
+
+    link.href =
+      "#shop";
+
+
+    link.textContent =
+      category;
+
+
+    link.addEventListener(
+      "click",
+      function() {
+
+        filterCategory(category);
+
+      }
+    );
+
+
+    menu.appendChild(
+      link
+    );
+
+  });
+
 }
+
+
 /* =========================================================
    CATEGORY FILTER
 ========================================================= */
@@ -2398,10 +2567,12 @@ function filterCategory(category) {
   activeCategory =
     String(category || "all");
 
+
   const title =
     document.getElementById(
       "shop-title"
     );
+
 
   if (title) {
 
@@ -2409,11 +2580,14 @@ function filterCategory(category) {
       activeCategory === "all"
         ? "The Drop"
         : activeCategory;
+
   }
+
 
   closeMenu();
 
   renderProducts();
+
 
   setTimeout(() => {
 
@@ -2424,24 +2598,32 @@ function filterCategory(category) {
       });
 
   }, 100);
+
 }
 
 
 function showAllProducts() {
 
-  activeCategory = "all";
+  activeCategory =
+    "all";
+
 
   const title =
     document.getElementById(
       "shop-title"
     );
 
+
   if (title) {
+
     title.textContent =
       "The Drop";
+
   }
 
+
   renderProducts();
+
 }
 
 
@@ -2454,10 +2636,12 @@ function findProduct(productId) {
   const wanted =
     String(productId);
 
+
   return products.find(
     product =>
       String(product.id) === wanted
   );
+
 }
 
 
@@ -2470,6 +2654,7 @@ function openProduct(productId) {
   const product =
     findProduct(productId);
 
+
   if (!product) {
 
     console.error(
@@ -2478,25 +2663,31 @@ function openProduct(productId) {
       products
     );
 
+
     alert(
       "Sorry, this Cherry Club piece could not be found."
     );
 
+
     return;
   }
+
 
   const overlay =
     document.getElementById(
       "productOverlay"
     );
 
+
   const content =
     document.getElementById(
       "product-detail-content"
     );
 
+
   const image =
     getProductImage(product);
+
 
   const suggestions =
     products
@@ -2506,6 +2697,7 @@ function openProduct(productId) {
           String(product.id)
       )
       .slice(0, 4);
+
 
   content.innerHTML = `
 
@@ -2541,54 +2733,79 @@ function openProduct(productId) {
 
       </div>
 
+
       <div class="detail-info">
 
         <div class="detail-category">
+
           ${escapeHTML(
             product.category ||
             "Cherry Club"
           )}
+
         </div>
 
+
         <h1 class="detail-name">
+
           ${escapeHTML(
             product.name
           )}
+
         </h1>
 
+
         <div class="detail-price">
+
           Rs.
           ${formatPrice(product.price)}
+
         </div>
 
+
         <p class="detail-description">
+
           ${escapeHTML(
             product.description ||
             "A carefully picked Cherry Club piece. One of one, made to be worn your way. 🍒"
           )}
+
         </p>
+
 
         ${
           product.size
           ?
           `
             <div class="detail-info-row">
-              <span>Size</span>
+
+              <span>
+                Size
+              </span>
+
               <strong>
                 ${escapeHTML(product.size)}
               </strong>
+
             </div>
           `
           :
           ""
         }
 
+
         <div class="detail-info-row">
-          <span>Delivery</span>
+
+          <span>
+            Delivery
+          </span>
+
           <strong>
             Rs. ${DELIVERY_FEE}
           </strong>
+
         </div>
+
 
         <button
           class="primary-button"
@@ -2602,6 +2819,7 @@ function openProduct(productId) {
 
     </div>
 
+
     <div class="suggestions">
 
       <div class="section-kicker">
@@ -2612,7 +2830,11 @@ function openProduct(productId) {
         More cherries.
       </h2>
 
-      <div class="products" id="suggestion-products">
+
+      <div
+        class="products"
+        id="suggestion-products"
+      >
 
         ${
           suggestions.length
@@ -2631,12 +2853,15 @@ function openProduct(productId) {
       </div>
 
     </div>
+
   `;
+
 
   const addButton =
     document.getElementById(
       "detail-add-button"
     );
+
 
   if (addButton) {
 
@@ -2650,25 +2875,34 @@ function openProduct(productId) {
 
       }
     );
+
   }
+
 
   const suggestionContainer =
     document.getElementById(
       "suggestion-products"
     );
 
+
   if (suggestionContainer) {
 
     attachProductCardListeners(
       suggestionContainer
     );
+
   }
 
-  overlay.classList.add("active");
+
+  overlay.classList.add(
+    "active"
+  );
+
 
   document.body.classList.add(
     "no-scroll"
   );
+
 }
 
 
@@ -2682,9 +2916,11 @@ function closeProduct() {
       "active"
     );
 
+
   document.body.classList.remove(
     "no-scroll"
   );
+
 }
 
 
@@ -2709,6 +2945,7 @@ function saveCart() {
     );
 
   }
+
 }
 
 
@@ -2721,18 +2958,25 @@ function loadCart() {
         "cherryClubCart"
       );
 
+
     if (!saved) {
+
       cart = [];
+
       return;
+
     }
+
 
     const parsed =
       JSON.parse(saved);
+
 
     cart =
       Array.isArray(parsed)
         ? parsed
         : [];
+
 
   } catch (error) {
 
@@ -2741,8 +2985,11 @@ function loadCart() {
       error
     );
 
+
     cart = [];
+
   }
+
 }
 
 
@@ -2755,6 +3002,7 @@ function addToBag(productId) {
   const product =
     findProduct(productId);
 
+
   if (!product) {
 
     alert(
@@ -2764,12 +3012,14 @@ function addToBag(productId) {
     return;
   }
 
+
   const existing =
     cart.find(
       item =>
         String(item.id) ===
         String(product.id)
     );
+
 
   if (existing) {
 
@@ -2779,7 +3029,8 @@ function addToBag(productId) {
 
     cart.push({
 
-      id: product.id,
+      id:
+        product.id,
 
       name:
         product.name,
@@ -2793,16 +3044,20 @@ function addToBag(productId) {
       image_url:
         product.image_url || "",
 
-      quantity: 1
+      quantity:
+        1
 
     });
+
   }
+
 
   saveCart();
 
   updateBagButton();
 
   openCart();
+
 }
 
 
@@ -2822,9 +3077,12 @@ function changeQuantity(
         String(productId)
     );
 
+
   if (!item) return;
 
+
   item.quantity += amount;
+
 
   if (item.quantity <= 0) {
 
@@ -2834,13 +3092,16 @@ function changeQuantity(
           String(item.id) !==
           String(productId)
       );
+
   }
+
 
   saveCart();
 
   renderCart();
 
   updateBagButton();
+
 }
 
 
@@ -2853,11 +3114,13 @@ function removeFromBag(productId) {
         String(productId)
     );
 
+
   saveCart();
 
   renderCart();
 
   updateBagButton();
+
 }
 
 
@@ -2877,6 +3140,7 @@ function cartSubtotal() {
       Number(item.quantity),
     0
   );
+
 }
 
 
@@ -2886,10 +3150,12 @@ function cartTotal() {
     return 0;
   }
 
+
   return (
     cartSubtotal() +
     DELIVERY_FEE
   );
+
 }
 
 
@@ -2904,7 +3170,9 @@ function updateBagButton() {
       ".bag-button"
     );
 
+
   if (!button) return;
+
 
   const count =
     cart.reduce(
@@ -2917,10 +3185,12 @@ function updateBagButton() {
       0
     );
 
+
   button.innerHTML =
     count > 0
       ? `♡ ${count}`
       : "♡";
+
 }
 
 
@@ -2935,7 +3205,9 @@ function renderCart() {
       "cart-items"
     );
 
+
   if (!container) return;
+
 
   if (!cart.length) {
 
@@ -2967,12 +3239,16 @@ function renderCart() {
         </button>
 
       </div>
+
     `;
+
 
     return;
   }
 
+
   let html = "";
+
 
   cart.forEach(item => {
 
@@ -3006,29 +3282,39 @@ function renderCart() {
           `
         }
 
+
         <div>
 
           <div class="cart-name">
+
             ${escapeHTML(item.name)}
+
           </div>
+
 
           ${
             item.size
             ?
             `
               <div class="cart-meta">
+
                 Size:
                 ${escapeHTML(item.size)}
+
               </div>
             `
             :
             ""
           }
 
+
           <div class="cart-price">
+
             Rs.
             ${formatPrice(item.price)}
+
           </div>
+
 
           <div class="quantity-row">
 
@@ -3040,9 +3326,11 @@ function renderCart() {
               −
             </button>
 
+
             <span>
               ${item.quantity}
             </span>
+
 
             <button
               type="button"
@@ -3051,6 +3339,7 @@ function renderCart() {
             >
               +
             </button>
+
 
             <button
               class="remove"
@@ -3066,14 +3355,18 @@ function renderCart() {
         </div>
 
       </div>
+
     `;
+
   });
+
 
   html += `
 
     <div class="summary">
 
       <div class="summary-row">
+
         <span>
           Subtotal
         </span>
@@ -3082,9 +3375,12 @@ function renderCart() {
           Rs.
           ${formatPrice(cartSubtotal())}
         </span>
+
       </div>
 
+
       <div class="summary-row">
+
         <span>
           Delivery
         </span>
@@ -3093,7 +3389,9 @@ function renderCart() {
           Rs.
           ${formatPrice(DELIVERY_FEE)}
         </span>
+
       </div>
+
 
       <div class="summary-row summary-total">
 
@@ -3108,6 +3406,7 @@ function renderCart() {
 
       </div>
 
+
       <button
         class="primary-button"
         type="button"
@@ -3117,9 +3416,13 @@ function renderCart() {
       </button>
 
     </div>
+
   `;
 
-  container.innerHTML = html;
+
+  container.innerHTML =
+    html;
+
 
   container
     .querySelectorAll(
@@ -3134,8 +3437,10 @@ function renderCart() {
           const id =
             this.dataset.id;
 
+
           const action =
             this.dataset.action;
+
 
           if (action === "minus") {
 
@@ -3156,10 +3461,12 @@ function renderCart() {
 
     });
 
+
   const checkoutButton =
     document.getElementById(
       "checkout-button"
     );
+
 
   if (checkoutButton) {
 
@@ -3167,7 +3474,9 @@ function renderCart() {
       "click",
       openCheckout
     );
+
   }
+
 }
 
 
@@ -3179,6 +3488,7 @@ function openCart() {
 
   renderCart();
 
+
   document
     .getElementById(
       "cartOverlay"
@@ -3187,9 +3497,11 @@ function openCart() {
       "active"
     );
 
+
   document.body.classList.add(
     "no-scroll"
   );
+
 }
 
 
@@ -3203,9 +3515,11 @@ function closeCart() {
       "active"
     );
 
+
   document.body.classList.remove(
     "no-scroll"
   );
+
 }
 
 
@@ -3220,9 +3534,12 @@ function renderCheckoutSummary() {
       "checkout-summary"
     );
 
+
   if (!container) return;
 
+
   let html = "";
+
 
   cart.forEach(item => {
 
@@ -3231,21 +3548,29 @@ function renderCheckoutSummary() {
       <div class="summary-product">
 
         <span>
+
           ${escapeHTML(item.name)}
           × ${item.quantity}
+
         </span>
 
+
         <strong>
+
           Rs.
           ${formatPrice(
             Number(item.price) *
             Number(item.quantity)
           )}
+
         </strong>
 
       </div>
+
     `;
+
   });
+
 
   html += `
 
@@ -3262,6 +3587,7 @@ function renderCheckoutSummary() {
 
     </div>
 
+
     <div class="checkout-total">
 
       <span>
@@ -3274,10 +3600,13 @@ function renderCheckoutSummary() {
       </span>
 
     </div>
+
   `;
+
 
   container.innerHTML =
     html;
+
 }
 
 
@@ -3296,9 +3625,11 @@ function openCheckout() {
     return;
   }
 
+
   closeCart();
 
   renderCheckoutSummary();
+
 
   document
     .getElementById(
@@ -3308,9 +3639,11 @@ function openCheckout() {
       "active"
     );
 
+
   document.body.classList.add(
     "no-scroll"
   );
+
 }
 
 
@@ -3324,9 +3657,11 @@ function closeCheckout() {
       "active"
     );
 
+
   document.body.classList.remove(
     "no-scroll"
   );
+
 }
 
 
@@ -3337,17 +3672,21 @@ function closeCheckout() {
 async function validateCartBeforeOrder() {
 
   if (!cart.length) {
+
     return {
       valid: false,
       message: "Your bag is empty."
     };
+
   }
+
 
   const ids =
     cart.map(
       item =>
         Number(item.id)
     );
+
 
   const {
     data,
@@ -3363,6 +3702,7 @@ async function validateCartBeforeOrder() {
         ids
       );
 
+
   if (error) {
 
     console.error(
@@ -3370,15 +3710,19 @@ async function validateCartBeforeOrder() {
       error
     );
 
+
     return {
       valid: false,
       message:
         "We couldn't verify your items. Please try again."
     };
+
   }
+
 
   const available =
     data || [];
+
 
   for (const item of cart) {
 
@@ -3389,6 +3733,7 @@ async function validateCartBeforeOrder() {
           String(item.id)
       );
 
+
     if (!current) {
 
       return {
@@ -3396,7 +3741,9 @@ async function validateCartBeforeOrder() {
         message:
           `${item.name} is no longer available.`
       };
+
     }
+
 
     if (
       current.status !==
@@ -3408,31 +3755,35 @@ async function validateCartBeforeOrder() {
         message:
           `${item.name} is no longer available.`
       };
+
     }
 
-    /*
-      Use the CURRENT database price,
-      not an old price saved in localStorage.
-    */
 
     item.price =
       Number(current.price);
 
+
     item.name =
       current.name;
+
 
     item.size =
       current.size || "";
 
+
     item.image_url =
       current.image_url || "";
+
   }
 
+
   saveCart();
+
 
   return {
     valid: true
   };
+
 }
 
 
@@ -3444,6 +3795,7 @@ async function submitOrder(event) {
 
   event.preventDefault();
 
+
   if (!cart.length) {
 
     alert(
@@ -3453,24 +3805,24 @@ async function submitOrder(event) {
     return;
   }
 
+
   const button =
     document.getElementById(
       "place-order-button"
     );
+
 
   button.disabled = true;
 
   button.textContent =
     "Checking your order...";
 
-  try {
 
-    /* -----------------------------------------------
-       RECHECK PRODUCTS
-    ----------------------------------------------- */
+  try {
 
     const validation =
       await validateCartBeforeOrder();
+
 
     if (!validation.valid) {
 
@@ -3478,20 +3830,19 @@ async function submitOrder(event) {
         validation.message
       );
 
+
       button.disabled = false;
 
       button.textContent =
         "Place Order →";
 
+
       renderCheckoutSummary();
 
       return;
+
     }
 
-
-    /* -----------------------------------------------
-       CUSTOMER DATA
-    ----------------------------------------------- */
 
     const customerName =
       document
@@ -3501,6 +3852,7 @@ async function submitOrder(event) {
         .value
         .trim();
 
+
     const customerPhone =
       document
         .getElementById(
@@ -3508,6 +3860,7 @@ async function submitOrder(event) {
         )
         .value
         .trim();
+
 
     const customerCity =
       document
@@ -3517,6 +3870,7 @@ async function submitOrder(event) {
         .value
         .trim();
 
+
     const customerAddress =
       document
         .getElementById(
@@ -3524,6 +3878,7 @@ async function submitOrder(event) {
         )
         .value
         .trim();
+
 
     const transactionId =
       document
@@ -3533,10 +3888,6 @@ async function submitOrder(event) {
         .value
         .trim();
 
-
-    /* -----------------------------------------------
-       BASIC VALIDATION
-    ----------------------------------------------- */
 
     if (
       !customerName ||
@@ -3550,53 +3901,30 @@ async function submitOrder(event) {
         "Please fill in all required details."
       );
 
+
       button.disabled = false;
 
       button.textContent =
         "Place Order →";
 
+
       return;
+
     }
 
-
-    /* -----------------------------------------------
-       GENERATE ORDER UUID
-       
-       Matches:
-       orders.id = uuid
-       order_items.order_id = uuid
-    ----------------------------------------------- */
 
     const orderId =
       crypto.randomUUID();
 
 
-    /* -----------------------------------------------
-       FREEZE THE TOTAL
-    ----------------------------------------------- */
-
     const subtotal =
       cartSubtotal();
+
 
     const total =
       subtotal +
       DELIVERY_FEE;
 
-
-    /* -----------------------------------------------
-       CREATE ORDER
-       
-       Exact orders schema:
-       id
-       customer_name
-       phone
-       address
-       city
-       payment_method
-       transaction_id
-       total
-       status
-    ----------------------------------------------- */
 
     const orderData = {
 
@@ -3651,25 +3979,14 @@ async function submitOrder(event) {
         orderError
       );
 
+
       throw new Error(
         "ORDER_ERROR: " +
         orderError.message
       );
+
     }
 
-
-    /* -----------------------------------------------
-       CREATE ORDER ITEMS
-       
-       Exact order_items schema:
-       id
-       order_id
-       product_id
-       product_name
-       size
-       price
-       quantity
-    ----------------------------------------------- */
 
     const items =
       cart.map(item => ({
@@ -3716,26 +4033,18 @@ async function submitOrder(event) {
         itemsError
       );
 
-      /*
-        IMPORTANT:
-        The order itself has already been created.
-        We therefore DO NOT show "success".
-
-        The customer gets a clear message instead,
-        so you don't accidentally think the order
-        is fully recorded.
-      */
 
       throw new Error(
         "ITEMS_ERROR: " +
         itemsError.message
       );
+
     }
 
 
-    /* -----------------------------------------------
+    /* =====================================================
        OPTIONAL EMAIL FUNCTION
-    ----------------------------------------------- */
+    ===================================================== */
 
     try {
 
@@ -3774,12 +4083,14 @@ async function submitOrder(event) {
             }
           );
 
+
       if (emailError) {
 
         console.warn(
           "Email function error:",
           emailError
         );
+
       }
 
     } catch (emailError) {
@@ -3788,20 +4099,24 @@ async function submitOrder(event) {
         "Email function unavailable:",
         emailError
       );
+
     }
 
 
-    /* -----------------------------------------------
+    /* =====================================================
        SUCCESS
-    ----------------------------------------------- */
+    ===================================================== */
 
     cart = [];
+
 
     localStorage.removeItem(
       "cherryClubCart"
     );
 
+
     updateBagButton();
+
 
     document
       .getElementById(
@@ -3809,7 +4124,9 @@ async function submitOrder(event) {
       )
       .reset();
 
+
     closeCheckout();
+
 
     document
       .getElementById(
@@ -3819,6 +4136,7 @@ async function submitOrder(event) {
       "Order ID: " +
       orderId;
 
+
     document
       .getElementById(
         "successOverlay"
@@ -3826,6 +4144,7 @@ async function submitOrder(event) {
       .classList.add(
         "active"
       );
+
 
     document.body.classList.add(
       "no-scroll"
@@ -3839,10 +4158,12 @@ async function submitOrder(event) {
       error
     );
 
+
     const message =
       String(
         error?.message || ""
       );
+
 
     if (
       message.startsWith(
@@ -3853,6 +4174,7 @@ async function submitOrder(event) {
       alert(
         "Your order was created, but the items could not be attached to it.\n\nPlease DO NOT submit the order again yet. Check your Supabase order and contact Cherry Club."
       );
+
 
     } else if (
       message.startsWith(
@@ -3868,11 +4190,13 @@ async function submitOrder(event) {
         )
       );
 
+
     } else {
 
       alert(
         "Something went wrong while submitting your order. Please try again."
       );
+
     }
 
   } finally {
@@ -3881,7 +4205,9 @@ async function submitOrder(event) {
 
     button.textContent =
       "Place Order →";
+
   }
+
 }
 
 
@@ -3899,9 +4225,11 @@ function closeSuccess() {
       "active"
     );
 
+
   document.body.classList.remove(
     "no-scroll"
   );
+
 }
 
 
@@ -3919,9 +4247,11 @@ function openMenu() {
       "active"
     );
 
+
   document.body.classList.add(
     "no-scroll"
   );
+
 }
 
 
@@ -3935,9 +4265,11 @@ function closeMenu() {
       "active"
     );
 
+
   document.body.classList.remove(
     "no-scroll"
   );
+
 }
 
 
@@ -3959,6 +4291,7 @@ document
       ) {
 
         closeMenu();
+
       }
 
     }
@@ -3979,6 +4312,7 @@ document
       ) {
 
         closeCart();
+
       }
 
     }
@@ -3999,6 +4333,7 @@ document
       ) {
 
         closeProduct();
+
       }
 
     }
@@ -4019,6 +4354,7 @@ document
       ) {
 
         closeCheckout();
+
       }
 
     }
@@ -4039,6 +4375,7 @@ document
       ) {
 
         closeSuccess();
+
       }
 
     }
