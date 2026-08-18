@@ -1010,9 +1010,7 @@
     <section id="categories-section" class="section-card hidden">
 
       <div class="section-heading">
-
         <h2>Categories</h2>
-
       </div>
 
 
@@ -1021,6 +1019,7 @@
         <div class="category-help">
 
           Create main categories and subcategories here.
+
           For example, create <strong>Nails</strong> as a main category,
           then create <strong>Press Ons</strong> and choose
           <strong>Nails</strong> as its parent.
@@ -1049,7 +1048,10 @@
 
               <label>Type</label>
 
-              <select id="new-category-type" onchange="toggleParentCategory()">
+              <select
+                id="new-category-type"
+                onchange="toggleParentCategory()"
+              >
 
                 <option value="main">
                   Main category
@@ -1072,9 +1074,11 @@
                 id="new-category-parent"
                 disabled
               >
+
                 <option value="">
                   Choose parent
                 </option>
+
               </select>
 
             </div>
@@ -1316,14 +1320,7 @@ const supabaseClient =
     SUPABASE_PUBLISHABLE_KEY
   );
 
-
-/*
-  IMPORTANT:
-  Your Supabase Storage bucket is EXACTLY:
-  product-images
-*/
 const PRODUCT_IMAGE_BUCKET = "product-images";
-
 
 let orders = [];
 let orderItems = [];
@@ -1331,7 +1328,9 @@ let adminProducts = [];
 let categories = [];
 
 
-/* LOGIN */
+/* =========================================================
+   LOGIN
+========================================================= */
 
 document
   .getElementById("login-form")
@@ -1388,9 +1387,7 @@ async function checkLogin() {
     await supabaseClient.auth.getSession();
 
   if (data && data.session) {
-
     showAdmin();
-
   }
 
 }
@@ -1420,7 +1417,9 @@ async function logout() {
 }
 
 
-/* LOAD EVERYTHING */
+/* =========================================================
+   LOAD EVERYTHING
+========================================================= */
 
 async function loadEverything() {
 
@@ -1431,8 +1430,8 @@ async function loadEverything() {
     loadAdminProducts()
   ]);
 
-  updateCategoryDropdown();
   updateParentCategoryDropdown();
+  updateCategoryDropdown();
 
   updateStats();
 
@@ -1440,10 +1439,14 @@ async function loadEverything() {
   renderAdminProducts();
   renderCategories();
 
+  toggleParentCategory();
+
 }
 
 
-/* ORDERS */
+/* =========================================================
+   ORDERS
+========================================================= */
 
 async function loadOrders() {
 
@@ -1457,10 +1460,7 @@ async function loadOrders() {
 
   if (error) {
 
-    console.error(
-      "Orders error:",
-      error
-    );
+    console.error("Orders error:", error);
 
     document.getElementById(
       "orders-container"
@@ -1476,10 +1476,7 @@ async function loadOrders() {
     return;
   }
 
-  orders =
-    Array.isArray(data)
-      ? data
-      : [];
+  orders = Array.isArray(data) ? data : [];
 
 }
 
@@ -1493,25 +1490,21 @@ async function loadOrderItems() {
 
   if (error) {
 
-    console.error(
-      "Order items error:",
-      error
-    );
+    console.error("Order items error:", error);
 
     orderItems = [];
 
     return;
   }
 
-  orderItems =
-    Array.isArray(data)
-      ? data
-      : [];
+  orderItems = Array.isArray(data) ? data : [];
 
 }
 
 
-/* CATEGORIES */
+/* =========================================================
+   CATEGORIES
+========================================================= */
 
 async function loadCategories() {
 
@@ -1530,10 +1523,7 @@ async function loadCategories() {
 
   if (error) {
 
-    console.error(
-      "Categories error:",
-      error
-    );
+    console.error("Categories error:", error);
 
     document.getElementById(
       "categories-container"
@@ -1549,17 +1539,17 @@ async function loadCategories() {
     return;
   }
 
-
   const properCategories =
-    Array.isArray(data)
-      ? data
-      : [];
+    Array.isArray(data) ? data : [];
 
 
   /*
-    Older products may still have category names
-    which aren't present in the categories table.
-    Keep those visible without modifying the database.
+    Preserve old product categories that may exist
+    only in products.category.
+
+    IMPORTANT:
+    These legacy entries are ONLY for display.
+    They are never used as real category IDs.
   */
 
   const {
@@ -1570,7 +1560,6 @@ async function loadCategories() {
       .from("products")
       .select("category,category_id");
 
-
   if (productError) {
 
     console.error(
@@ -1578,8 +1567,7 @@ async function loadCategories() {
       productError
     );
 
-    categories =
-      properCategories;
+    categories = properCategories;
 
     return;
   }
@@ -1587,11 +1575,10 @@ async function loadCategories() {
 
   const existingNames =
     new Set(
-      properCategories.map(
-        category =>
-          String(category.name || "")
-            .trim()
-            .toLowerCase()
+      properCategories.map(category =>
+        String(category.name || "")
+          .trim()
+          .toLowerCase()
       )
     );
 
@@ -1602,18 +1589,14 @@ async function loadCategories() {
   (productData || []).forEach(product => {
 
     const productCategory =
-      String(
-        product.category || ""
-      ).trim();
+      String(product.category || "").trim();
 
     if (!productCategory) {
       return;
     }
 
-
     const normalized =
       productCategory.toLowerCase();
-
 
     if (!existingNames.has(normalized)) {
 
@@ -1654,10 +1637,9 @@ async function loadCategories() {
 }
 
 
-/*
-  Parent dropdown:
-  Only real MAIN categories can be parents.
-*/
+/* =========================================================
+   PARENT CATEGORY DROPDOWN
+========================================================= */
 
 function updateParentCategoryDropdown() {
 
@@ -1674,10 +1656,9 @@ function updateParentCategoryDropdown() {
 
 
   const mainCategories =
-    categories.filter(
-      category =>
-        !category.legacy &&
-        !category.parent_id
+    categories.filter(category =>
+      !category.legacy &&
+      !category.parent_id
     );
 
 
@@ -1687,37 +1668,33 @@ function updateParentCategoryDropdown() {
     </option>
 
     ${
-      mainCategories
-        .map(category => `
-          <option value="${escapeHTML(category.id)}">
-            ${escapeHTML(category.name)}
-          </option>
-        `)
-        .join("")
+      mainCategories.map(category => `
+        <option value="${escapeHTML(String(category.id))}">
+          ${escapeHTML(category.name)}
+        </option>
+      `).join("")
     }
   `;
 
 
   if (
     currentValue &&
-    mainCategories.some(
-      category =>
-        String(category.id) ===
-        String(currentValue)
+    mainCategories.some(category =>
+      String(category.id) ===
+      String(currentValue)
     )
   ) {
 
-    select.value =
-      currentValue;
+    select.value = currentValue;
 
   }
 
 }
 
 
-/*
-  Show / hide parent selector.
-*/
+/* =========================================================
+   TOGGLE PARENT
+========================================================= */
 
 function toggleParentCategory() {
 
@@ -1755,12 +1732,9 @@ function toggleParentCategory() {
 }
 
 
-/*
-  Product category dropdown.
-
-  Both main categories and subcategories
-  can be selected for a product.
-*/
+/* =========================================================
+   PRODUCT CATEGORY DROPDOWN
+========================================================= */
 
 function updateCategoryDropdown() {
 
@@ -1777,9 +1751,8 @@ function updateCategoryDropdown() {
 
 
   const mainCategories =
-    categories.filter(
-      category =>
-        !category.parent_id
+    categories.filter(category =>
+      !category.parent_id
     );
 
 
@@ -1790,22 +1763,22 @@ function updateCategoryDropdown() {
   mainCategories.forEach(main => {
 
     html += `
-      <option value="${escapeHTML(main.id)}">
+      <option value="${escapeHTML(String(main.id))}">
         ${escapeHTML(main.name)}
       </option>
     `;
 
 
     categories
-      .filter(
-        category =>
-          String(category.parent_id) ===
-          String(main.id)
+      .filter(sub =>
+        !sub.legacy &&
+        String(sub.parent_id) ===
+        String(main.id)
       )
       .forEach(sub => {
 
         html += `
-          <option value="${escapeHTML(sub.id)}">
+          <option value="${escapeHTML(String(sub.id))}">
             ↳ ${escapeHTML(sub.name)}
           </option>
         `;
@@ -1816,48 +1789,64 @@ function updateCategoryDropdown() {
 
 
   /*
-    Legacy categories which aren't part of
-    the normal hierarchy.
+    Legacy categories are displayed so old products
+    don't disappear from the admin.
+
+    They are NOT valid choices for new products.
   */
 
-  categories
-    .filter(
-      category =>
-        category.legacy
-    )
-    .forEach(category => {
+  const legacyCategories =
+    categories.filter(category =>
+      category.legacy
+    );
+
+
+  if (legacyCategories.length) {
+
+    html += `
+      <option disabled>
+        ── Existing product categories ──
+      </option>
+    `;
+
+    legacyCategories.forEach(category => {
 
       html += `
-        <option value="${escapeHTML(category.id)}">
+        <option
+          value=""
+          disabled
+        >
           ${escapeHTML(category.name)}
         </option>
       `;
 
     });
 
+  }
 
-  select.innerHTML =
-    html;
+
+  select.innerHTML = html;
 
 
   if (
     currentValue &&
-    categories.some(
-      category =>
-        String(category.id) ===
-        String(currentValue)
+    categories.some(category =>
+      !category.legacy &&
+      String(category.id) ===
+      String(currentValue)
     )
   ) {
 
-    select.value =
-      currentValue;
+    select.value = currentValue;
 
   }
 
 }
 
 
-/* RENDER CATEGORIES */
+/* =========================================================
+   RENDER CATEGORIES
+========================================================= */
 
 function renderCategories() {
 
@@ -1880,16 +1869,14 @@ function renderCategories() {
 
 
   const mainCategories =
-    categories.filter(
-      category =>
-        !category.parent_id
+    categories.filter(category =>
+      !category.parent_id
     );
 
 
   const subcategories =
-    categories.filter(
-      category =>
-        category.parent_id
+    categories.filter(category =>
+      category.parent_id
     );
 
 
@@ -1906,10 +1893,9 @@ function renderCategories() {
 
 
     subcategories
-      .filter(
-        sub =>
-          String(sub.parent_id) ===
-          String(category.id)
+      .filter(sub =>
+        String(sub.parent_id) ===
+        String(category.id)
       )
       .forEach(sub => {
 
@@ -1924,17 +1910,15 @@ function renderCategories() {
 
 
   /*
-    In case a subcategory somehow has a parent
-    that isn't currently loaded, don't hide it.
+    Orphaned subcategories should still be visible.
   */
 
   subcategories
     .filter(sub => {
 
-      return !mainCategories.some(
-        main =>
-          String(main.id) ===
-          String(sub.parent_id)
+      return !mainCategories.some(main =>
+        String(main.id) ===
+        String(sub.parent_id)
       );
 
     })
@@ -1951,8 +1935,7 @@ function renderCategories() {
   html += `</div>`;
 
 
-  container.innerHTML =
-    html;
+  container.innerHTML = html;
 
 }
 
@@ -1963,10 +1946,9 @@ function renderCategoryRow(
 ) {
 
   const parent =
-    categories.find(
-      item =>
-        String(item.id) ===
-        String(category.parent_id)
+    categories.find(item =>
+      String(item.id) ===
+      String(category.parent_id)
     );
 
 
@@ -2008,6 +1990,10 @@ function renderCategoryRow(
                 )
               }`
               :
+              category.legacy
+              ?
+              "Existing product category"
+              :
               "Main category"
             }
 
@@ -2037,14 +2023,14 @@ function renderCategoryRow(
           :
           `
             <button
-              onclick="renameCategory('${escapeHTML(category.id)}')"
+              onclick="renameCategory('${escapeJS(String(category.id))}')"
             >
               Rename
             </button>
 
             <button
               class="danger"
-              onclick="deleteCategory('${escapeHTML(category.id)}')"
+              onclick="deleteCategory('${escapeJS(String(category.id))}')"
             >
               Delete
             </button>
@@ -2060,7 +2046,9 @@ function renderCategoryRow(
 }
 
 
-/* ADD CATEGORY */
+/* =========================================================
+   ADD CATEGORY
+========================================================= */
 
 async function addCategory() {
 
@@ -2090,22 +2078,22 @@ async function addCategory() {
       "Please enter a category name."
     );
 
+    input.focus();
+
     return;
   }
 
 
   /*
-    Check duplicates case-insensitively
-    before attempting the database insert.
+    Check duplicate names.
   */
 
   const exists =
-    categories.some(
-      category =>
-        String(category.name)
-          .trim()
-          .toLowerCase() ===
-        name.toLowerCase()
+    categories.some(category =>
+      String(category.name)
+        .trim()
+        .toLowerCase() ===
+      name.toLowerCase()
     );
 
 
@@ -2119,14 +2107,13 @@ async function addCategory() {
   }
 
 
-  let parentId =
-    null;
+  let parentId = null;
 
 
   if (type === "sub") {
 
     parentId =
-      parentSelect.value;
+      parentSelect.value.trim();
 
 
     if (!parentId) {
@@ -2140,12 +2127,11 @@ async function addCategory() {
 
 
     const parent =
-      categories.find(
-        category =>
-          String(category.id) ===
-          String(parentId) &&
-          !category.parent_id &&
-          !category.legacy
+      categories.find(category =>
+        !category.legacy &&
+        String(category.id) ===
+        String(parentId) &&
+        !category.parent_id
       );
 
 
@@ -2162,11 +2148,7 @@ async function addCategory() {
 
 
   /*
-    Make sure there is actually a logged-in
-    Supabase user before inserting.
-
-    This is important because RLS only permits
-    authenticated users.
+    Confirm active admin session.
   */
 
   const {
@@ -2191,12 +2173,18 @@ async function addCategory() {
   }
 
 
+  const realCategories =
+    categories.filter(
+      category =>
+        !category.legacy
+    );
+
+
   const nextSortOrder =
-    categories.length
+    realCategories.length
       ? Math.max(
-          ...categories.map(
-            category =>
-              Number(category.sort_order) || 0
+          ...realCategories.map(category =>
+            Number(category.sort_order) || 0
           )
         ) + 1
       : 1;
@@ -2208,111 +2196,129 @@ async function addCategory() {
     );
 
 
-  button.disabled =
-    true;
-
-  button.textContent =
-    "Adding...";
+  button.disabled = true;
+  button.textContent = "Adding...";
 
 
-  const { error } =
-    await supabaseClient
-      .from("categories")
-      .insert({
-
-        name:
-          name,
-
-        parent_id:
-          parentId,
-
-        sort_order:
-          nextSortOrder
-
-      });
-
-
-  button.disabled =
-    false;
-
-  button.textContent =
-    "+ Add category";
-
-
-  if (error) {
-
-    console.error(
-      "Category add error:",
-      error
-    );
-
+  try {
 
     /*
-      Give a useful error instead of silently failing.
+      IMPORTANT:
+      Do NOT convert parentId to Number.
+
+      Supabase category IDs are commonly UUIDs.
+      Keeping the value as a string works for UUID
+      and other text-based IDs.
     */
 
-    if (
-      error.message &&
-      error.message
-        .toLowerCase()
-        .includes("row-level security")
-    ) {
+    const insertData = {
+      name: name,
+      parent_id: parentId || null,
+      sort_order: nextSortOrder
+    };
 
-      alert(
-        "Supabase is blocking the category insert with RLS.\n\n" +
-        "Your admin page is logged in, but Supabase is not accepting this insert for the current session.\n\n" +
-        error.message
+
+    const { data, error } =
+      await supabaseClient
+        .from("categories")
+        .insert(insertData)
+        .select()
+        .single();
+
+
+    if (error) {
+
+      console.error(
+        "Category add error:",
+        error
       );
 
-    } else {
+      if (
+        error.message &&
+        error.message
+          .toLowerCase()
+          .includes("row-level security")
+      ) {
 
-      alert(
+        throw new Error(
+          "Supabase is blocking the category insert with RLS.\n\n" +
+          "Your admin page is logged in, but Supabase is not allowing this insert.\n\n" +
+          error.message
+        );
+
+      }
+
+      throw new Error(
         "Couldn't add that category.\n\n" +
         error.message
       );
 
     }
 
-    return;
+
+    console.log(
+      "Category created:",
+      data
+    );
+
+
+    input.value = "";
+
+    document.getElementById(
+      "new-category-type"
+    ).value = "main";
+
+    parentSelect.value = "";
+
+    toggleParentCategory();
+
+
+    /*
+      Reload everything from Supabase so the newly-created
+      category immediately becomes available everywhere.
+    */
+
+    await loadCategories();
+
+    updateParentCategoryDropdown();
+    updateCategoryDropdown();
+
+    renderCategories();
+    renderAdminProducts();
+
+
+  } catch (error) {
+
+    console.error(
+      "Add category failed:",
+      error
+    );
+
+    alert(
+      error.message ||
+      "Something went wrong while adding the category."
+    );
+
+  } finally {
+
+    button.disabled = false;
+    button.textContent = "+ Add category";
+
   }
-
-
-  input.value =
-    "";
-
-  document.getElementById(
-    "new-category-type"
-  ).value =
-    "main";
-
-
-  parentSelect.value =
-    "";
-
-
-  toggleParentCategory();
-
-
-  await loadCategories();
-
-
-  updateParentCategoryDropdown();
-  updateCategoryDropdown();
-  renderCategories();
-  renderAdminProducts();
 
 }
 
 
-/* RENAME CATEGORY */
+/* =========================================================
+   RENAME CATEGORY
+========================================================= */
 
 async function renameCategory(id) {
 
   const category =
-    categories.find(
-      item =>
-        String(item.id) ===
-        String(id)
+    categories.find(item =>
+      String(item.id) ===
+      String(id)
     );
 
 
@@ -2322,8 +2328,7 @@ async function renameCategory(id) {
   if (category.legacy) {
 
     alert(
-      "This is an older category stored only in product data. " +
-      "Create a proper category instead."
+      "This is an older category stored only in product data. Create a proper category instead."
     );
 
     return;
@@ -2357,13 +2362,13 @@ async function renameCategory(id) {
 
 
   const duplicate =
-    categories.some(
-      item =>
-        String(item.id) !==
-        String(id) &&
-        String(item.name)
-          .toLowerCase() ===
-        cleanedName.toLowerCase()
+    categories.some(item =>
+      !item.legacy &&
+      String(item.id) !== String(id) &&
+      String(item.name)
+        .trim()
+        .toLowerCase() ===
+      cleanedName.toLowerCase()
     );
 
 
@@ -2403,8 +2408,7 @@ async function renameCategory(id) {
 
 
   /*
-    Keep products.category text synchronized
-    with the renamed category.
+    Synchronize old category text in products.
   */
 
   const {
@@ -2426,8 +2430,7 @@ async function renameCategory(id) {
     );
 
     alert(
-      "The category was renamed, but some product category text " +
-      "couldn't be updated.\n\n" +
+      "The category was renamed, but some product category text couldn't be updated.\n\n" +
       productError.message
     );
 
@@ -2436,7 +2439,6 @@ async function renameCategory(id) {
 
   await loadCategories();
   await loadAdminProducts();
-
 
   updateParentCategoryDropdown();
   updateCategoryDropdown();
@@ -2447,15 +2449,16 @@ async function renameCategory(id) {
 }
 
 
-/* DELETE CATEGORY */
+/* =========================================================
+   DELETE CATEGORY
+========================================================= */
 
 async function deleteCategory(id) {
 
   const category =
-    categories.find(
-      item =>
-        String(item.id) ===
-        String(id)
+    categories.find(item =>
+      String(item.id) ===
+      String(id)
     );
 
 
@@ -2473,7 +2476,7 @@ async function deleteCategory(id) {
 
 
   /*
-    First check products.
+    Check whether products use it.
   */
 
   const {
@@ -2518,7 +2521,7 @@ async function deleteCategory(id) {
 
 
   /*
-    Also check subcategories.
+    Check subcategories.
   */
 
   const {
@@ -2555,7 +2558,7 @@ async function deleteCategory(id) {
     alert(
       `"${category.name}" cannot be deleted yet.\n\n` +
       `It has ${childCount} subcategor${childCount === 1 ? "y" : "ies"} underneath it. ` +
-      `Delete or move those subcategories first.`
+      `Delete those subcategories first.`
     );
 
     return;
@@ -2599,7 +2602,6 @@ async function deleteCategory(id) {
 
   await loadCategories();
 
-
   updateParentCategoryDropdown();
   updateCategoryDropdown();
 
@@ -2608,7 +2610,9 @@ async function deleteCategory(id) {
 }
 
 
-/* PRODUCTS */
+/* =========================================================
+   PRODUCTS
+========================================================= */
 
 async function loadAdminProducts() {
 
@@ -2646,14 +2650,14 @@ async function loadAdminProducts() {
 
 
   adminProducts =
-    Array.isArray(data)
-      ? data
-      : [];
+    Array.isArray(data) ? data : [];
 
 }
 
 
-/* STATS */
+/* =========================================================
+   STATS
+========================================================= */
 
 function updateStats() {
 
@@ -2666,9 +2670,8 @@ function updateStats() {
   document.getElementById(
     "stat-pending"
   ).textContent =
-    orders.filter(
-      order =>
-        order.status === "pending"
+    orders.filter(order =>
+      order.status === "pending"
     ).length;
 
 
@@ -2681,15 +2684,16 @@ function updateStats() {
   document.getElementById(
     "stat-available"
   ).textContent =
-    adminProducts.filter(
-      product =>
-        product.status === "available"
+    adminProducts.filter(product =>
+      product.status === "available"
     ).length;
 
 }
 
 
-/* HELPERS */
+/* =========================================================
+   HELPERS
+========================================================= */
 
 function formatPrice(value) {
 
@@ -2702,29 +2706,30 @@ function formatPrice(value) {
 
 function escapeHTML(value) {
 
-  return String(
-    value ?? ""
-  )
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
-    );
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+/*
+  Used for IDs inside onclick attributes.
+
+  This prevents quotes/backslashes from breaking
+  the generated HTML when IDs are strings.
+*/
+
+function escapeJS(value) {
+
+  return String(value ?? "")
+    .replace(/\\/g, "\\\\")
+    .replace(/'/g, "\\'")
+    .replace(/\r/g, "\\r")
+    .replace(/\n/g, "\\n");
 
 }
 
@@ -2748,7 +2753,9 @@ function formatDate(value) {
 }
 
 
-/* ORDERS */
+/* =========================================================
+   RENDER ORDERS
+========================================================= */
 
 function renderOrders() {
 
@@ -2774,10 +2781,9 @@ function renderOrders() {
     orders.map(order => {
 
       const items =
-        orderItems.filter(
-          item =>
-            String(item.order_id) ===
-            String(order.id)
+        orderItems.filter(item =>
+          String(item.order_id) ===
+          String(order.id)
         );
 
 
@@ -2868,13 +2874,10 @@ function renderOrders() {
               <div class="detail-label">Total</div>
 
               <div class="detail-value">
-
                 <strong>
                   Rs. ${formatPrice(order.total)}
                 </strong>
-
               </div>
-
             </div>
 
           </div>
@@ -2912,13 +2915,11 @@ function renderOrders() {
 
 
                   <strong>
-
                     Rs.
                     ${formatPrice(
                       Number(item.price) *
                       Number(item.quantity)
                     )}
-
                   </strong>
 
                 </div>
@@ -2967,8 +2968,7 @@ function statusOptions(current) {
   ];
 
 
-  return statuses
-    .map(status => `
+  return statuses.map(status => `
 
       <option
         value="${status}"
@@ -2999,8 +2999,7 @@ async function changeOrderStatus(select) {
     select.value;
 
 
-  select.disabled =
-    true;
+  select.disabled = true;
 
 
   const { error } =
@@ -3012,8 +3011,7 @@ async function changeOrderStatus(select) {
       .eq("id", orderId);
 
 
-  select.disabled =
-    false;
+  select.disabled = false;
 
 
   if (error) {
@@ -3028,7 +3026,6 @@ async function changeOrderStatus(select) {
       error.message
     );
 
-
     await loadOrders();
 
     renderOrders();
@@ -3038,18 +3035,14 @@ async function changeOrderStatus(select) {
 
 
   const order =
-    orders.find(
-      item =>
-        String(item.id) ===
-        String(orderId)
+    orders.find(item =>
+      String(item.id) ===
+      String(orderId)
     );
 
 
   if (order) {
-
-    order.status =
-      newStatus;
-
+    order.status = newStatus;
   }
 
 
@@ -3058,140 +3051,77 @@ async function changeOrderStatus(select) {
 }
 
 
-/* TABS */
+/* =========================================================
+   TABS
+========================================================= */
 
 function showTab(tab) {
 
-  const ordersSection =
-    document.getElementById(
-      "orders-section"
-    );
+  const sections = {
+    orders:
+      document.getElementById("orders-section"),
 
-  const productsSection =
-    document.getElementById(
-      "products-section"
-    );
+    products:
+      document.getElementById("products-section"),
 
-  const categoriesSection =
-    document.getElementById(
-      "categories-section"
-    );
+    categories:
+      document.getElementById("categories-section"),
 
-  const websiteSection =
-    document.getElementById(
-      "website-section"
-    );
+    website:
+      document.getElementById("website-section")
+  };
 
 
-  const ordersTab =
-    document.getElementById(
-      "orders-tab"
-    );
+  const tabs = {
+    orders:
+      document.getElementById("orders-tab"),
 
-  const productsTab =
-    document.getElementById(
-      "products-tab"
-    );
+    products:
+      document.getElementById("products-tab"),
 
-  const categoriesTab =
-    document.getElementById(
-      "categories-tab"
-    );
+    categories:
+      document.getElementById("categories-tab"),
 
-  const websiteTab =
-    document.getElementById(
-      "website-tab"
-    );
+    website:
+      document.getElementById("website-tab")
+  };
 
 
-  ordersSection.classList.add(
-    "hidden"
-  );
-
-  productsSection.classList.add(
-    "hidden"
-  );
-
-  categoriesSection.classList.add(
-    "hidden"
-  );
-
-  websiteSection.classList.add(
-    "hidden"
+  Object.values(sections).forEach(section =>
+    section.classList.add("hidden")
   );
 
 
-  ordersTab.classList.remove(
-    "active"
-  );
-
-  productsTab.classList.remove(
-    "active"
-  );
-
-  categoriesTab.classList.remove(
-    "active"
-  );
-
-  websiteTab.classList.remove(
-    "active"
+  Object.values(tabs).forEach(tabElement =>
+    tabElement.classList.remove("active")
   );
 
 
-  if (tab === "orders") {
-
-    ordersSection.classList.remove(
-      "hidden"
-    );
-
-    ordersTab.classList.add(
-      "active"
-    );
-
+  if (!sections[tab]) {
+    return;
   }
 
 
-  else if (tab === "products") {
-
-    productsSection.classList.remove(
-      "hidden"
-    );
-
-    productsTab.classList.add(
-      "active"
-    );
-
-  }
+  sections[tab].classList.remove("hidden");
+  tabs[tab].classList.add("active");
 
 
-  else if (tab === "categories") {
-
-    categoriesSection.classList.remove(
-      "hidden"
-    );
-
-    categoriesTab.classList.add(
-      "active"
-    );
-
+  if (tab === "categories") {
 
     updateParentCategoryDropdown();
-
     toggleParentCategory();
 
   }
 
 
-  else if (tab === "website") {
+  if (tab === "products") {
 
-    websiteSection.classList.remove(
-      "hidden"
-    );
+    updateCategoryDropdown();
 
-    websiteTab.classList.add(
-      "active"
-    );
+  }
 
+
+  if (tab === "website") {
 
     loadWebsiteContent();
 
@@ -3200,7 +3130,9 @@ function showTab(tab) {
 }
 
 
-/* WEBSITE CONTENT */
+/* =========================================================
+   WEBSITE CONTENT
+========================================================= */
 
 const websiteFields = [
 
@@ -3313,94 +3245,87 @@ async function saveWebsiteContent() {
     );
 
 
-  buttons.forEach(button => {
-
-    button.disabled =
-      true;
-
-  });
+  buttons.forEach(button =>
+    button.disabled = true
+  );
 
 
-  for (const key of websiteFields) {
+  try {
 
-    const { error } =
-      await supabaseClient
-        .from("site_content")
-        .upsert(
-          {
-            key,
-            value:
-              values[key] || "",
-            updated_at:
-              new Date().toISOString()
-          },
-          {
-            onConflict: "key"
-          }
+    for (const key of websiteFields) {
+
+      const { error } =
+        await supabaseClient
+          .from("site_content")
+          .upsert(
+            {
+              key,
+              value: values[key] || "",
+              updated_at:
+                new Date().toISOString()
+            },
+            {
+              onConflict: "key"
+            }
+          );
+
+
+      if (error) {
+
+        console.error(
+          "Website content save error:",
+          error
         );
 
+        throw new Error(
+          "Couldn't save website content.\n\n" +
+          error.message
+        );
 
-    if (error) {
+      }
 
-      console.error(
-        "Website content save error:",
-        error
-      );
-
-
-      alert(
-        "Couldn't save website content.\n\n" +
-        error.message
-      );
-
-
-      buttons.forEach(button => {
-
-        button.disabled =
-          false;
-
-      });
-
-
-      return;
     }
 
-  }
+
+    const message =
+      document.getElementById(
+        "website-save-message"
+      );
 
 
-  buttons.forEach(button => {
-
-    button.disabled =
-      false;
-
-  });
-
-
-  const message =
-    document.getElementById(
-      "website-save-message"
-    );
-
-
-  if (message) {
-
-    message.textContent =
-      "✓ Website changes saved 🍒";
-
-
-    setTimeout(() => {
+    if (message) {
 
       message.textContent =
-        "";
+        "✓ Website changes saved 🍒";
 
-    }, 3000);
+
+      setTimeout(() => {
+        message.textContent = "";
+      }, 3000);
+
+    }
+
+  } catch (error) {
+
+    alert(
+      error.message ||
+      "Something went wrong while saving the website."
+    );
+
+  } finally {
+
+    buttons.forEach(button =>
+      button.disabled = false
+    );
 
   }
 
 }
 
 
-/* PRODUCT FORM */
+/* =========================================================
+   PRODUCT FORM
+========================================================= */
 
 function openProductForm(product = null) {
 
@@ -3410,82 +3335,74 @@ function openProductForm(product = null) {
     );
 
 
-  area.classList.remove(
-    "hidden"
-  );
+  area.classList.remove("hidden");
 
 
   document.getElementById(
     "editing-product-id"
   ).value =
-    product
-      ? product.id
-      : "";
+    product ? product.id : "";
 
 
   document.getElementById(
     "product-form-title"
   ).textContent =
-    product
-      ? "Edit product"
-      : "Add product";
+    product ? "Edit product" : "Add product";
 
 
   document.getElementById(
     "product-name"
   ).value =
-    product?.name ||
-    "";
+    product?.name || "";
 
 
   document.getElementById(
     "product-price"
   ).value =
-    product?.price ||
-    "";
+    product?.price ?? "";
 
 
   document.getElementById(
     "product-size"
   ).value =
-    product?.size ||
-    "";
+    product?.size || "";
 
 
   document.getElementById(
     "product-status"
   ).value =
-    product?.status ||
-    "available";
+    product?.status || "available";
 
 
   document.getElementById(
     "product-image"
   ).value =
-    product?.image_url ||
-    "";
+    product?.image_url || "";
 
 
   document.getElementById(
     "product-description"
   ).value =
-    product?.description ||
-    "";
+    product?.description || "";
 
 
   updateCategoryDropdown();
 
 
+  /*
+    IMPORTANT:
+    category_id stays as a string.
+
+    This is the key fix for UUID category IDs.
+  */
+
   document.getElementById(
     "product-category-id"
   ).value =
-    product?.category_id ||
-    "";
+    product?.category_id
+      ? String(product.category_id)
+      : "";
 
-
-  /*
-    Show existing image while editing.
-  */
 
   const preview =
     document.getElementById(
@@ -3508,23 +3425,15 @@ function openProductForm(product = null) {
 
   } else {
 
-    previewImage.src =
-      "";
-
-    preview.style.display =
-      "none";
+    previewImage.src = "";
+    preview.style.display = "none";
 
   }
 
 
-  /*
-    Clear file picker.
-  */
-
   document.getElementById(
     "product-image-file"
-  ).value =
-    "";
+  ).value = "";
 
 
   area.scrollIntoView({
@@ -3540,9 +3449,7 @@ function closeProductForm() {
     .getElementById(
       "product-form-area"
     )
-    .classList.add(
-      "hidden"
-    );
+    .classList.add("hidden");
 
 
   document
@@ -3556,454 +3463,405 @@ function closeProductForm() {
     .getElementById(
       "editing-product-id"
     )
-    .value =
-    "";
+    .value = "";
 
 
   document
     .getElementById(
       "product-image"
     )
-    .value =
-    "";
+    .value = "";
 
 
   document
     .getElementById(
       "product-image-preview"
     )
-    .style.display =
-    "none";
+    .style.display = "none";
 
 
   document
     .getElementById(
       "product-image-preview-img"
     )
-    .src =
-    "";
+    .src = "";
 
 }
 
 
-/* IMAGE PICKER */
+/* =========================================================
+   IMAGE PICKER
+========================================================= */
 
 document
-  .getElementById(
-    "product-image-file"
-  )
-  .addEventListener(
-    "change",
-    function(event) {
+  .getElementById("product-image-file")
+  .addEventListener("change", function(event) {
 
-      const file =
-        event.target.files[0];
+    const file =
+      event.target.files[0];
 
 
-      const preview =
+    const preview =
+      document.getElementById(
+        "product-image-preview"
+      );
+
+
+    const previewImage =
+      document.getElementById(
+        "product-image-preview-img"
+      );
+
+
+    if (!file) {
+
+      preview.style.display = "none";
+      previewImage.src = "";
+
+      return;
+    }
+
+
+    const imageURL =
+      URL.createObjectURL(file);
+
+
+    previewImage.src =
+      imageURL;
+
+    preview.style.display =
+      "block";
+
+  });
+
+
+/* =========================================================
+   SAVE PRODUCT
+========================================================= */
+
+document
+  .getElementById("product-form")
+  .addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+
+    const editingId =
+      document
+        .getElementById(
+          "editing-product-id"
+        )
+        .value;
+
+
+    /*
+      IMPORTANT:
+      Keep category ID as its original string value.
+      DO NOT use Number().
+    */
+
+    const categoryId =
+      document
+        .getElementById(
+          "product-category-id"
+        )
+        .value
+        .trim();
+
+
+    const selectedCategory =
+      categories.find(category =>
+        !category.legacy &&
+        String(category.id) ===
+        String(categoryId)
+      );
+
+
+    if (!selectedCategory) {
+
+      alert(
+        "Please choose a valid category or subcategory."
+      );
+
+      return;
+    }
+
+
+    const button =
+      document.getElementById(
+        "save-product-button"
+      );
+
+
+    button.disabled = true;
+    button.textContent = "Saving...";
+
+
+    try {
+
+      const imageFileInput =
         document.getElementById(
-          "product-image-preview"
+          "product-image-file"
         );
 
 
-      const previewImage =
-        document.getElementById(
-          "product-image-preview-img"
-        );
+      const selectedFile =
+        imageFileInput.files[0];
 
 
-      if (!file) {
+      let imageURL =
+        document
+          .getElementById(
+            "product-image"
+          )
+          .value
+          .trim();
 
-        preview.style.display =
-          "none";
 
-        previewImage.src =
-          "";
+      /*
+        UPLOAD NEW IMAGE
+      */
 
-        return;
+      if (selectedFile) {
+
+        if (
+          selectedFile.size >
+          10 * 1024 * 1024
+        ) {
+
+          throw new Error(
+            "That photo is too large. Please choose an image under 10 MB."
+          );
+
+        }
+
+
+        const originalName =
+          selectedFile.name ||
+          "product-image";
+
+
+        const safeFileName =
+          originalName
+            .replace(
+              /[^a-zA-Z0-9.-]/g,
+              "-"
+            );
+
+
+        const fileName =
+          `${Date.now()}-${safeFileName}`;
+
+
+        const filePath =
+          `products/${fileName}`;
+
+
+        const {
+          error: uploadError
+        } =
+          await supabaseClient
+            .storage
+            .from(PRODUCT_IMAGE_BUCKET)
+            .upload(
+              filePath,
+              selectedFile,
+              {
+                cacheControl: "3600",
+                upsert: false,
+                contentType:
+                  selectedFile.type ||
+                  "image/jpeg"
+              }
+            );
+
+
+        if (uploadError) {
+
+          console.error(
+            "Image upload error:",
+            uploadError
+          );
+
+          throw new Error(
+            "The photo couldn't be uploaded.\n\n" +
+            uploadError.message
+          );
+
+        }
+
+
+        const {
+          data: publicURLData
+        } =
+          supabaseClient
+            .storage
+            .from(PRODUCT_IMAGE_BUCKET)
+            .getPublicUrl(filePath);
+
+
+        imageURL =
+          publicURLData.publicUrl;
+
+
+        document
+          .getElementById(
+            "product-image"
+          )
+          .value =
+          imageURL;
+
       }
 
 
       /*
-        Works with:
-        - iPhone Gallery
-        - iPhone Files
-        - Camera
-        - Android Gallery
-        - Android Files
+        PRODUCT DATA
+
+        category_id is deliberately NOT Number().
       */
 
-      const imageURL =
-        URL.createObjectURL(
-          file
-        );
+      const productData = {
+
+        name:
+          document
+            .getElementById(
+              "product-name"
+            )
+            .value
+            .trim(),
 
 
-      previewImage.src =
-        imageURL;
+        category:
+          selectedCategory.name,
 
 
-      preview.style.display =
-        "block";
-
-    }
-  );
+        category_id:
+          categoryId,
 
 
-/* SAVE PRODUCT */
-
-document
-  .getElementById(
-    "product-form"
-  )
-  .addEventListener(
-    "submit",
-    async function(event) {
-
-      event.preventDefault();
+        price:
+          Number(
+            document
+              .getElementById(
+                "product-price"
+              )
+              .value
+          ),
 
 
-      const editingId =
-        document
-          .getElementById(
-            "editing-product-id"
-          )
-          .value;
+        size:
+          document
+            .getElementById(
+              "product-size"
+            )
+            .value
+            .trim(),
 
 
-      const categoryId =
-        document
-          .getElementById(
-            "product-category-id"
-          )
-          .value;
+        status:
+          document
+            .getElementById(
+              "product-status"
+            )
+            .value,
 
 
-      const selectedCategory =
-        categories.find(
-          category =>
-            String(category.id) ===
-            String(categoryId)
-        );
+        image_url:
+          imageURL,
 
 
-      if (!selectedCategory) {
+        description:
+          document
+            .getElementById(
+              "product-description"
+            )
+            .value
+            .trim()
 
-        alert(
-          "Please choose a category."
-        );
+      };
 
-        return;
+
+      let error;
+
+
+      if (editingId) {
+
+        const result =
+          await supabaseClient
+            .from("products")
+            .update(productData)
+            .eq("id", editingId);
+
+
+        error =
+          result.error;
+
+      } else {
+
+        const result =
+          await supabaseClient
+            .from("products")
+            .insert(productData);
+
+
+        error =
+          result.error;
+
       }
 
 
-      const button =
-        document.getElementById(
-          "save-product-button"
-        );
-
-
-      button.disabled =
-        true;
-
-      button.textContent =
-        "Saving...";
-
-
-      try {
-
-        const imageFileInput =
-          document.getElementById(
-            "product-image-file"
-          );
-
-
-        const selectedFile =
-          imageFileInput.files[0];
-
-
-        let imageURL =
-          document
-            .getElementById(
-              "product-image"
-            )
-            .value
-            .trim();
-
-
-        /*
-          NEW PHOTO
-
-          Upload directly to:
-
-          product-images/products/...
-        */
-
-        if (selectedFile) {
-
-          /*
-            Basic size protection.
-            10 MB max.
-          */
-
-          if (
-            selectedFile.size >
-            10 * 1024 * 1024
-          ) {
-
-            throw new Error(
-              "That photo is too large. Please choose an image under 10 MB."
-            );
-
-          }
-
-
-          const originalName =
-            selectedFile.name ||
-            "product-image";
-
-
-          const safeFileName =
-            originalName
-              .replace(
-                /[^a-zA-Z0-9.-]/g,
-                "-"
-              );
-
-
-          const fileName =
-            `${Date.now()}-${safeFileName}`;
-
-
-          const filePath =
-            `products/${fileName}`;
-
-
-          const {
-            error: uploadError
-          } =
-            await supabaseClient
-              .storage
-              .from(
-                PRODUCT_IMAGE_BUCKET
-              )
-              .upload(
-                filePath,
-                selectedFile,
-                {
-                  cacheControl:
-                    "3600",
-
-                  upsert:
-                    false,
-
-                  contentType:
-                    selectedFile.type ||
-                    "image/jpeg"
-                }
-              );
-
-
-          if (uploadError) {
-
-            console.error(
-              "Image upload error:",
-              uploadError
-            );
-
-
-            throw new Error(
-              "The photo couldn't be uploaded.\n\n" +
-              uploadError.message
-            );
-
-          }
-
-
-          const {
-            data: publicURLData
-          } =
-            supabaseClient
-              .storage
-              .from(
-                PRODUCT_IMAGE_BUCKET
-              )
-              .getPublicUrl(
-                filePath
-              );
-
-
-          imageURL =
-            publicURLData.publicUrl;
-
-
-          document
-            .getElementById(
-              "product-image"
-            )
-            .value =
-            imageURL;
-
-        }
-
-
-        /*
-          PRODUCT DATA
-        */
-
-        const productData = {
-
-          name:
-            document
-              .getElementById(
-                "product-name"
-              )
-              .value
-              .trim(),
-
-
-          category:
-            selectedCategory.name,
-
-
-          category_id:
-            Number(categoryId),
-
-
-          price:
-            Number(
-              document
-                .getElementById(
-                  "product-price"
-                )
-                .value
-            ),
-
-
-          size:
-            document
-              .getElementById(
-                "product-size"
-              )
-              .value
-              .trim(),
-
-
-          status:
-            document
-              .getElementById(
-                "product-status"
-              )
-              .value,
-
-
-          image_url:
-            imageURL,
-
-
-          description:
-            document
-              .getElementById(
-                "product-description"
-              )
-              .value
-              .trim()
-
-        };
-
-
-        let error;
-
-
-        if (editingId) {
-
-          const result =
-            await supabaseClient
-              .from("products")
-              .update(
-                productData
-              )
-              .eq(
-                "id",
-                editingId
-              );
-
-
-          error =
-            result.error;
-
-        } else {
-
-          const result =
-            await supabaseClient
-              .from("products")
-              .insert(
-                productData
-              );
-
-
-          error =
-            result.error;
-
-        }
-
-
-        if (error) {
-
-          console.error(
-            "Product save error:",
-            error
-          );
-
-
-          throw new Error(
-            "I couldn't save that product.\n\n" +
-            error.message
-          );
-
-        }
-
-
-        closeProductForm();
-
-
-        await loadAdminProducts();
-
-
-        updateStats();
-
-        renderAdminProducts();
-
-
-      } catch (error) {
+      if (error) {
 
         console.error(
           "Product save error:",
           error
         );
 
-
-        alert(
-          error.message ||
-          "Something went wrong while saving the product."
+        throw new Error(
+          "I couldn't save that product.\n\n" +
+          error.message
         );
-
-
-      } finally {
-
-        button.disabled =
-          false;
-
-        button.textContent =
-          "Save product";
 
       }
 
+
+      closeProductForm();
+
+
+      await loadAdminProducts();
+
+
+      updateStats();
+
+      renderAdminProducts();
+
+
+    } catch (error) {
+
+      console.error(
+        "Product save error:",
+        error
+      );
+
+      alert(
+        error.message ||
+        "Something went wrong while saving the product."
+      );
+
+
+    } finally {
+
+      button.disabled = false;
+      button.textContent = "Save product";
+
     }
-  );
+
+  });
 
 
-/* RENDER PRODUCTS */
+/* =========================================================
+   RENDER PRODUCTS
+========================================================= */
 
 function renderAdminProducts() {
 
@@ -4037,20 +3895,20 @@ function renderAdminProducts() {
 
 
         const category =
-          categories.find(
-            item =>
-              String(item.id) ===
-              String(product.category_id)
+          categories.find(item =>
+            !item.legacy &&
+            String(item.id) ===
+            String(product.category_id)
           );
 
 
         const parentCategory =
           category?.parent_id
           ?
-          categories.find(
-            item =>
-              String(item.id) ===
-              String(category.parent_id)
+          categories.find(item =>
+            !item.legacy &&
+            String(item.id) ===
+            String(category.parent_id)
           )
           :
           null;
@@ -4151,8 +4009,7 @@ function renderAdminProducts() {
               >
 
                 ${
-                  product.status ===
-                  "sold"
+                  product.status === "sold"
                   ?
                   "Sold Out"
                   :
@@ -4168,28 +4025,28 @@ function renderAdminProducts() {
               <div class="product-actions">
 
                 <button
-                  onclick="editProduct('${escapeHTML(product.id)}')"
+                  onclick="editProduct('${escapeJS(String(product.id))}')"
                 >
                   Edit
                 </button>
 
 
                 <button
-                  onclick="setProductStatus('${escapeHTML(product.id)}','available')"
+                  onclick="setProductStatus('${escapeJS(String(product.id))}','available')"
                 >
                   Available
                 </button>
 
 
                 <button
-                  onclick="setProductStatus('${escapeHTML(product.id)}','sold')"
+                  onclick="setProductStatus('${escapeJS(String(product.id))}','sold')"
                 >
                   Sold Out
                 </button>
 
 
                 <button
-                  onclick="setProductStatus('${escapeHTML(product.id)}','hidden')"
+                  onclick="setProductStatus('${escapeJS(String(product.id))}','hidden')"
                 >
                   Hide
                 </button>
@@ -4197,7 +4054,7 @@ function renderAdminProducts() {
 
                 <button
                   class="delete-button"
-                  onclick="deleteProduct('${escapeHTML(product.id)}')"
+                  onclick="deleteProduct('${escapeJS(String(product.id))}')"
                 >
                   🗑 Delete product
                 </button>
@@ -4216,15 +4073,16 @@ function renderAdminProducts() {
 }
 
 
-/* EDIT PRODUCT */
+/* =========================================================
+   EDIT PRODUCT
+========================================================= */
 
 function editProduct(id) {
 
   const product =
-    adminProducts.find(
-      item =>
-        String(item.id) ===
-        String(id)
+    adminProducts.find(item =>
+      String(item.id) ===
+      String(id)
     );
 
 
@@ -4233,14 +4091,14 @@ function editProduct(id) {
   }
 
 
-  openProductForm(
-    product
-  );
+  openProductForm(product);
 
 }
 
 
-/* PRODUCT STATUS */
+/* =========================================================
+   PRODUCT STATUS
+========================================================= */
 
 async function setProductStatus(
   id,
@@ -4248,10 +4106,9 @@ async function setProductStatus(
 ) {
 
   const product =
-    adminProducts.find(
-      item =>
-        String(item.id) ===
-        String(id)
+    adminProducts.find(item =>
+      String(item.id) ===
+      String(id)
     );
 
 
@@ -4264,13 +4121,9 @@ async function setProductStatus(
     await supabaseClient
       .from("products")
       .update({
-        status:
-          newStatus
+        status: newStatus
       })
-      .eq(
-        "id",
-        id
-      );
+      .eq("id", id);
 
 
   if (error) {
@@ -4280,12 +4133,10 @@ async function setProductStatus(
       error
     );
 
-
     alert(
       "I couldn't change that product.\n\n" +
       error.message
     );
-
 
     return;
   }
@@ -4302,15 +4153,16 @@ async function setProductStatus(
 }
 
 
-/* DELETE PRODUCT */
+/* =========================================================
+   DELETE PRODUCT
+========================================================= */
 
 async function deleteProduct(id) {
 
   const product =
-    adminProducts.find(
-      item =>
-        String(item.id) ===
-        String(id)
+    adminProducts.find(item =>
+      String(item.id) ===
+      String(id)
     );
 
 
@@ -4335,10 +4187,7 @@ async function deleteProduct(id) {
     await supabaseClient
       .from("products")
       .delete()
-      .eq(
-        "id",
-        id
-      );
+      .eq("id", id);
 
 
   if (error) {
@@ -4348,22 +4197,19 @@ async function deleteProduct(id) {
       error
     );
 
-
     alert(
       "I couldn't delete that product.\n\n" +
       error.message
     );
-
 
     return;
   }
 
 
   adminProducts =
-    adminProducts.filter(
-      item =>
-        String(item.id) !==
-        String(id)
+    adminProducts.filter(item =>
+      String(item.id) !==
+      String(id)
     );
 
 
@@ -4374,7 +4220,9 @@ async function deleteProduct(id) {
 }
 
 
-/* START */
+/* =========================================================
+   START
+========================================================= */
 
 checkLogin();
 
