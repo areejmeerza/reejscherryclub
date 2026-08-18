@@ -1952,7 +1952,194 @@
       );
 
     }
+/* LOAD WEBSITE CONTENT FROM SUPABASE */
 
+async function loadWebsiteContent() {
+
+  if (!supabaseClient) {
+    console.error("Supabase is not connected.");
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("site_content")
+    .select("key,value");
+
+  if (error) {
+    console.error("Could not load website content:", error);
+    return;
+  }
+
+  const content = {};
+
+  (data || []).forEach(item => {
+    content[item.key] = item.value;
+  });
+
+
+  /* ANNOUNCEMENT BAR */
+
+  const announcement =
+    document.getElementById("announcement-bar");
+
+  if (announcement) {
+
+    const enabled =
+      content["announcement-enabled"] !== "false";
+
+    announcement.textContent =
+      content["announcement"] || "";
+
+    announcement.style.display =
+      enabled && content["announcement"]
+        ? ""
+        : "none";
+  }
+
+
+  /* HERO */
+
+  const heroTitle =
+    document.getElementById("hero-title");
+
+  if (heroTitle && content["hero-title"] !== undefined) {
+    heroTitle.textContent =
+      content["hero-title"];
+  }
+
+
+  const heroSubtitle =
+    document.getElementById("hero-subtitle");
+
+  if (heroSubtitle && content["hero-subtitle"] !== undefined) {
+    heroSubtitle.textContent =
+      content["hero-subtitle"];
+  }
+
+
+  const heroButton =
+    document.getElementById("hero-button");
+
+  if (heroButton && content["hero-button"] !== undefined) {
+    heroButton.textContent =
+      content["hero-button"];
+  }
+
+
+  const heroLink =
+    document.getElementById("hero-link");
+
+  if (heroLink && content["hero-link"] !== undefined) {
+    heroLink.href =
+      content["hero-link"];
+  }
+
+
+  /* PROMOTION */
+
+  const promo =
+    document.getElementById("promo-section");
+
+  if (promo) {
+
+    const enabled =
+      content["promo-enabled"] !== "false";
+
+    promo.style.display =
+      enabled
+        ? ""
+        : "none";
+  }
+
+
+  const promoTitle =
+    document.getElementById("promo-title");
+
+  if (promoTitle && content["promo-title"] !== undefined) {
+    promoTitle.textContent =
+      content["promo-title"];
+  }
+
+
+  const promoDescription =
+    document.getElementById("promo-description");
+
+  if (
+    promoDescription &&
+    content["promo-description"] !== undefined
+  ) {
+    promoDescription.textContent =
+      content["promo-description"];
+  }
+
+
+  const promoButton =
+    document.getElementById("promo-button");
+
+  if (promoButton && content["promo-button"] !== undefined) {
+    promoButton.textContent =
+      content["promo-button"];
+  }
+
+
+  /* HOMEPAGE SECTION TITLES */
+
+  const newArrivalsTitle =
+    document.getElementById("new-arrivals-title");
+
+  if (
+    newArrivalsTitle &&
+    content["new-arrivals-title"] !== undefined
+  ) {
+    newArrivalsTitle.textContent =
+      content["new-arrivals-title"];
+  }
+
+
+  const featuredTitle =
+    document.getElementById("featured-title");
+
+  if (
+    featuredTitle &&
+    content["featured-title"] !== undefined
+  ) {
+    featuredTitle.textContent =
+      content["featured-title"];
+  }
+
+
+  const aboutTitle =
+    document.getElementById("about-title");
+
+  if (
+    aboutTitle &&
+    content["about-title"] !== undefined
+  ) {
+    aboutTitle.textContent =
+      content["about-title"];
+  }
+
+
+  const aboutText =
+    document.getElementById("about-text");
+
+  if (
+    aboutText &&
+    content["about-text"] !== undefined
+  ) {
+    aboutText.textContent =
+      content["about-text"];
+  }
+
+}
+
+
+/* LOAD IT WHEN THE WEBSITE OPENS */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  loadWebsiteContent
+);
 
     /* =========================================
        SETTINGS
@@ -3560,7 +3747,7 @@
       initializeCherryClub();
 
     }
-
+loadWebsiteContent();
   </script>
 
 </body>
