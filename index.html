@@ -3599,6 +3599,10 @@ async function loadCategories() {
       cannot be loaded.
 
     */
+    alert(
+  "CATEGORY ERROR:\n\n" +
+  (error.message || "Unknown error")
+);
 
     categories = [];
 
@@ -4272,7 +4276,7 @@ async function loadProducts() {
 
         .from("products")
 .select(
-  "id,name,category,price,size,status,image_url,description,created_at,quantity,sold_quantity"
+  "id,name,category,price,size,status,image_url,description,created_at"
 )
       
 
