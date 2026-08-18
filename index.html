@@ -2562,7 +2562,7 @@ footer{
 
       <a
 
-        href="mailto:chandlerbing0305@gmail.com"
+        href="mailto:reejscherryclub@gmail.com"
 
         class="contact-link">
 
@@ -4270,14 +4270,21 @@ async function loadProducts() {
 
       await supabaseClient
 
-     .from("products")
-.select(
-  "id,name,category,price,size,status,image_url,description,created_at,quantity,sold_quantity"
-)
-.eq(
-  "status",
-  "available"
-)
+        .from("products")
+
+        .select(
+
+          "id,name,category,price,size,status,image_url,description,created_at"
+
+        )
+
+        .eq(
+
+          "status",
+
+          "available"
+
+        )
 
         .order(
 
@@ -4353,97 +4360,76 @@ async function loadProducts() {
 
 }
 
-  /* =========================================================
-   INVENTORY
-   ========================================================= */
-
-function getProductRemaining(product) {
-
-  const quantity =
-    Math.max(
-      0,
-      Number(product?.quantity) || 0
-    );
-
-  const sold =
-    Math.max(
-      0,
-      Number(product?.sold_quantity) || 0
-    );
-
-  return Math.max(
-    0,
-    quantity - sold
-  );
-}
-
-function isProductSoldOut(product) {
-
-  return getProductRemaining(product) <= 0;
-
-}
-
-function stockLabel(product) {
-
-  const remaining =
-    getProductRemaining(product);
-
-  if (remaining <= 0) {
-
-    return "SOLD OUT";
-
-  }
-
-  if (remaining === 1) {
-
-    return "ONLY 1 LEFT";
-
-  }
-
-  return `ONLY ${remaining} LEFT`;
-
-}
 /* =========================================================
 
    RENDER PRODUCTS
 
    ========================================================= */
+
 function renderProducts() {
 
   const container =
+
     document.getElementById(
+
       "products-container"
+
     );
 
   if (!container) return;
 
   let visibleProducts =
+
     products.slice();
 
   const selectedCategory =
+
     activeCategoryId !== null
+
       ? getCategoryById(
+
           activeCategoryId
+
         )
+
       : null;
 
   if (selectedCategory) {
 
+    /*
+
+      If a MAIN category is selected,
+
+      show products belonging to it OR
+
+      one of its subcategories.
+
+    */
+
     const children =
+
       getSubcategories(
+
         selectedCategory.id
+
       );
 
     if (children.length) {
 
       visibleProducts =
+
         products.filter(product => {
 
           if (
+
             productMatchesCategory(
+
               product,
+
               selectedCategory
+
             )
+
           ) {
 
             return true;
@@ -4451,11 +4437,17 @@ function renderProducts() {
           }
 
           return children.some(
+
             child =>
+
               productMatchesCategory(
+
                 product,
+
                 child
+
               )
+
           );
 
         });
@@ -4463,252 +4455,22 @@ function renderProducts() {
     } else {
 
       visibleProducts =
+
         products.filter(product =>
+
           productMatchesCategory(
+
             product,
+
             selectedCategory
+
           )
+
         );
 
     }
 
   }
-
-  const note =
-    document.getElementById(
-      "active-filter-note"
-    );
-
-  if (note) {
-
-    if (selectedCategory) {
-
-      note.style.display =
-        "block";
-
-      note.textContent =
-        `Showing: ${selectedCategory.name}`;
-
-    } else {
-
-      note.style.display =
-        "none";
-
-      note.textContent =
-        "";
-
-    }
-
-  }
-
-  if (!visibleProducts.length) {
-
-    container.innerHTML = `
-
-      <div class="empty-products">
-
-        ${
-          selectedCategory
-            ? `
-              No pieces in ${escapeHTML(
-                selectedCategory.name
-              )} right now 🍒
-            `
-            : `
-              No pieces available right now 🍒
-            `
-        }
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-  container.innerHTML = "";
-
-  visibleProducts.forEach(
-    product => {
-
-      const article =
-        document.createElement(
-          "article"
-        );
-
-      article.className =
-        "product";
-
-      const category =
-        product.category
-          ? escapeHTML(
-              product.category
-            )
-          : "";
-
-      const size =
-        product.size
-          ? escapeHTML(
-              product.size
-            )
-          : "";
-
-      const meta =
-        [category,size]
-          .filter(Boolean)
-          .join(" · ");
-
-      const remaining =
-        getProductRemaining(
-          product
-        );
-
-      const soldOut =
-        remaining <= 0;
-
-      article.innerHTML = `
-
-        <div class="product-image">
-
-          ${createProductImage(product)}
-
-          ${
-            category
-              ? `
-                <div class="tag">
-
-                  ${category}
-
-                </div>
-              `
-              : ""
-          }
-
-          <div
-            class="tag"
-            style="
-              left:auto;
-              right:14px;
-              background:${
-                soldOut
-                  ? "#111"
-                  : "white"
-              };
-              color:${
-                soldOut
-                  ? "white"
-                  : "#111"
-              };
-            "
-          >
-
-            ${stockLabel(product)}
-
-          </div>
-
-        </div>
-
-        <div class="product-info">
-
-          <div>
-
-            <div class="product-name">
-
-              ${escapeHTML(
-                product.name
-              )}
-
-            </div>
-
-            ${
-              meta
-                ? `
-                  <div class="product-meta">
-
-                    ${meta}
-
-                  </div>
-                `
-                : ""
-            }
-
-          </div>
-
-          <div>
-
-            <div class="price">
-
-              Rs. ${formatMoney(
-                product.price
-              )}
-
-            </div>
-
-            ${
-              soldOut
-                ? `
-                  <div
-                    class="add-to-bag"
-                    style="
-                      color:#888;
-                      border-color:#aaa;
-                      cursor:not-allowed;
-                    "
-                  >
-                    Sold Out
-                  </div>
-                `
-                : `
-                  <button
-                    class="add-to-bag"
-                    type="button"
-                  >
-                    Add to Bag
-                  </button>
-                `
-            }
-
-          </div>
-
-        </div>
-
-      `;
-
-      if (!soldOut) {
-
-        const addButton =
-          article.querySelector(
-            ".add-to-bag"
-          );
-
-        if (addButton) {
-
-          addButton.addEventListener(
-            "click",
-            event => {
-
-              event.stopPropagation();
-
-              addToBag(
-                product.id
-              );
-
-            }
-          );
-
-        }
-
-      }
-
-      container.appendChild(
-        article
-      );
-
-    }
-  );
-
-}
 
   /* FILTER LABEL */
 
@@ -5047,98 +4809,135 @@ function loadCart() {
    ========================================================= */
 
 function addToBag(productId) {
-  const product = products.find(
-    item => String(item.id) === String(productId)
-  );
+
+  const product =
+
+    products.find(
+
+      item =>
+
+        String(item.id) ===
+
+        String(productId)
+
+    );
 
   if (!product) {
-    alert("Sorry, this item is no longer available.");
+
+    alert(
+
+      "Sorry, this item is no longer available."
+
+    );
+
     return;
+
   }
 
-  const remaining = Math.max(
-    0,
-    Number(product.quantity || 0) -
-    Number(product.sold_quantity || 0)
-  );
+  const existing =
 
-  if (remaining <= 0) {
-    alert("Sorry, this item is sold out.");
-    return;
-  }
+    cart.find(
 
-  const existing = cart.find(
-    item => String(item.id) === String(productId)
-  );
+      item =>
+
+        String(item.id) ===
+
+        String(productId)
+
+    );
 
   if (existing) {
-    if (existing.quantity >= remaining) {
-      alert(`Only ${remaining} left in stock.`);
-      return;
-    }
 
     existing.quantity += 1;
+
   } else {
+
     cart.push({
-      id: product.id,
-      name: product.name,
-      price: Number(product.price) || 0,
-      size: product.size || "",
-      image_url: product.image_url || "",
-      quantity: 1
+
+      id:
+
+        product.id,
+
+      name:
+
+        product.name,
+
+      price:
+
+        Number(product.price) || 0,
+
+      size:
+
+        product.size || "",
+
+      image_url:
+
+        product.image_url || "",
+
+      quantity:
+
+        1
+
     });
+
   }
 
   saveCart();
+
   updateBagButton();
+
   openCart();
+
 }
 
-function changeQuantity(productId, amount) {
-  const item = cart.find(
-    current =>
-      String(current.id) === String(productId)
-  );
+function changeQuantity(
+
+  productId,
+
+  amount
+
+) {
+
+  const item =
+
+    cart.find(
+
+      current =>
+
+        String(current.id) ===
+
+        String(productId)
+
+    );
 
   if (!item) return;
 
-  const product = products.find(
-    current =>
-      String(current.id) === String(productId)
-  );
-
-  if (!product) return;
-
-  const remaining = Math.max(
-    0,
-    Number(product.quantity || 0) -
-    Number(product.sold_quantity || 0)
-  );
-
-  const newQuantity = item.quantity + amount;
-
-  if (newQuantity > remaining) {
-    alert(
-      remaining === 1
-        ? "Only 1 left in stock."
-        : `Only ${remaining} left in stock.`
-    );
-    return;
-  }
-
-  item.quantity = newQuantity;
+  item.quantity += amount;
 
   if (item.quantity <= 0) {
-    cart = cart.filter(
-      current =>
-        String(current.id) !== String(productId)
-    );
+
+    cart =
+
+      cart.filter(
+
+        current =>
+
+          String(current.id) !==
+
+          String(productId)
+
+      );
+
   }
 
   saveCart();
+
   renderCart();
+
   updateBagButton();
+
 }
+
 function removeFromBag(
 
   productId
@@ -5728,260 +5527,419 @@ function closeSuccess() {
    ORDER SUBMISSION
 
    ========================================================= */
-async function submitOrder(event) {
+
+async function submitOrder(
+
+  event
+
+) {
+
   event.preventDefault();
 
   if (!cart.length) {
-    alert("Your bag is empty 🍒");
+
+    alert(
+
+      "Your bag is empty 🍒"
+
+    );
+
     return;
+
   }
 
   if (!supabaseClient) {
+
     alert(
+
       "The shop connection is unavailable. Please refresh the page and try again."
+
     );
+
     return;
+
   }
 
-  const button = document.getElementById("place-order-button");
+  const button =
 
-  if (button) {
-    button.disabled = true;
-    button.textContent = "Checking stock...";
-  }
+    document.getElementById(
+
+      "place-order-button"
+
+    );
+
+  button.disabled = true;
+
+  button.textContent =
+
+    "Submitting order...";
 
   const customerName =
-    document.getElementById("customer-name").value.trim();
+
+    document.getElementById(
+
+      "customer-name"
+
+    ).value.trim();
 
   const customerPhone =
-    document.getElementById("customer-phone").value.trim();
+
+    document.getElementById(
+
+      "customer-phone"
+
+    ).value.trim();
 
   const customerCity =
-    document.getElementById("customer-city").value.trim();
+
+    document.getElementById(
+
+      "customer-city"
+
+    ).value.trim();
 
   const customerAddress =
-    document.getElementById("customer-address").value.trim();
+
+    document.getElementById(
+
+      "customer-address"
+
+    ).value.trim();
 
   const transactionId =
-    document.getElementById("transaction-id").value.trim();
+
+    document.getElementById(
+
+      "transaction-id"
+
+    ).value.trim();
 
   try {
-    /*
-     * FINAL STOCK CHECK + INVENTORY UPDATE
-     *
-     * This is handled by PostgreSQL so two customers
-     * cannot buy the same one-of-one item simultaneously.
-     */
-    const inventoryItems = cart.map(item => ({
-      product_id: item.id,
-      quantity: Number(item.quantity) || 1
-    }));
+
+    /* CREATE ORDER */
 
     const {
-      error: inventoryError
-    } = await supabaseClient.rpc(
-      "reserve_inventory",
-      {
-        order_items: inventoryItems
-      }
-    );
 
-    if (inventoryError) {
-      throw new Error(
-        inventoryError.message ||
-        "Some items in your bag are no longer available."
-      );
-    }
+      data:order,
 
-    /*
-     * CREATE ORDER
-     */
-    if (button) {
-      button.textContent = "Submitting order...";
-    }
+      error:orderError
 
-    const {
-      data: order,
-      error: orderError
-    } = await supabaseClient
-      .from("orders")
-      .insert({
-        customer_name: customerName,
-        phone: customerPhone,
-        address: customerAddress,
-        city: customerCity,
-        payment_method: "JazzCash",
-        transaction_id: transactionId,
-        total: cartTotal(),
-        status: "pending"
-      })
-      .select()
-      .single();
+    } =
+
+      await supabaseClient
+
+        .from("orders")
+
+        .insert({
+
+          customer_name:
+
+            customerName,
+
+          phone:
+
+            customerPhone,
+
+          address:
+
+            customerAddress,
+
+          city:
+
+            customerCity,
+
+          payment_method:
+
+            "JazzCash",
+
+          transaction_id:
+
+            transactionId,
+
+          total:
+
+            cartTotal(),
+
+          status:
+
+            "pending"
+
+        })
+
+        .select()
+
+        .single();
 
     if (orderError) {
-      throw new Error(orderError.message);
-    }
 
-    if (!order || !order.id) {
       throw new Error(
-        "The order could not be created."
+
+        orderError.message
+
       );
+
     }
 
-    /*
-     * CREATE ORDER ITEMS
-     */
-    const items = cart.map(item => ({
-      order_id: order.id,
-      product_id: item.id,
-      product_name: item.name,
-      size: item.size || null,
-      price: Number(item.price) || 0,
-      quantity: Number(item.quantity) || 1
-    }));
+    if (
+
+      !order ||
+
+      !order.id
+
+    ) {
+
+      throw new Error(
+
+        "The order could not be created."
+
+      );
+
+    }
+
+    /* CREATE ORDER ITEMS */
+
+    const items =
+
+      cart.map(item => ({
+
+        order_id:
+
+          order.id,
+
+        product_id:
+
+          item.id,
+
+        product_name:
+
+          item.name,
+
+        size:
+
+          item.size || null,
+
+        price:
+
+          Number(item.price) || 0,
+
+        quantity:
+
+          Number(item.quantity) || 1
+
+      }));
 
     const {
-      error: itemsError
-    } = await supabaseClient
-      .from("order_items")
-      .insert(items);
+
+      error:itemsError
+
+    } =
+
+      await supabaseClient
+
+        .from("order_items")
+
+        .insert(items);
 
     if (itemsError) {
+
       console.error(
+
         "Order items error:",
+
         itemsError
+
       );
 
       throw new Error(
+
         "Your order was created, but the products could not be attached to it. Please contact Cherry Club before placing another order."
+
       );
+
     }
 
-    /*
-     * OPTIONAL EMAIL FUNCTION
-     */
+    /* OPTIONAL EMAIL FUNCTION */
+
     try {
+
       const {
-        error: emailError
-      } = await supabaseClient
-        .functions
-        .invoke(
-          "smooth-worker",
-          {
-            body: {
-              customer_name: customerName,
-              phone: customerPhone,
-              address: customerAddress,
-              city: customerCity,
-              transaction_id: transactionId,
-              total: cartTotal(),
-              order_id: order.id
+
+        error:emailError
+
+      } =
+
+        await supabaseClient
+
+          .functions
+
+          .invoke(
+
+            "smooth-worker",
+
+            {
+
+              body:{
+
+                customer_name:
+
+                  customerName,
+
+                phone:
+
+                  customerPhone,
+
+                address:
+
+                  customerAddress,
+
+                city:
+
+                  customerCity,
+
+                transaction_id:
+
+                  transactionId,
+
+                total:
+
+                  cartTotal(),
+
+                order_id:
+
+                  order.id
+
+              }
+
             }
-          }
-        );
+
+          );
 
       if (emailError) {
+
         console.warn(
+
           "Optional order email failed:",
+
           emailError
+
         );
+
       }
 
-    } catch (emailError) {
+    } catch(emailError) {
+
       console.warn(
+
         "Optional email function unavailable:",
+
         emailError
+
       );
+
     }
 
-    /*
-     * CLEAR CART
-     */
+    /* CLEAR CART */
+
     cart = [];
 
     localStorage.removeItem(
+
       "cherryClubCart"
+
     );
 
     updateBagButton();
 
-    /*
-     * RESET FORM
-     */
+    /* RESET FORM */
+
     const form =
-      document.getElementById("checkout-form");
+
+      document.getElementById(
+
+        "checkout-form"
+
+      );
 
     if (form) {
+
       form.reset();
+
     }
 
     closeCheckout();
 
-    /*
-     * SUCCESS
-     */
+    /* SUCCESS */
+
     const orderNumber =
+
       document.getElementById(
+
         "success-order-number"
+
       );
 
     if (orderNumber) {
+
       orderNumber.textContent =
+
         `Order ID: ${order.id}`;
+
     }
 
     const successOverlay =
+
       document.getElementById(
+
         "cherry-success"
+
       );
 
     if (successOverlay) {
-      successOverlay.classList.add("active");
+
+      successOverlay.classList.add(
+
+        "active"
+
+      );
 
       document.body.classList.add(
+
         "no-scroll"
+
       );
+
     }
 
-    /*
-     * Refresh products so the storefront
-     * immediately reflects the new stock.
-     */
-    try {
-      const {
-        data: refreshedProducts,
-        error: refreshError
-      } = await supabaseClient
-        .from("products")
-        .select("*");
+  } catch(error) {
 
-      if (!refreshError && refreshedProducts) {
-        products = refreshedProducts;
-      }
-    } catch (refreshError) {
-      console.warn(
-        "Could not refresh products:",
-        refreshError
-      );
-    }
-
-  } catch (error) {
     console.error(
+
       "Order submission error:",
+
       error
+
     );
 
     alert(
+
       error.message ||
+
       "Something went wrong while placing your order."
+
     );
 
   } finally {
-    if (button) {
-      button.disabled = false;
-      button.textContent = "Place Order →";
-    }
+
+    button.disabled =
+
+      false;
+
+    button.textContent =
+
+      "Place Order →";
+
   }
+
 }
 
 /* =========================================================
