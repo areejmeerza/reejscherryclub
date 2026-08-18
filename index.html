@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <title>Cherry Club 🍒</title>
-  <meta name="description" content="Cherry Club — Y2K pieces, one-of-one finds & clothes worth obsessing over.">
+  <meta
+    name="description"
+    content="Cherry Club — Y2K pieces, one-of-one finds & clothes worth obsessing over."
+  >
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap');
@@ -28,18 +32,27 @@
       overflow-x: hidden;
     }
 
+    body.no-scroll {
+      overflow: hidden;
+    }
+
     a {
       color: inherit;
       text-decoration: none;
     }
 
-    button {
+    button,
+    input,
+    textarea {
       font: inherit;
     }
 
+    button {
+      cursor: pointer;
+    }
 
     /* =========================
-       INTRO / CHERRY ANIMATION
+       INTRO
        ========================= */
 
     .intro {
@@ -198,7 +211,6 @@
       }
     }
 
-
     /* =========================
        NAVIGATION
        ========================= */
@@ -224,7 +236,6 @@
     .bag-button {
       background: none;
       border: 0;
-      cursor: pointer;
       font-size: 20px;
     }
 
@@ -254,7 +265,6 @@
     .logo span {
       color: #a20f20;
     }
-
 
     /* =========================
        SIDE MENU
@@ -299,7 +309,6 @@
       border: 0;
       background: none;
       font-size: 25px;
-      cursor: pointer;
     }
 
     .menu-label {
@@ -341,7 +350,6 @@
       text-transform: uppercase;
       letter-spacing: 1.5px;
     }
-
 
     /* =========================
        HERO
@@ -418,7 +426,6 @@
       text-transform: uppercase;
     }
 
-
     /* =========================
        MARQUEE
        ========================= */
@@ -443,10 +450,14 @@
     }
 
     @keyframes move {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
+      from {
+        transform: translateX(0);
+      }
 
+      to {
+        transform: translateX(-50%);
+      }
+    }
 
     /* =========================
        SHOP
@@ -494,6 +505,7 @@
 
     .product {
       cursor: pointer;
+      min-width: 0;
     }
 
     .product-image {
@@ -507,8 +519,20 @@
       transition: 0.4s;
     }
 
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: 0.4s;
+    }
+
     .product:hover .product-image {
       transform: translateY(-6px);
+    }
+
+    .product:hover .product-image img {
+      transform: scale(1.03);
     }
 
     .placeholder {
@@ -527,6 +551,7 @@
       font-size: 8px;
       text-transform: uppercase;
       letter-spacing: 1.5px;
+      z-index: 2;
     }
 
     .product-info {
@@ -544,6 +569,7 @@
       font-size: 10px;
       color: #888;
       margin-top: 5px;
+      text-transform: lowercase;
     }
 
     .price {
@@ -551,6 +577,48 @@
       white-space: nowrap;
     }
 
+    .add-to-bag {
+      margin-top: 9px;
+      border: 0;
+      border-bottom: 1px solid #111;
+      background: none;
+      padding: 4px 0;
+      cursor: pointer;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .add-to-bag:hover {
+      color: #a20f20;
+      border-color: #a20f20;
+    }
+
+    .loading-message,
+    .products-error,
+    .empty-products {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: #888;
+      padding: 70px 20px;
+      font-size: 13px;
+    }
+
+    .products-error {
+      color: #a20f20;
+    }
+
+    .retry-products {
+      display: inline-block;
+      margin-top: 15px;
+      border: 0;
+      background: #111;
+      color: white;
+      padding: 12px 18px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
 
     /* =========================
        ABOUT
@@ -589,130 +657,8 @@
       color: white;
     }
 
-
     /* =========================
-       FOOTER
-       ========================= */
-
-    footer {
-      background: #111;
-      color: white;
-      border-top: 1px solid #333;
-      padding: 60px 6vw 30px;
-    }
-
-    .footer-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 30px;
-      padding-bottom: 60px;
-    }
-
-    .footer-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 45px;
-      font-style: italic;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 30px;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-    }
-
-    .footer-bottom {
-      border-top: 1px solid #333;
-      padding-top: 22px;
-      display: flex;
-      justify-content: space-between;
-      color: #777;
-      font-size: 9px;
-    }
-
-
-    /* =========================
-       MOBILE
-       ========================= */
-
-    @media (max-width: 700px) {
-
-      nav {
-        height: 64px;
-        padding: 0 20px;
-      }
-
-      .logo {
-        font-size: 19px;
-      }
-
-      .hero {
-        padding: 120px 20px 70px;
-      }
-
-      .hero h2 {
-        font-size: 70px;
-        letter-spacing: -4px;
-      }
-
-      .hero-text {
-        font-size: 13px;
-      }
-
-      .section {
-        padding: 80px 20px;
-      }
-
-      .section-header {
-        margin-bottom: 30px;
-      }
-
-      .section-title {
-        font-size: 50px;
-      }
-
-      .products {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-      }
-
-      .product-info {
-        display: block;
-      }
-
-      .price {
-        display: block;
-        margin-top: 6px;
-      }
-
-      .about {
-        display: block;
-        padding: 85px 20px;
-      }
-
-      .about-copy {
-        margin-top: 40px;
-      }
-
-      .footer-top {
-        display: block;
-      }
-
-      .footer-links {
-        margin-top: 35px;
-        flex-wrap: wrap;
-      }
-
-      .footer-bottom {
-        display: block;
-        line-height: 2;
-      }
-    }
-
-
-    /* =========================
-       CONTACT / CUSTOMER CARE
+       CONTACT
        ========================= */
 
     .contact-section {
@@ -837,12 +783,371 @@
       color: white;
     }
 
+    /* =========================
+       FOOTER
+       ========================= */
+
+    footer {
+      background: #111;
+      color: white;
+      border-top: 1px solid #333;
+      padding: 60px 6vw 30px;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      padding-bottom: 60px;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 45px;
+      font-style: italic;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 30px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #333;
+      padding-top: 22px;
+      display: flex;
+      justify-content: space-between;
+      color: #777;
+      font-size: 9px;
+    }
 
     /* =========================
-       CONTACT MOBILE
+       OVERLAYS
+       ========================= */
+
+    .cherry-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      z-index: 5000;
+      opacity: 0;
+      visibility: hidden;
+      transition: .3s ease;
+    }
+
+    .cherry-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .cherry-cart {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: min(440px,94vw);
+      height: 100%;
+      background: #f5f1eb;
+      padding: 35px;
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: .4s cubic-bezier(.7,0,.2,1);
+    }
+
+    .cherry-overlay.active .cherry-cart {
+      transform: translateX(0);
+    }
+
+    .cherry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .cherry-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 38px;
+    }
+
+    .cherry-close {
+      border: 0;
+      background: none;
+      font-size: 27px;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 15px;
+      padding: 18px 0;
+      border-bottom: 1px solid #ddd7d0;
+    }
+
+    .cart-image {
+      width: 80px;
+      height: 100px;
+      background: #ddd6cf;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cart-name {
+      font-size: 13px;
+    }
+
+    .cart-meta {
+      color: #888;
+      font-size: 10px;
+      margin-top: 5px;
+    }
+
+    .cart-price {
+      margin-top: 10px;
+      font-size: 12px;
+    }
+
+    .quantity-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .quantity-row button {
+      width: 25px;
+      height: 25px;
+      border: 1px solid #ccc;
+      background: white;
+    }
+
+    .remove-item {
+      width: auto !important;
+      border: 0 !important;
+      background: none !important;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .cart-summary {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #111;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 12px;
+    }
+
+    .summary-total {
+      font-size: 16px;
+      font-weight: 600;
+      padding-top: 12px;
+      border-top: 1px solid #ddd7d0;
+    }
+
+    .checkout-button {
+      width: 100%;
+      border: 0;
+      background: #111;
+      color: white;
+      padding: 17px;
+      margin-top: 20px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 10px;
+    }
+
+    .checkout-button:hover {
+      background: #a20f20;
+    }
+
+    .checkout-button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .empty-cart {
+      text-align: center;
+      color: #777;
+      padding: 70px 0;
+      font-size: 13px;
+    }
+
+    .checkout-box,
+    .success-box {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+      width: min(600px,94vw);
+      max-height: 92vh;
+      overflow-y: auto;
+      background: #f5f1eb;
+      padding: 35px;
+    }
+
+    .success-box {
+      width: min(500px,92vw);
+      text-align: center;
+    }
+
+    .checkout-title {
+      font-family: 'Playfair Display',serif;
+      font-size: 42px;
+      margin-bottom: 25px;
+    }
+
+    .checkout-field {
+      margin-bottom: 17px;
+    }
+
+    .checkout-field label {
+      display: block;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 7px;
+      color: #777;
+    }
+
+    .checkout-field input,
+    .checkout-field textarea {
+      width: 100%;
+      border: 1px solid #d4cec7;
+      background: white;
+      padding: 13px;
+      font: inherit;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .checkout-field input:focus,
+    .checkout-field textarea:focus {
+      border-color: #111;
+    }
+
+    .checkout-field textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .jazzcash-box {
+      background: #111;
+      color: white;
+      padding: 25px;
+      margin: 25px 0;
+    }
+
+    .jazzcash-box h3 {
+      font-family: 'Playfair Display',serif;
+      font-size: 26px;
+      margin-bottom: 12px;
+    }
+
+    .jazzcash-details {
+      margin: 15px 0;
+      line-height: 1.9;
+      font-size: 12px;
+    }
+
+    .jazzcash-instructions {
+      color: #aaa;
+      font-size: 11px;
+      line-height: 1.8;
+    }
+
+    .order-total {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #ddd7d0;
+      padding-top: 18px;
+      margin-top: 20px;
+    }
+
+    .success-box h2 {
+      font-family: 'Playfair Display',serif;
+      font-size: 45px;
+      font-weight: 500;
+    }
+
+    .success-box p {
+      color: #666;
+      font-size: 13px;
+      line-height: 1.8;
+      margin-top: 18px;
+    }
+
+    /* =========================
+       MOBILE
        ========================= */
 
     @media (max-width: 700px) {
+
+      nav {
+        height: 64px;
+        padding: 0 20px;
+      }
+
+      .logo {
+        font-size: 19px;
+      }
+
+      .hero {
+        padding: 120px 20px 70px;
+      }
+
+      .hero h2 {
+        font-size: 70px;
+        letter-spacing: -4px;
+      }
+
+      .hero-text {
+        font-size: 13px;
+      }
+
+      .section {
+        padding: 80px 20px;
+      }
+
+      .section-header {
+        margin-bottom: 30px;
+      }
+
+      .section-title {
+        font-size: 50px;
+      }
+
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .product-info {
+        display: block;
+      }
+
+      .price {
+        display: block;
+        margin-top: 6px;
+      }
+
+      .about {
+        display: block;
+        padding: 85px 20px;
+      }
+
+      .about-copy {
+        margin-top: 40px;
+      }
 
       .contact-section {
         padding: 80px 20px;
@@ -874,26 +1179,44 @@
         margin-top: 30px;
       }
 
-    }
+      .footer-top {
+        display: block;
+      }
 
+      .footer-links {
+        margin-top: 35px;
+        flex-wrap: wrap;
+      }
+
+      .footer-bottom {
+        display: block;
+        line-height: 2;
+      }
+
+      .cherry-cart {
+        padding: 25px 20px;
+      }
+
+      .checkout-box {
+        padding: 30px 22px;
+      }
+
+      .checkout-title {
+        font-size: 36px;
+      }
+    }
   </style>
 </head>
 
-
 <body>
 
+  <!-- INTRO -->
 
-  <!-- =========================
-       CHERRY INTRO
-       ========================= -->
-
-  <div class="intro">
+  <div class="intro" id="intro">
 
     <div class="cherry-stage">
-
       <div class="cherry left"></div>
       <div class="cherry right"></div>
-
     </div>
 
     <div class="intro-logo">
@@ -904,30 +1227,35 @@
   </div>
 
 
-  <!-- =========================
-       SIDE MENU
-       ========================= -->
+  <!-- SIDE MENU -->
 
   <div class="menu-overlay" id="menuOverlay">
 
     <div class="side-menu">
 
-      <button class="close-menu" onclick="closeMenu()">×</button>
+      <button
+        class="close-menu"
+        type="button"
+        onclick="closeMenu()"
+        aria-label="Close menu"
+      >
+        ×
+      </button>
 
       <div class="menu-label">Shop</div>
 
       <div class="menu-links">
-        <a href="#shop">New Arrivals</a>
-        <a href="#shop">Dresses</a>
-        <a href="#shop">Tops</a>
-        <a href="#shop">Jeans</a>
-        <a href="#shop">Bottoms</a>
-        <a href="#shop">Shoes</a>
-        <a href="#shop">Accessories</a>
-        <a href="#shop">Women</a>
-        <a href="#shop">Men</a>
-        <a href="#shop">Unisex</a>
-        <a href="#shop">Sale</a>
+        <a href="#shop" onclick="closeMenu()">New Arrivals</a>
+        <a href="#shop" onclick="closeMenu()">Dresses</a>
+        <a href="#shop" onclick="closeMenu()">Tops</a>
+        <a href="#shop" onclick="closeMenu()">Jeans</a>
+        <a href="#shop" onclick="closeMenu()">Bottoms</a>
+        <a href="#shop" onclick="closeMenu()">Shoes</a>
+        <a href="#shop" onclick="closeMenu()">Accessories</a>
+        <a href="#shop" onclick="closeMenu()">Women</a>
+        <a href="#shop" onclick="closeMenu()">Men</a>
+        <a href="#shop" onclick="closeMenu()">Unisex</a>
+        <a href="#shop" onclick="closeMenu()">Sale</a>
       </div>
 
       <div class="menu-divider"></div>
@@ -935,10 +1263,10 @@
       <div class="menu-label">The Club</div>
 
       <div class="menu-small">
-        <a href="#about">About Us</a>
-        <a href="#">Size Guide</a>
-        <a href="#">Shipping & Returns</a>
-        <a href="#contact-us">Contact</a>
+        <a href="#about" onclick="closeMenu()">About Us</a>
+        <a href="#contact-us" onclick="closeMenu()">Size Guide</a>
+        <a href="#contact-us" onclick="closeMenu()">Shipping & Returns</a>
+        <a href="#contact-us" onclick="closeMenu()">Contact</a>
       </div>
 
     </div>
@@ -946,13 +1274,16 @@
   </div>
 
 
-  <!-- =========================
-       NAVIGATION
-       ========================= -->
+  <!-- NAVIGATION -->
 
   <nav>
 
-    <button class="menu-button" onclick="openMenu()" aria-label="Open menu">
+    <button
+      class="menu-button"
+      type="button"
+      onclick="openMenu()"
+      aria-label="Open menu"
+    >
       <span class="menu-line"></span>
       <span class="menu-line"></span>
       <span class="menu-line"></span>
@@ -962,19 +1293,21 @@
       Cherry <span>🍒</span> Club
     </a>
 
-    <button class="bag-button" aria-label="Shopping bag">
+    <button
+      class="bag-button"
+      type="button"
+      aria-label="Shopping bag"
+      onclick="openCart()"
+    >
       ♡
     </button>
 
   </nav>
 
 
-  <!-- =========================
-       MAIN
-       ========================= -->
+  <!-- MAIN -->
 
   <main>
-
 
     <!-- HERO -->
 
@@ -1014,14 +1347,14 @@
     <div class="marquee">
 
       <div class="marquee-track">
-
         <span>🍒 CHERRY CLUB</span>
         <span>Y2K · THRIFT · ONE OF ONE</span>
         <span>🍒 CHERRY CLUB</span>
         <span>Y2K · THRIFT · ONE OF ONE</span>
         <span>🍒 CHERRY CLUB</span>
         <span>Y2K · THRIFT · ONE OF ONE</span>
-
+        <span>🍒 CHERRY CLUB</span>
+        <span>Y2K · THRIFT · ONE OF ONE</span>
       </div>
 
     </div>
@@ -1034,8 +1367,13 @@
       <div class="section-header">
 
         <div>
-          <div class="section-kicker">Freshly picked</div>
-          <h2 class="section-title">The Drop</h2>
+          <div class="section-kicker">
+            Freshly picked
+          </div>
+
+          <h2 class="section-title">
+            The Drop
+          </h2>
         </div>
 
         <a href="#shop" class="view-all">
@@ -1043,15 +1381,15 @@
         </a>
 
       </div>
-        <div class="products" id="products-container">
-  <p style="grid-column: 1 / -1; text-align: center; color: #888;">
-    Loading the drop...
-  </p>
-</div>
-  
 
-
-      
+      <div
+        class="products"
+        id="products-container"
+      >
+        <div class="loading-message">
+          Loading the drop 🍒
+        </div>
+      </div>
 
     </section>
 
@@ -1096,15 +1434,15 @@
 
     </section>
 
-
   </main>
 
 
-  <!-- =========================
-       CONTACT / CUSTOMER CARE
-       ========================= -->
+  <!-- CONTACT -->
 
-  <section class="contact-section" id="contact-us">
+  <section
+    class="contact-section"
+    id="contact-us"
+  >
 
     <div class="contact-header">
 
@@ -1126,7 +1464,6 @@
 
     <div class="contact-grid">
 
-
       <div class="contact-card">
 
         <span class="contact-label">
@@ -1144,6 +1481,7 @@
         <a
           href="https://instagram.com/reejscherryclub"
           target="_blank"
+          rel="noopener noreferrer"
           class="contact-link"
         >
           Message us →
@@ -1218,7 +1556,6 @@
 
       </div>
 
-
     </div>
 
 
@@ -1235,7 +1572,6 @@
         </h3>
 
       </div>
-
 
       <div class="policy-text">
 
@@ -1263,9 +1599,7 @@
   </section>
 
 
-  <!-- =========================
-       FOOTER
-       ========================= -->
+  <!-- FOOTER -->
 
   <footer id="contact">
 
@@ -1277,7 +1611,11 @@
 
       <div class="footer-links">
 
-        <a href="#">
+        <a
+          href="https://instagram.com/reejscherryclub"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Instagram
         </a>
 
@@ -1289,14 +1627,13 @@
           Contact
         </a>
 
-        <a href="#">
+        <a href="#contact-us">
           Shipping
         </a>
 
       </div>
 
     </div>
-
 
     <div class="footer-bottom">
 
@@ -1314,494 +1651,14 @@
 
 
   <!-- =========================
-       JAVASCRIPT
+       CART
        ========================= -->
 
+  <div
+    class="cherry-overlay"
+    id="cherry-cart"
+  >
 
-
-  
-<script>
-const SUPABASE_URL = 'https://jqpkvttexoekaoylwtkg.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_QzAhQAxVVhrOdR0zhPbHBg_5c0LDxKF';
-
-const supabaseClient = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
-
-const DELIVERY_FEE = 370;
-const JAZZCASH_NAME = 'Areej Fatima';
-const JAZZCASH_NUMBER = '03054400537';
-
-let products = [];
-let cart = [];
-
-
-/* LOAD PRODUCTS */
-
-async function loadProducts() {
-  const container = document.getElementById("products-container");
-const { data, error } = await supabaseClient
-  .from("products")
-  .select("*")
-  .eq("status", "available")
-  .order("created_at", { ascending: false });
-
-console.log("PRODUCT DATA:", data);
-console.log("PRODUCT ERROR:", error);
-  
-  if (error) {
-    console.error("Error loading products:", error);
-    container.innerHTML =
-      "<p style='grid-column:1/-1;text-align:center;color:#888;'>Unable to load products.</p>";
-    return;
-  }
-
-  products = data || [];
-  container.innerHTML = "";
-
-  if (!products.length) {
-    container.innerHTML =
-      "<p style='grid-column:1/-1;text-align:center;color:#888;'>No pieces available right now 🍒</p>";
-    return;
-  }
-
-  products.forEach(product => {
-    const article = document.createElement("article");
-    article.className = "product";
-
-    article.innerHTML = `
-      <div class="product-image">
-        ${
-          product.image_url
-            ? `<img
-                src="${product.image_url}"
-                alt="${escapeHTML(product.name)}"
-                style="width:100%;height:100%;object-fit:cover;"
-              >`
-            : `<div class="placeholder">🍒</div>`
-        }
-      </div>
-
-      <div class="product-info">
-        <div>
-          <div class="product-name">
-            ${escapeHTML(product.name)}
-          </div>
-
-          <div class="product-meta">
-            ${escapeHTML(product.category || "")}
-            ${product.size ? " · " + escapeHTML(product.size) : ""}
-          </div>
-        </div>
-
-        <div>
-          <div class="price">
-            Rs. ${Number(product.price).toLocaleString()}
-          </div>
-
-          <button
-            class="add-to-bag"
-            onclick="addToBag(${product.id})"
-          >
-            Add to Bag
-          </button>
-        </div>
-      </div>
-    `;
-
-    container.appendChild(article);
-  });
-
-  updateBagButton();
-}
-
-
-/* CART */
-
-function saveCart() {
-  localStorage.setItem("cherryClubCart", JSON.stringify(cart));
-}
-
-function loadCart() {
-  try {
-    const saved = localStorage.getItem("cherryClubCart");
-    if (saved) cart = JSON.parse(saved);
-  } catch {
-    cart = [];
-  }
-}
-
-function addToBag(productId) {
-  const product = products.find(
-    p => Number(p.id) === Number(productId)
-  );
-
-  if (!product) return;
-
-  const existing = cart.find(
-    item => Number(item.id) === Number(productId)
-  );
-
-  if (existing) {
-    existing.quantity += 1;
-  } else {
-    cart.push({
-      id: product.id,
-      name: product.name,
-      price: Number(product.price),
-      size: product.size || "",
-      image_url: product.image_url || "",
-      quantity: 1
-    });
-  }
-
-  saveCart();
-  updateBagButton();
-  openCart();
-}
-
-function changeQuantity(productId, amount) {
-  const item = cart.find(
-    item => Number(item.id) === Number(productId)
-  );
-
-  if (!item) return;
-
-  item.quantity += amount;
-
-  if (item.quantity <= 0) {
-    cart = cart.filter(
-      item => Number(item.id) !== Number(productId)
-    );
-  }
-
-  saveCart();
-  renderCart();
-  updateBagButton();
-}
-
-function removeFromBag(productId) {
-  cart = cart.filter(
-    item => Number(item.id) !== Number(productId)
-  );
-
-  saveCart();
-  renderCart();
-  updateBagButton();
-}
-
-function cartSubtotal() {
-  return cart.reduce(
-    (total, item) =>
-      total + Number(item.price) * Number(item.quantity),
-    0
-  );
-}
-
-function cartTotal() {
-  return cart.length
-    ? cartSubtotal() + DELIVERY_FEE
-    : 0;
-}
-
-function updateBagButton() {
-  const button = document.querySelector(".bag-button");
-  if (!button) return;
-
-  const count = cart.reduce(
-    (total, item) => total + Number(item.quantity),
-    0
-  );
-
-  button.innerHTML = count > 0 ? `♡ ${count}` : "♡";
-}
-
-
-/* CHECKOUT UI */
-
-function createStoreUI() {
-
-  const style = document.createElement("style");
-
-  style.innerHTML = `
-    .add-to-bag {
-      margin-top: 9px;
-      border: 0;
-      border-bottom: 1px solid #111;
-      background: none;
-      padding: 4px 0;
-      cursor: pointer;
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-    }
-
-    .add-to-bag:hover {
-      color: #a20f20;
-      border-color: #a20f20;
-    }
-
-    .cherry-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.45);
-      z-index: 5000;
-      opacity: 0;
-      visibility: hidden;
-      transition: .3s ease;
-    }
-
-    .cherry-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .cherry-cart {
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: min(440px,94vw);
-      height: 100%;
-      background: #f5f1eb;
-      padding: 35px;
-      overflow-y: auto;
-      transform: translateX(100%);
-      transition: .4s cubic-bezier(.7,0,.2,1);
-    }
-
-    .cherry-overlay.active .cherry-cart {
-      transform: translateX(0);
-    }
-
-    .cherry-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-    }
-
-    .cherry-title {
-      font-family: 'Playfair Display',serif;
-      font-size: 38px;
-    }
-
-    .cherry-close {
-      border: 0;
-      background: none;
-      font-size: 27px;
-      cursor: pointer;
-    }
-
-    .cart-item {
-      display: grid;
-      grid-template-columns: 80px 1fr;
-      gap: 15px;
-      padding: 18px 0;
-      border-bottom: 1px solid #ddd7d0;
-    }
-
-    .cart-image {
-      width: 80px;
-      height: 100px;
-      background: #ddd6cf;
-      object-fit: cover;
-    }
-
-    .cart-name {
-      font-size: 13px;
-    }
-
-    .cart-meta {
-      color: #888;
-      font-size: 10px;
-      margin-top: 5px;
-    }
-
-    .cart-price {
-      margin-top: 10px;
-      font-size: 12px;
-    }
-
-    .quantity-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 12px;
-    }
-
-    .quantity-row button {
-      width: 25px;
-      height: 25px;
-      border: 1px solid #ccc;
-      background: white;
-      cursor: pointer;
-    }
-
-    .remove-item {
-      width: auto !important;
-      border: 0 !important;
-      background: none !important;
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .cart-summary {
-      margin-top: 30px;
-      padding-top: 20px;
-      border-top: 1px solid #111;
-    }
-
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 12px;
-      font-size: 12px;
-    }
-
-    .summary-total {
-      font-size: 16px;
-      font-weight: 600;
-      padding-top: 12px;
-      border-top: 1px solid #ddd7d0;
-    }
-
-    .checkout-button {
-      width: 100%;
-      border: 0;
-      background: #111;
-      color: white;
-      padding: 17px;
-      margin-top: 20px;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-size: 10px;
-    }
-
-    .checkout-button:hover {
-      background: #a20f20;
-    }
-
-    .empty-cart {
-      text-align: center;
-      color: #777;
-      padding: 70px 0;
-      font-size: 13px;
-    }
-
-    .checkout-box,
-    .success-box {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%,-50%);
-      width: min(600px,94vw);
-      max-height: 92vh;
-      overflow-y: auto;
-      background: #f5f1eb;
-      padding: 35px;
-    }
-
-    .success-box {
-      width: min(500px,92vw);
-      text-align: center;
-    }
-
-    .checkout-title {
-      font-family: 'Playfair Display',serif;
-      font-size: 42px;
-      margin-bottom: 25px;
-    }
-
-    .checkout-field {
-      margin-bottom: 17px;
-    }
-
-    .checkout-field label {
-      display: block;
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 7px;
-      color: #777;
-    }
-
-    .checkout-field input,
-    .checkout-field textarea {
-      width: 100%;
-      border: 1px solid #d4cec7;
-      background: white;
-      padding: 13px;
-      font: inherit;
-      font-size: 13px;
-      outline: none;
-    }
-
-    .checkout-field textarea {
-      min-height: 90px;
-      resize: vertical;
-    }
-
-    .jazzcash-box {
-      background: #111;
-      color: white;
-      padding: 25px;
-      margin: 25px 0;
-    }
-
-    .jazzcash-box h3 {
-      font-family: 'Playfair Display',serif;
-      font-size: 26px;
-      margin-bottom: 12px;
-    }
-
-    .jazzcash-details {
-      margin: 15px 0;
-      line-height: 1.9;
-      font-size: 12px;
-    }
-
-    .jazzcash-instructions {
-      color: #aaa;
-      font-size: 11px;
-      line-height: 1.8;
-    }
-
-    .order-total {
-      display: flex;
-      justify-content: space-between;
-      border-top: 1px solid #ddd7d0;
-      padding-top: 18px;
-      margin-top: 20px;
-    }
-
-    .success-box h2 {
-      font-family: 'Playfair Display',serif;
-      font-size: 45px;
-      font-weight: 500;
-    }
-
-    .success-box p {
-      color: #666;
-      font-size: 13px;
-      line-height: 1.8;
-      margin-top: 18px;
-    }
-  `;
-
-  document.head.appendChild(style);
-
-
-  /* CART DRAWER */
-
-  const cartOverlay = document.createElement("div");
-
-  cartOverlay.id = "cherry-cart";
-  cartOverlay.className = "cherry-overlay";
-
-  cartOverlay.innerHTML = `
     <div class="cherry-cart">
 
       <div class="cherry-header">
@@ -1812,7 +1669,9 @@ function createStoreUI() {
 
         <button
           class="cherry-close"
+          type="button"
           onclick="closeCart()"
+          aria-label="Close cart"
         >
           ×
         </button>
@@ -1822,24 +1681,26 @@ function createStoreUI() {
       <div id="cart-items"></div>
 
     </div>
-  `;
 
-  document.body.appendChild(cartOverlay);
+  </div>
 
 
-  /* CHECKOUT */
+  <!-- =========================
+       CHECKOUT
+       ========================= -->
 
-  const checkoutOverlay = document.createElement("div");
+  <div
+    class="cherry-overlay"
+    id="cherry-checkout"
+  >
 
-  checkoutOverlay.id = "cherry-checkout";
-  checkoutOverlay.className = "cherry-overlay";
-
-  checkoutOverlay.innerHTML = `
     <div class="checkout-box">
 
       <button
         class="cherry-close"
+        type="button"
         onclick="closeCheckout()"
+        aria-label="Close checkout"
         style="position:absolute;right:25px;top:20px;"
       >
         ×
@@ -1852,24 +1713,67 @@ function createStoreUI() {
       <form id="checkout-form">
 
         <div class="checkout-field">
-          <label>Full Name</label>
-          <input id="customer-name" required>
+
+          <label for="customer-name">
+            Full Name
+          </label>
+
+          <input
+            id="customer-name"
+            type="text"
+            autocomplete="name"
+            required
+          >
+
         </div>
 
-        <div class="checkout-field">
-          <label>Phone Number</label>
-          <input id="customer-phone" type="tel" required>
-        </div>
 
         <div class="checkout-field">
-          <label>City</label>
-          <input id="customer-city" required>
+
+          <label for="customer-phone">
+            Phone Number
+          </label>
+
+          <input
+            id="customer-phone"
+            type="tel"
+            autocomplete="tel"
+            required
+          >
+
         </div>
 
+
         <div class="checkout-field">
-          <label>Delivery Address</label>
-          <textarea id="customer-address" required></textarea>
+
+          <label for="customer-city">
+            City
+          </label>
+
+          <input
+            id="customer-city"
+            type="text"
+            autocomplete="address-level2"
+            required
+          >
+
         </div>
+
+
+        <div class="checkout-field">
+
+          <label for="customer-address">
+            Delivery Address
+          </label>
+
+          <textarea
+            id="customer-address"
+            autocomplete="street-address"
+            required
+          ></textarea>
+
+        </div>
+
 
         <div class="jazzcash-box">
 
@@ -1878,14 +1782,19 @@ function createStoreUI() {
           </h3>
 
           <div class="jazzcash-details">
+
             <strong>Account name:</strong>
-            ${JAZZCASH_NAME}
+            Areej Fatima
+
             <br>
+
             <strong>JazzCash number:</strong>
-            ${JAZZCASH_NUMBER}
+            03054400537
+
           </div>
 
           <div class="jazzcash-instructions">
+
             1. Check your total below.<br>
             2. Send the exact amount manually to
             the JazzCash account above.<br>
@@ -1893,33 +1802,47 @@ function createStoreUI() {
             4. Enter your JazzCash transaction/reference
             number below.<br>
             5. Submit your order.
+
             <br><br>
+
             <strong>
               Your order will remain pending until
               Cherry Club verifies your payment.
             </strong>
+
           </div>
 
         </div>
 
+
         <div class="checkout-field">
-          <label>
+
+          <label for="transaction-id">
             JazzCash Transaction / Reference Number
           </label>
 
           <input
             id="transaction-id"
+            type="text"
             required
             placeholder="Enter your transaction ID"
           >
+
         </div>
 
+
         <div class="order-total">
-          <span>Total</span>
+
+          <span>
+            Total
+          </span>
+
           <strong id="checkout-total">
             Rs. 0
           </strong>
+
         </div>
+
 
         <button
           class="checkout-button"
@@ -1932,24 +1855,26 @@ function createStoreUI() {
       </form>
 
     </div>
-  `;
 
-  document.body.appendChild(checkoutOverlay);
+  </div>
 
 
-  /* SUCCESS */
+  <!-- =========================
+       SUCCESS
+       ========================= -->
 
-  const successOverlay = document.createElement("div");
+  <div
+    class="cherry-overlay"
+    id="cherry-success"
+  >
 
-  successOverlay.id = "cherry-success";
-  successOverlay.className = "cherry-overlay";
-
-  successOverlay.innerHTML = `
     <div class="success-box">
 
       <button
         class="cherry-close"
+        type="button"
         onclick="closeSuccess()"
+        aria-label="Close"
         style="position:absolute;right:20px;top:15px;"
       >
         ×
@@ -1973,494 +1898,1670 @@ function createStoreUI() {
 
       <button
         class="checkout-button"
+        type="button"
         onclick="closeSuccess()"
       >
         Done
       </button>
 
     </div>
-  `;
 
-  document.body.appendChild(successOverlay);
-
-
-  document
-    .getElementById("checkout-form")
-    .addEventListener("submit", submitOrder);
+  </div>
 
 
-  cartOverlay.addEventListener("click", event => {
-    if (event.target === cartOverlay) {
-      closeCart();
+  <!-- =========================
+       JAVASCRIPT
+       ========================= -->
+
+  <script>
+
+    /* =========================================
+       SUPABASE
+       ========================================= */
+
+    const SUPABASE_URL =
+      'https://jqpkvttexoekaoylwtkg.supabase.co';
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      'sb_publishable_QzAhQAxVVhrOdR0zhPbHBg_5c0LDxKF';
+
+    let supabaseClient = null;
+
+    try {
+
+      if (
+        typeof supabase === "undefined" ||
+        typeof supabase.createClient !== "function"
+      ) {
+        throw new Error(
+          "Supabase library failed to load."
+        );
+      }
+
+      supabaseClient =
+        supabase.createClient(
+          SUPABASE_URL,
+          SUPABASE_PUBLISHABLE_KEY
+        );
+
+    } catch (error) {
+
+      console.error(
+        "Supabase initialization error:",
+        error
+      );
+
     }
-  });
 
-  checkoutOverlay.addEventListener("click", event => {
-    if (event.target === checkoutOverlay) {
-      closeCheckout();
+
+    /* =========================================
+       SETTINGS
+       ========================================= */
+
+    const DELIVERY_FEE = 370;
+
+    const JAZZCASH_NAME =
+      "Areej Fatima";
+
+    const JAZZCASH_NUMBER =
+      "03054400537";
+
+
+    /* =========================================
+       STATE
+       ========================================= */
+
+    let products = [];
+
+    let cart = [];
+
+
+    /* =========================================
+       HTML ESCAPING
+       ========================================= */
+
+    function escapeHTML(value) {
+
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
     }
-  });
-}
 
 
-/* RENDER CART */
+    /* =========================================
+       MONEY
+       ========================================= */
 
-function renderCart() {
+    function formatMoney(value) {
 
-  const container =
-    document.getElementById("cart-items");
+      const number =
+        Number(value) || 0;
 
-  if (!container) return;
+      return number.toLocaleString(
+        "en-PK"
+      );
 
-  if (!cart.length) {
+    }
 
-    container.innerHTML = `
-      <div class="empty-cart">
-        Your bag is empty 🍒
-      </div>
-    `;
 
-    return;
-  }
+    /* =========================================
+       PRODUCT IMAGE
+       ========================================= */
 
-  let html = "";
+    function createProductImage(product) {
 
-  cart.forEach(item => {
+      if (!product.image_url) {
 
-    html += `
-      <div class="cart-item">
+        return `
+          <div class="placeholder">
+            🍒
+          </div>
+        `;
 
-        ${
-          item.image_url
-            ? `<img
-                class="cart-image"
-                src="${item.image_url}"
-                alt="${escapeHTML(item.name)}"
-              >`
-            : `<div class="cart-image"></div>`
+      }
+
+      const safeUrl =
+        escapeHTML(product.image_url);
+
+      const safeName =
+        escapeHTML(product.name);
+
+      return `
+        <img
+          src="${safeUrl}"
+          alt="${safeName}"
+          loading="lazy"
+          onerror="this.style.display='none';this.parentElement.querySelector('.image-fallback').style.display='flex';"
+        >
+
+        <div
+          class="placeholder image-fallback"
+          style="display:none;"
+        >
+          🍒
+        </div>
+      `;
+
+    }
+
+
+    /* =========================================
+       LOAD PRODUCTS
+       ========================================= */
+
+    async function loadProducts() {
+
+      const container =
+        document.getElementById(
+          "products-container"
+        );
+
+      if (!container) {
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="loading-message">
+          Loading the drop 🍒
+        </div>
+      `;
+
+
+      if (!supabaseClient) {
+
+        container.innerHTML = `
+          <div class="products-error">
+            The shop connection could not be started.
+            <br>
+            Please refresh the page.
+            <br>
+            <button
+              class="retry-products"
+              type="button"
+              onclick="loadProducts()"
+            >
+              Try again
+            </button>
+          </div>
+        `;
+
+        return;
+      }
+
+
+      try {
+
+        /*
+          We select the columns we actually use.
+          This avoids the frontend breaking because of
+          unrelated columns in the products table.
+        */
+
+        const {
+          data,
+          error
+        } = await supabaseClient
+          .from("products")
+          .select(
+            "id,name,category,price,size,status,image_url,description,created_at"
+          )
+          .eq(
+            "status",
+            "available"
+          )
+          .order(
+            "created_at",
+            {
+              ascending: false
+            }
+          );
+
+
+        console.log(
+          "Cherry Club products:",
+          data
+        );
+
+        console.log(
+          "Cherry Club product error:",
+          error
+        );
+
+
+        if (error) {
+          throw error;
         }
 
-        <div>
 
-          <div class="cart-name">
-            ${escapeHTML(item.name)}
-          </div>
+        products =
+          Array.isArray(data)
+            ? data
+            : [];
 
-          ${
-            item.size
-              ? `<div class="cart-meta">
-                  Size: ${escapeHTML(item.size)}
-                </div>`
-              : ""
+
+        if (!products.length) {
+
+          container.innerHTML = `
+            <div class="empty-products">
+              No pieces available right now 🍒
+            </div>
+          `;
+
+          updateBagButton();
+
+          return;
+        }
+
+
+        container.innerHTML = "";
+
+
+        products.forEach(
+          product => {
+
+            const article =
+              document.createElement(
+                "article"
+              );
+
+            article.className =
+              "product";
+
+
+            const category =
+              product.category
+                ? escapeHTML(
+                    product.category
+                  )
+                : "";
+
+
+            const size =
+              product.size
+                ? escapeHTML(
+                    product.size
+                  )
+                : "";
+
+
+            const meta =
+              [category, size]
+                .filter(Boolean)
+                .join(" · ");
+
+
+            article.innerHTML = `
+
+              <div class="product-image">
+
+                ${createProductImage(product)}
+
+                ${
+                  category
+                    ? `
+                      <div class="tag">
+                        ${category}
+                      </div>
+                    `
+                    : ""
+                }
+
+              </div>
+
+
+              <div class="product-info">
+
+                <div>
+
+                  <div class="product-name">
+                    ${escapeHTML(product.name)}
+                  </div>
+
+                  ${
+                    meta
+                      ? `
+                        <div class="product-meta">
+                          ${meta}
+                        </div>
+                      `
+                      : ""
+                  }
+
+                </div>
+
+
+                <div>
+
+                  <div class="price">
+                    Rs. ${formatMoney(product.price)}
+                  </div>
+
+                  <button
+                    class="add-to-bag"
+                    type="button"
+                    data-product-id="${escapeHTML(product.id)}"
+                  >
+                    Add to Bag
+                  </button>
+
+                </div>
+
+              </div>
+            `;
+
+
+            const addButton =
+              article.querySelector(
+                ".add-to-bag"
+              );
+
+
+            addButton.addEventListener(
+              "click",
+              function(event) {
+
+                event.stopPropagation();
+
+                addToBag(
+                  product.id
+                );
+
+              }
+            );
+
+
+            container.appendChild(
+              article
+            );
+
           }
+        );
 
-          <div class="cart-price">
-            Rs. ${Number(item.price).toLocaleString()}
+
+        updateBagButton();
+
+
+      } catch (error) {
+
+        console.error(
+          "Error loading products:",
+          error
+        );
+
+
+        container.innerHTML = `
+          <div class="products-error">
+
+            Unable to load the drop right now 🍒
+
+            <br>
+
+            <small>
+              ${escapeHTML(
+                error.message ||
+                "Unknown Supabase error"
+              )}
+            </small>
+
+            <br>
+
+            <button
+              class="retry-products"
+              type="button"
+              onclick="loadProducts()"
+            >
+              Try again
+            </button>
+
+          </div>
+        `;
+
+      }
+
+    }
+
+
+    /* =========================================
+       CART STORAGE
+       ========================================= */
+
+    function saveCart() {
+
+      try {
+
+        localStorage.setItem(
+          "cherryClubCart",
+          JSON.stringify(cart)
+        );
+
+      } catch (error) {
+
+        console.error(
+          "Could not save cart:",
+          error
+        );
+
+      }
+
+    }
+
+
+    function loadCart() {
+
+      try {
+
+        const saved =
+          localStorage.getItem(
+            "cherryClubCart"
+          );
+
+
+        if (!saved) {
+          cart = [];
+          return;
+        }
+
+
+        const parsed =
+          JSON.parse(saved);
+
+
+        cart =
+          Array.isArray(parsed)
+            ? parsed
+            : [];
+
+
+      } catch (error) {
+
+        console.error(
+          "Could not load cart:",
+          error
+        );
+
+        cart = [];
+
+      }
+
+    }
+
+
+    /* =========================================
+       CART
+       ========================================= */
+
+    function addToBag(productId) {
+
+      const product =
+        products.find(
+          item =>
+            String(item.id) ===
+            String(productId)
+        );
+
+
+      if (!product) {
+
+        alert(
+          "Sorry, this item is no longer available."
+        );
+
+        return;
+      }
+
+
+      const existing =
+        cart.find(
+          item =>
+            String(item.id) ===
+            String(productId)
+        );
+
+
+      if (existing) {
+
+        existing.quantity += 1;
+
+      } else {
+
+        cart.push({
+
+          id: product.id,
+
+          name: product.name,
+
+          price:
+            Number(product.price) || 0,
+
+          size:
+            product.size || "",
+
+          image_url:
+            product.image_url || "",
+
+          quantity: 1
+
+        });
+
+      }
+
+
+      saveCart();
+
+      updateBagButton();
+
+      openCart();
+
+    }
+
+
+    function changeQuantity(
+      productId,
+      amount
+    ) {
+
+      const item =
+        cart.find(
+          current =>
+            String(current.id) ===
+            String(productId)
+        );
+
+
+      if (!item) {
+        return;
+      }
+
+
+      item.quantity += amount;
+
+
+      if (item.quantity <= 0) {
+
+        cart =
+          cart.filter(
+            current =>
+              String(current.id) !==
+              String(productId)
+          );
+
+      }
+
+
+      saveCart();
+
+      renderCart();
+
+      updateBagButton();
+
+    }
+
+
+    function removeFromBag(
+      productId
+    ) {
+
+      cart =
+        cart.filter(
+          item =>
+            String(item.id) !==
+            String(productId)
+        );
+
+
+      saveCart();
+
+      renderCart();
+
+      updateBagButton();
+
+    }
+
+
+    function cartSubtotal() {
+
+      return cart.reduce(
+        (total, item) => {
+
+          return (
+            total +
+            (
+              Number(item.price) || 0
+            ) *
+            (
+              Number(item.quantity) || 0
+            )
+          );
+
+        },
+        0
+      );
+
+    }
+
+
+    function cartTotal() {
+
+      if (!cart.length) {
+        return 0;
+      }
+
+      return (
+        cartSubtotal() +
+        DELIVERY_FEE
+      );
+
+    }
+
+
+    function updateBagButton() {
+
+      const button =
+        document.querySelector(
+          ".bag-button"
+        );
+
+
+      if (!button) {
+        return;
+      }
+
+
+      const count =
+        cart.reduce(
+          (
+            total,
+            item
+          ) =>
+            total +
+            (
+              Number(item.quantity) || 0
+            ),
+          0
+        );
+
+
+      button.textContent =
+        count > 0
+          ? `♡ ${count}`
+          : "♡";
+
+    }
+
+
+    /* =========================================
+       RENDER CART
+       ========================================= */
+
+    function renderCart() {
+
+      const container =
+        document.getElementById(
+          "cart-items"
+        );
+
+
+      if (!container) {
+        return;
+      }
+
+
+      if (!cart.length) {
+
+        container.innerHTML = `
+          <div class="empty-cart">
+            Your bag is empty 🍒
+          </div>
+        `;
+
+        return;
+      }
+
+
+      let html = "";
+
+
+      cart.forEach(
+        item => {
+
+          html += `
+
+            <div class="cart-item">
+
+              ${
+                item.image_url
+                  ? `
+                    <img
+                      class="cart-image"
+                      src="${escapeHTML(item.image_url)}"
+                      alt="${escapeHTML(item.name)}"
+                    >
+                  `
+                  : `
+                    <div class="cart-image">
+                      <div class="placeholder">
+                        🍒
+                      </div>
+                    </div>
+                  `
+              }
+
+
+              <div>
+
+                <div class="cart-name">
+                  ${escapeHTML(item.name)}
+                </div>
+
+
+                ${
+                  item.size
+                    ? `
+                      <div class="cart-meta">
+                        Size:
+                        ${escapeHTML(item.size)}
+                      </div>
+                    `
+                    : ""
+                }
+
+
+                <div class="cart-price">
+                  Rs. ${formatMoney(item.price)}
+                </div>
+
+
+                <div class="quantity-row">
+
+                  <button
+                    type="button"
+                    onclick="changeQuantity('${escapeHTML(item.id)}', -1)"
+                  >
+                    −
+                  </button>
+
+                  <span>
+                    ${Number(item.quantity) || 0}
+                  </span>
+
+                  <button
+                    type="button"
+                    onclick="changeQuantity('${escapeHTML(item.id)}', 1)"
+                  >
+                    +
+                  </button>
+
+                  <button
+                    class="remove-item"
+                    type="button"
+                    onclick="removeFromBag('${escapeHTML(item.id)}')"
+                  >
+                    Remove
+                  </button>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      );
+
+
+      html += `
+
+        <div class="cart-summary">
+
+          <div class="summary-row">
+
+            <span>
+              Subtotal
+            </span>
+
+            <span>
+              Rs. ${formatMoney(cartSubtotal())}
+            </span>
+
           </div>
 
-          <div class="quantity-row">
 
-            <button
-              onclick="changeQuantity(${item.id},-1)"
-            >
-              −
-            </button>
+          <div class="summary-row">
 
-            <span>${item.quantity}</span>
+            <span>
+              Delivery
+            </span>
 
-            <button
-              onclick="changeQuantity(${item.id},1)"
-            >
-              +
-            </button>
-
-            <button
-              class="remove-item"
-              onclick="removeFromBag(${item.id})"
-            >
-              Remove
-            </button>
+            <span>
+              Rs. ${formatMoney(DELIVERY_FEE)}
+            </span>
 
           </div>
+
+
+          <div class="summary-row summary-total">
+
+            <span>
+              Total
+            </span>
+
+            <span>
+              Rs. ${formatMoney(cartTotal())}
+            </span>
+
+          </div>
+
+
+          <button
+            class="checkout-button"
+            type="button"
+            onclick="openCheckout()"
+          >
+            Proceed to Checkout →
+          </button>
 
         </div>
 
-      </div>
-    `;
-  });
+      `;
 
 
-  html += `
-    <div class="cart-summary">
+      container.innerHTML =
+        html;
 
-      <div class="summary-row">
-        <span>Subtotal</span>
-        <span>
-          Rs. ${cartSubtotal().toLocaleString()}
-        </span>
-      </div>
-
-      <div class="summary-row">
-        <span>Delivery</span>
-        <span>
-          Rs. ${DELIVERY_FEE.toLocaleString()}
-        </span>
-      </div>
-
-      <div class="summary-row summary-total">
-        <span>Total</span>
-        <span>
-          Rs. ${cartTotal().toLocaleString()}
-        </span>
-      </div>
-
-      <button
-        class="checkout-button"
-        onclick="openCheckout()"
-      >
-        Proceed to Checkout →
-      </button>
-
-    </div>
-  `;
-
-  container.innerHTML = html;
-}
-
-
-/* OPEN / CLOSE CART */
-
-function openCart() {
-  renderCart();
-
-  document
-    .getElementById("cherry-cart")
-    .classList.add("active");
-}
-
-function closeCart() {
-  document
-    .getElementById("cherry-cart")
-    .classList.remove("active");
-}
-
-
-/* CHECKOUT */
-
-function openCheckout() {
-
-  if (!cart.length) {
-    alert("Your bag is empty 🍒");
-    return;
-  }
-
-  closeCart();
-
-  document
-    .getElementById("checkout-total")
-    .textContent =
-    `Rs. ${cartTotal().toLocaleString()}`;
-
-  document
-    .getElementById("cherry-checkout")
-    .classList.add("active");
-}
-
-function closeCheckout() {
-  document
-    .getElementById("cherry-checkout")
-    .classList.remove("active");
-}
-
-
-/* SUBMIT ORDER */
-
-async function submitOrder(event) {
-
-  event.preventDefault();
-
-  if (!cart.length) {
-    alert("Your bag is empty.");
-    return;
-  }
-
-  const button =
-    document.getElementById(
-      "place-order-button"
-    );
-
-  button.disabled = true;
-  button.textContent =
-    "Submitting order...";
-
-
-  const customerName =
-    document.getElementById(
-      "customer-name"
-    ).value.trim();
-
-  const customerPhone =
-    document.getElementById(
-      "customer-phone"
-    ).value.trim();
-
-  const customerCity =
-    document.getElementById(
-      "customer-city"
-    ).value.trim();
-
-  const customerAddress =
-    document.getElementById(
-      "customer-address"
-    ).value.trim();
-
-  const transactionId =
-    document.getElementById(
-      "transaction-id"
-    ).value.trim();
-
-
-  try {
-
-    /* CREATE ORDER */
-
-    const {
-      data: order,
-      error: orderError
-    } = await supabaseClient
-      .from("orders")
-      .insert({
-
-        customer_name: customerName,
-
-        phone: customerPhone,
-
-        address: customerAddress,
-
-        city: customerCity,
-
-        payment_method: "JazzCash",
-
-        transaction_id: transactionId,
-
-        total: cartTotal(),
-
-        status: "pending"
-
-      })
-      .select()
-      .single();
-
-
-    if (orderError) {
-
-      console.error(
-        "Order error:",
-        orderError
-      );
-
-      throw new Error(
-        orderError.message
-      );
-    }
-    if (orderError) {
-      console.error(
-        "Order error:",
-        orderError
-      );
-
-      throw new Error(
-        orderError.message
-      );
     }
 
-    /* SEND ORDER EMAIL */
 
-    const { error: emailError } = await supabaseClient.functions.invoke(
-      "smooth-worker",
-      {
-        body: {
-          customer_name: customerName,
-          phone: customerPhone,
-          address: customerAddress,
-          city: customerCity,
-          transaction_id: transactionId,
-          total: cartTotal(),
-          order_id: order.id
+    /* =========================================
+       CART OPEN / CLOSE
+       ========================================= */
+
+    function openCart() {
+
+      renderCart();
+
+      const overlay =
+        document.getElementById(
+          "cherry-cart"
+        );
+
+
+      if (!overlay) {
+        return;
+      }
+
+
+      overlay.classList.add(
+        "active"
+      );
+
+      document.body.classList.add(
+        "no-scroll"
+      );
+
+    }
+
+
+    function closeCart() {
+
+      const overlay =
+        document.getElementById(
+          "cherry-cart"
+        );
+
+
+      if (!overlay) {
+        return;
+      }
+
+
+      overlay.classList.remove(
+        "active"
+      );
+
+      if (
+        !document.querySelector(
+          ".cherry-overlay.active"
+        )
+      ) {
+        document.body.classList.remove(
+          "no-scroll"
+        );
+      }
+
+    }
+
+
+    /* =========================================
+       CHECKOUT
+       ========================================= */
+
+    function openCheckout() {
+
+      if (!cart.length) {
+
+        alert(
+          "Your bag is empty 🍒"
+        );
+
+        return;
+      }
+
+
+      closeCart();
+
+
+      const total =
+        document.getElementById(
+          "checkout-total"
+        );
+
+
+      if (total) {
+
+        total.textContent =
+          `Rs. ${formatMoney(cartTotal())}`;
+
+      }
+
+
+      const overlay =
+        document.getElementById(
+          "cherry-checkout"
+        );
+
+
+      if (overlay) {
+
+        overlay.classList.add(
+          "active"
+        );
+
+        document.body.classList.add(
+          "no-scroll"
+        );
+
+      }
+
+    }
+
+
+    function closeCheckout() {
+
+      const overlay =
+        document.getElementById(
+          "cherry-checkout"
+        );
+
+
+      if (!overlay) {
+        return;
+      }
+
+
+      overlay.classList.remove(
+        "active"
+      );
+
+
+      if (
+        !document.querySelector(
+          ".cherry-overlay.active"
+        )
+      ) {
+
+        document.body.classList.remove(
+          "no-scroll"
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       SUBMIT ORDER
+       ========================================= */
+
+    async function submitOrder(
+      event
+    ) {
+
+      event.preventDefault();
+
+
+      if (!cart.length) {
+
+        alert(
+          "Your bag is empty 🍒"
+        );
+
+        return;
+
+      }
+
+
+      if (!supabaseClient) {
+
+        alert(
+          "The shop connection is unavailable. Please refresh the page and try again."
+        );
+
+        return;
+
+      }
+
+
+      const button =
+        document.getElementById(
+          "place-order-button"
+        );
+
+
+      button.disabled = true;
+
+      button.textContent =
+        "Submitting order...";
+
+
+      const customerName =
+        document.getElementById(
+          "customer-name"
+        ).value.trim();
+
+
+      const customerPhone =
+        document.getElementById(
+          "customer-phone"
+        ).value.trim();
+
+
+      const customerCity =
+        document.getElementById(
+          "customer-city"
+        ).value.trim();
+
+
+      const customerAddress =
+        document.getElementById(
+          "customer-address"
+        ).value.trim();
+
+
+      const transactionId =
+        document.getElementById(
+          "transaction-id"
+        ).value.trim();
+
+
+      try {
+
+        /*
+          STEP 1:
+          CREATE THE ORDER
+        */
+
+        const {
+          data: order,
+          error: orderError
+        } =
+          await supabaseClient
+            .from("orders")
+            .insert({
+
+              customer_name:
+                customerName,
+
+              phone:
+                customerPhone,
+
+              address:
+                customerAddress,
+
+              city:
+                customerCity,
+
+              payment_method:
+                "JazzCash",
+
+              transaction_id:
+                transactionId,
+
+              total:
+                cartTotal(),
+
+              status:
+                "pending"
+
+            })
+            .select()
+            .single();
+
+
+        if (orderError) {
+
+          console.error(
+            "Order error:",
+            orderError
+          );
+
+          throw new Error(
+            orderError.message
+          );
+
         }
+
+
+        if (!order || !order.id) {
+
+          throw new Error(
+            "The order could not be created."
+          );
+
+        }
+
+
+        /*
+          STEP 2:
+          CREATE ORDER ITEMS
+
+          This is the section that was
+          syntactically broken in your old file.
+        */
+
+        const items =
+          cart.map(
+            item => ({
+
+              order_id:
+                order.id,
+
+              product_id:
+                item.id,
+
+              product_name:
+                item.name,
+
+              size:
+                item.size || null,
+
+              price:
+                Number(item.price) || 0,
+
+              quantity:
+                Number(item.quantity) || 1
+
+            })
+          );
+
+
+        const {
+          error: itemsError
+        } =
+          await supabaseClient
+            .from("order_items")
+            .insert(items);
+
+
+        if (itemsError) {
+
+          console.error(
+            "Order items error:",
+            itemsError
+          );
+
+          /*
+            The order itself exists, so we tell
+            the customer exactly what happened
+            instead of pretending everything worked.
+          */
+
+          throw new Error(
+            "Your order was created, but the products could not be attached to it. Please contact Cherry Club before placing another order."
+          );
+
+        }
+
+
+        /*
+          STEP 3:
+          OPTIONAL EMAIL FUNCTION
+
+          IMPORTANT:
+          If smooth-worker doesn't exist or fails,
+          it will NOT cancel an otherwise successful order.
+        */
+
+        try {
+
+          const {
+            error: emailError
+          } =
+            await supabaseClient.functions.invoke(
+              "smooth-worker",
+              {
+                body: {
+
+                  customer_name:
+                    customerName,
+
+                  phone:
+                    customerPhone,
+
+                  address:
+                    customerAddress,
+
+                  city:
+                    customerCity,
+
+                  transaction_id:
+                    transactionId,
+
+                  total:
+                    cartTotal(),
+
+                  order_id:
+                    order.id
+
+                }
+              }
+            );
+
+
+          if (emailError) {
+
+            console.warn(
+              "Optional order email failed:",
+              emailError
+            );
+
+          }
+
+        } catch (emailError) {
+
+          console.warn(
+            "Optional email function unavailable:",
+            emailError
+          );
+
+        }
+
+
+        /*
+          STEP 4:
+          CLEAR CART
+        */
+
+        cart = [];
+
+        try {
+
+          localStorage.removeItem(
+            "cherryClubCart"
+          );
+
+        } catch (storageError) {
+
+          console.warn(
+            "Could not clear local cart storage:",
+            storageError
+          );
+
+        }
+
+
+        updateBagButton();
+
+
+        /*
+          STEP 5:
+          RESET FORM
+        */
+
+        const form =
+          document.getElementById(
+            "checkout-form"
+          );
+
+
+        if (form) {
+          form.reset();
+        }
+
+
+        closeCheckout();
+
+
+        /*
+          STEP 6:
+          SUCCESS MESSAGE
+        */
+
+        const orderNumber =
+          document.getElementById(
+            "success-order-number"
+          );
+
+
+        if (orderNumber) {
+
+          orderNumber.textContent =
+            `Order ID: ${order.id}`;
+
+        }
+
+
+        const successOverlay =
+          document.getElementById(
+            "cherry-success"
+          );
+
+
+        if (successOverlay) {
+
+          successOverlay.classList.add(
+            "active"
+          );
+
+          document.body.classList.add(
+            "no-scroll"
+          );
+
+        }
+
+
+      } catch (error) {
+
+        console.error(
+          "Order submission error:",
+          error
+        );
+
+
+        alert(
+          error.message ||
+          "Something went wrong while placing your order."
+        );
+
+
+      } finally {
+
+        button.disabled = false;
+
+        button.textContent =
+          "Place Order →";
+
+      }
+
+    }
+
+
+    /* =========================================
+       SUCCESS
+       ========================================= */
+
+    function closeSuccess() {
+
+      const overlay =
+        document.getElementById(
+          "cherry-success"
+        );
+
+
+      if (!overlay) {
+        return;
+      }
+
+
+      overlay.classList.remove(
+        "active"
+      );
+
+
+      if (
+        !document.querySelector(
+          ".cherry-overlay.active"
+        )
+      ) {
+
+        document.body.classList.remove(
+          "no-scroll"
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       MENU
+       ========================================= */
+
+    function openMenu() {
+
+      const overlay =
+        document.getElementById(
+          "menuOverlay"
+        );
+
+
+      if (!overlay) {
+        return;
+      }
+
+
+      overlay.classList.add(
+        "active"
+      );
+
+      document.body.classList.add(
+        "no-scroll"
+      );
+
+    }
+
+
+    function closeMenu() {
+
+      const overlay =
+        document.getElementById(
+          "menuOverlay"
+        );
+
+
+      if (!overlay) {
+        return;
+      }
+
+
+      overlay.classList.remove(
+        "active"
+      );
+
+
+      if (
+        !document.querySelector(
+          ".cherry-overlay.active"
+        )
+      ) {
+
+        document.body.classList.remove(
+          "no-scroll"
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       OVERLAY CLICKS
+       ========================================= */
+
+    document.addEventListener(
+      "click",
+      function(event) {
+
+        const menuOverlay =
+          document.getElementById(
+            "menuOverlay"
+          );
+
+
+        if (
+          menuOverlay &&
+          event.target === menuOverlay
+        ) {
+
+          closeMenu();
+
+        }
+
+
+        const cartOverlay =
+          document.getElementById(
+            "cherry-cart"
+          );
+
+
+        if (
+          cartOverlay &&
+          event.target === cartOverlay
+        ) {
+
+          closeCart();
+
+        }
+
+
+        const checkoutOverlay =
+          document.getElementById(
+            "cherry-checkout"
+          );
+
+
+        if (
+          checkoutOverlay &&
+          event.target === checkoutOverlay
+        ) {
+
+          closeCheckout();
+
+        }
+
+
+        const successOverlay =
+          document.getElementById(
+            "cherry-success"
+          );
+
+
+        if (
+          successOverlay &&
+          event.target === successOverlay
+        ) {
+
+          closeSuccess();
+
+        }
+
       }
     );
 
-    if (emailError) {
-      console.error("Email error:", emailError);
-    }
 
-    /* CREATE ORDER ITEMS */
+    /* =========================================
+       ESCAPE KEY
+       ========================================= */
 
-    const items = cart.map(item => ({
+    document.addEventListener(
+      "keydown",
+      function(event) {
 
-    /* CREATE ORDER ITEMS */
-
-    const items = cart.map(item => ({
-
-      order_id: order.id,
-
-      product_id: item.id,
-
-      product_name: item.name,
-
-      size: item.size,
-
-      price: item.price,
-
-      quantity: item.quantity
-
-    }));
+        if (event.key !== "Escape") {
+          return;
+        }
 
 
-    const {
-      error: itemsError
-    } = await supabaseClient
-      .from("order_items")
-      .insert(items);
+        closeMenu();
+        closeCart();
+        closeCheckout();
+        closeSuccess();
 
-
-    if (itemsError) {
-
-      console.error(
-        "Order items error:",
-        itemsError
-      );
-
-      throw new Error(
-        "Your order was created, but the products could not be saved."
-      );
-    }
-
-
-    /* CLEAR CART */
-
-    localStorage.removeItem(
-      "cherryClubCart"
+      }
     );
 
-    cart = [];
 
-    updateBagButton();
+    /* =========================================
+       CHECKOUT FORM
+       ========================================= */
 
-    document
-      .getElementById(
+    const checkoutForm =
+      document.getElementById(
         "checkout-form"
-      )
-      .reset();
-
-    closeCheckout();
+      );
 
 
-    /* SUCCESS */
+    if (checkoutForm) {
 
-    document
-      .getElementById(
-        "success-order-number"
-      )
-      .textContent =
-      `Order ID: ${order.id}`;
+      checkoutForm.addEventListener(
+        "submit",
+        submitOrder
+      );
 
-    document
-      .getElementById(
-        "cherry-success"
-      )
-      .classList.add("active");
-
-
-  } catch (error) {
-
-    console.error(
-      "Order submission error:",
-      error
-    );
-
-    alert(
-      error.message ||
-      "Something went wrong while placing your order."
-    );
-
-  } finally {
-
-    button.disabled = false;
-
-    button.textContent =
-      "Place Order →";
-  }
-}
-
-
-function closeSuccess() {
-
-  document
-    .getElementById(
-      "cherry-success"
-    )
-    .classList.remove("active");
-}
-
-
-/* MENU */
-
-function openMenu() {
-  document
-    .getElementById("menuOverlay")
-    .classList.add("active");
-}
-
-function closeMenu() {
-  document
-    .getElementById("menuOverlay")
-    .classList.remove("active");
-}
-
-document
-  .getElementById("menuOverlay")
-  .addEventListener("click", function(event) {
-
-    if (event.target === this) {
-      closeMenu();
     }
 
-  });
+
+    /* =========================================
+       START EVERYTHING
+       ========================================= */
+
+    async function initializeCherryClub() {
+
+      console.log(
+        "🍒 Cherry Club starting..."
+      );
 
 
-/* BAG BUTTON */
+      loadCart();
 
-document
-  .querySelector(".bag-button")
-  .addEventListener("click", function() {
-    openCart();
-  });
+      updateBagButton();
+
+      await loadProducts();
 
 
-/* ESCAPE HTML */
+      console.log(
+        "🍒 Cherry Club ready."
+      );
 
-function escapeHTML(value) {
-
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
-}
+    }
 
 
-/* START */
+    /*
+      Start after the HTML has fully loaded.
+    */
 
-loadCart();
-createStoreUI();
-loadProducts();
-updateBagButton();
+    if (
+      document.readyState ===
+      "loading"
+    ) {
 
-</script>
+      document.addEventListener(
+        "DOMContentLoaded",
+        initializeCherryClub
+      );
+
+    } else {
+
+      initializeCherryClub();
+
+    }
+
+  </script>
 
 </body>
 </html>
