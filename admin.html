@@ -529,21 +529,21 @@
     .category-help {
       color: #888;
       font-size: 11px;
-      line-height: 1.6;
+      line-height: 1.7;
       margin-bottom: 20px;
     }
 
-    .category-add-box {
-      padding: 20px;
-      background: #faf9f7;
+    .category-add {
       border: 1px solid #e5e0da;
-      margin-bottom: 25px;
+      background: #faf9f7;
+      padding: 20px;
+      margin-bottom: 20px;
     }
 
     .category-add-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr auto;
-      gap: 10px;
+      grid-template-columns: 2fr 1fr 1.5fr;
+      gap: 15px;
       align-items: end;
     }
 
@@ -552,9 +552,9 @@
       margin-bottom: 0;
     }
 
-    .category-add-grid button {
-      height: 44px;
-      white-space: nowrap;
+    .category-add-button {
+      margin-top: 15px;
+      width: 100%;
     }
 
     .category-list {
@@ -573,20 +573,20 @@
     }
 
     .category-row.subcategory {
-      margin-left: 30px;
-      background: white;
-      border-left: 3px solid #d83b4c;
+      margin-left: 28px;
+      background: #fff;
     }
 
-    .category-left {
+    .category-name-area {
       display: flex;
       align-items: center;
       gap: 10px;
       min-width: 0;
     }
 
-    .category-icon {
-      font-size: 17px;
+    .category-arrow {
+      color: #999;
+      font-size: 13px;
     }
 
     .category-name {
@@ -594,18 +594,18 @@
       font-size: 19px;
     }
 
-    .category-parent-label {
+    .category-type {
       color: #999;
-      font-size: 9px;
+      font-size: 8px;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.2px;
       margin-top: 4px;
     }
 
     .category-actions {
       display: flex;
       gap: 7px;
-      flex-wrap: wrap;
+      flex-shrink: 0;
     }
 
     .category-actions button {
@@ -632,18 +632,31 @@
       color: white;
     }
 
-    .category-error {
-      color: #a20f20;
-      background: #fff3f3;
-      border: 1px solid #e8c4c4;
-      padding: 12px;
-      font-size: 11px;
-      line-height: 1.5;
+    .parent-disabled {
+      opacity: .45;
+      pointer-events: none;
+    }
+
+    /* WEBSITE */
+
+    .website-save-message {
       margin-top: 15px;
+      font-size: 12px;
+      color: #176b3a;
+    }
+
+    @media(max-width: 850px) {
+      .category-add-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .category-add-grid input,
+      .category-add-grid select {
+        margin-bottom: 0;
+      }
     }
 
     @media(max-width: 700px) {
-
       header {
         padding: 0 20px;
       }
@@ -689,14 +702,6 @@
 
       .section-heading {
         align-items: flex-start;
-      }
-
-      .category-add-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .category-add-grid button {
-        width: 100%;
       }
 
       .category-row {
@@ -879,6 +884,7 @@
 
             <div>
               <label>Category / Subcategory</label>
+
               <select id="product-category-id" required>
                 <option value="">Choose category</option>
               </select>
@@ -896,6 +902,7 @@
 
             <div>
               <label>Status</label>
+
               <select id="product-status">
                 <option value="available">Available</option>
                 <option value="sold">Sold Out</option>
@@ -935,7 +942,10 @@
                 >
               </div>
 
-              <input id="product-image" type="hidden">
+              <input
+                id="product-image"
+                type="hidden"
+              >
 
               <div
                 style="
@@ -945,7 +955,7 @@
                   margin-top:8px;
                 "
               >
-                Select from Gallery, Files, or Camera 📸
+                Select from your gallery, Files, or take a new photo 📸
               </div>
 
             </div>
@@ -985,9 +995,11 @@
 
 
       <div id="products-container" class="products-container">
+
         <div class="loading" style="grid-column:1/-1;">
           Loading products 🍒
         </div>
+
       </div>
 
     </section>
@@ -1003,6 +1015,7 @@
 
       </div>
 
+
       <div class="categories-container">
 
         <div class="category-help">
@@ -1015,7 +1028,7 @@
         </div>
 
 
-        <div class="category-add-box">
+        <div class="category-add">
 
           <div class="category-add-grid">
 
@@ -1042,7 +1055,7 @@
                   Main category
                 </option>
 
-                <option value="subcategory">
+                <option value="sub">
                   Subcategory
                 </option>
 
@@ -1055,27 +1068,27 @@
 
               <label>Parent category</label>
 
-              <select id="new-category-parent" disabled>
-
+              <select
+                id="new-category-parent"
+                disabled
+              >
                 <option value="">
                   Choose parent
                 </option>
-
               </select>
 
             </div>
 
-
-            <button
-              class="small-button"
-              onclick="addCategory()"
-            >
-              + Add category
-            </button>
-
           </div>
 
-          <div id="category-add-error" class="category-error hidden"></div>
+
+          <button
+            class="small-button category-add-button"
+            onclick="addCategory()"
+            id="add-category-button"
+          >
+            + Add category
+          </button>
 
         </div>
 
@@ -1152,19 +1165,31 @@
 
         <label>Main heading</label>
 
-        <input id="site-hero-title">
+        <input
+          id="site-hero-title"
+          placeholder="e.g. The New Drop"
+        >
 
         <label>Subtitle</label>
 
-        <textarea id="site-hero-subtitle"></textarea>
+        <textarea
+          id="site-hero-subtitle"
+          placeholder="e.g. Y2K pieces you'll obsess over."
+        ></textarea>
 
         <label>Button text</label>
 
-        <input id="site-hero-button">
+        <input
+          id="site-hero-button"
+          placeholder="e.g. SHOP NOW"
+        >
 
         <label>Button link</label>
 
-        <input id="site-hero-link">
+        <input
+          id="site-hero-link"
+          placeholder="e.g. #products"
+        >
 
       </div>
 
@@ -1189,15 +1214,24 @@
 
         <label>Promotion title</label>
 
-        <input id="site-promo-title">
+        <input
+          id="site-promo-title"
+          placeholder="e.g. FLAT 40% OFF"
+        >
 
         <label>Promotion description</label>
 
-        <textarea id="site-promo-description"></textarea>
+        <textarea
+          id="site-promo-description"
+          placeholder="e.g. On selected Cherry Club pieces."
+        ></textarea>
 
         <label>Promotion button</label>
 
-        <input id="site-promo-button">
+        <input
+          id="site-promo-button"
+          placeholder="e.g. SHOP SALE"
+        >
 
       </div>
 
@@ -1215,19 +1249,31 @@
 
         <label>New Arrivals title</label>
 
-        <input id="site-new-arrivals-title">
+        <input
+          id="site-new-arrivals-title"
+          placeholder="New Arrivals"
+        >
 
         <label>Featured Products title</label>
 
-        <input id="site-featured-title">
+        <input
+          id="site-featured-title"
+          placeholder="Cherry Picks"
+        >
 
         <label>About section title</label>
 
-        <input id="site-about-title">
+        <input
+          id="site-about-title"
+          placeholder="About Cherry Club"
+        >
 
         <label>About section text</label>
 
-        <textarea id="site-about-text"></textarea>
+        <textarea
+          id="site-about-text"
+          placeholder="Tell customers about Cherry Club..."
+        ></textarea>
 
       </div>
 
@@ -1244,11 +1290,7 @@
 
         <div
           id="website-save-message"
-          style="
-            margin-top:15px;
-            font-size:12px;
-            color:#176b3a;
-          "
+          class="website-save-message"
         ></div>
 
       </div>
@@ -1273,6 +1315,14 @@ const supabaseClient =
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
   );
+
+
+/*
+  IMPORTANT:
+  Your Supabase Storage bucket is EXACTLY:
+  product-images
+*/
+const PRODUCT_IMAGE_BUCKET = "product-images";
 
 
 let orders = [];
@@ -1338,7 +1388,9 @@ async function checkLogin() {
     await supabaseClient.auth.getSession();
 
   if (data && data.session) {
+
     showAdmin();
+
   }
 
 }
@@ -1381,7 +1433,9 @@ async function loadEverything() {
 
   updateCategoryDropdown();
   updateParentCategoryDropdown();
+
   updateStats();
+
   renderOrders();
   renderAdminProducts();
   renderCategories();
@@ -1397,13 +1451,20 @@ async function loadOrders() {
     await supabaseClient
       .from("orders")
       .select("*")
-      .order("created_at", { ascending: false });
+      .order("created_at", {
+        ascending: false
+      });
 
   if (error) {
 
-    console.error("Orders error:", error);
+    console.error(
+      "Orders error:",
+      error
+    );
 
-    document.getElementById("orders-container").innerHTML = `
+    document.getElementById(
+      "orders-container"
+    ).innerHTML = `
       <div class="empty">
         We couldn't load the orders.<br><br>
         ${escapeHTML(error.message)}
@@ -1411,10 +1472,14 @@ async function loadOrders() {
     `;
 
     orders = [];
+
     return;
   }
 
-  orders = Array.isArray(data) ? data : [];
+  orders =
+    Array.isArray(data)
+      ? data
+      : [];
 
 }
 
@@ -1428,13 +1493,20 @@ async function loadOrderItems() {
 
   if (error) {
 
-    console.error("Order items error:", error);
+    console.error(
+      "Order items error:",
+      error
+    );
 
     orderItems = [];
+
     return;
   }
 
-  orderItems = Array.isArray(data) ? data : [];
+  orderItems =
+    Array.isArray(data)
+      ? data
+      : [];
 
 }
 
@@ -1446,15 +1518,26 @@ async function loadCategories() {
   const { data, error } =
     await supabaseClient
       .from("categories")
-      .select("id,name,sort_order,created_at,parent_id")
-      .order("sort_order", { ascending: true })
-      .order("name", { ascending: true });
+      .select(
+        "id,name,parent_id,sort_order,created_at"
+      )
+      .order("sort_order", {
+        ascending: true
+      })
+      .order("name", {
+        ascending: true
+      });
 
   if (error) {
 
-    console.error("Categories error:", error);
+    console.error(
+      "Categories error:",
+      error
+    );
 
-    document.getElementById("categories-container").innerHTML = `
+    document.getElementById(
+      "categories-container"
+    ).innerHTML = `
       <div class="empty">
         Couldn't load categories.<br><br>
         ${escapeHTML(error.message)}
@@ -1462,32 +1545,141 @@ async function loadCategories() {
     `;
 
     categories = [];
+
     return;
   }
 
-  categories =
+
+  const properCategories =
     Array.isArray(data)
       ? data
       : [];
 
+
+  /*
+    Older products may still have category names
+    which aren't present in the categories table.
+    Keep those visible without modifying the database.
+  */
+
+  const {
+    data: productData,
+    error: productError
+  } =
+    await supabaseClient
+      .from("products")
+      .select("category,category_id");
+
+
+  if (productError) {
+
+    console.error(
+      "Product category lookup error:",
+      productError
+    );
+
+    categories =
+      properCategories;
+
+    return;
+  }
+
+
+  const existingNames =
+    new Set(
+      properCategories.map(
+        category =>
+          String(category.name || "")
+            .trim()
+            .toLowerCase()
+      )
+    );
+
+
+  const missingCategories = [];
+
+
+  (productData || []).forEach(product => {
+
+    const productCategory =
+      String(
+        product.category || ""
+      ).trim();
+
+    if (!productCategory) {
+      return;
+    }
+
+
+    const normalized =
+      productCategory.toLowerCase();
+
+
+    if (!existingNames.has(normalized)) {
+
+      existingNames.add(normalized);
+
+      missingCategories.push({
+
+        id:
+          `legacy-${missingCategories.length + 1}`,
+
+        name:
+          productCategory,
+
+        parent_id:
+          null,
+
+        sort_order:
+          9999,
+
+        created_at:
+          null,
+
+        legacy:
+          true
+
+      });
+
+    }
+
+  });
+
+
+  categories = [
+    ...properCategories,
+    ...missingCategories
+  ];
+
 }
 
+
+/*
+  Parent dropdown:
+  Only real MAIN categories can be parents.
+*/
 
 function updateParentCategoryDropdown() {
 
   const select =
-    document.getElementById("new-category-parent");
+    document.getElementById(
+      "new-category-parent"
+    );
 
   if (!select) return;
 
-  const current =
+
+  const currentValue =
     select.value;
+
 
   const mainCategories =
     categories.filter(
       category =>
+        !category.legacy &&
         !category.parent_id
     );
+
 
   select.innerHTML = `
     <option value="">
@@ -1495,61 +1687,94 @@ function updateParentCategoryDropdown() {
     </option>
 
     ${
-      mainCategories.map(category => `
-        <option value="${escapeHTML(category.id)}">
-          ${escapeHTML(category.name)}
-        </option>
-      `).join("")
+      mainCategories
+        .map(category => `
+          <option value="${escapeHTML(category.id)}">
+            ${escapeHTML(category.name)}
+          </option>
+        `)
+        .join("")
     }
   `;
 
+
   if (
+    currentValue &&
     mainCategories.some(
       category =>
-        String(category.id) === String(current)
+        String(category.id) ===
+        String(currentValue)
     )
   ) {
-    select.value = current;
+
+    select.value =
+      currentValue;
+
   }
 
 }
 
+
+/*
+  Show / hide parent selector.
+*/
 
 function toggleParentCategory() {
 
   const type =
-    document.getElementById("new-category-type").value;
+    document.getElementById(
+      "new-category-type"
+    ).value;
 
-  const parent =
-    document.getElementById("new-category-parent");
+  const parentSelect =
+    document.getElementById(
+      "new-category-parent"
+    );
 
-  if (type === "subcategory") {
 
-    parent.disabled = false;
-    parent.required = true;
+  if (type === "sub") {
 
-    updateParentCategoryDropdown();
+    parentSelect.disabled = false;
+
+    parentSelect.classList.remove(
+      "parent-disabled"
+    );
 
   } else {
 
-    parent.disabled = true;
-    parent.required = false;
-    parent.value = "";
+    parentSelect.disabled = true;
+
+    parentSelect.classList.add(
+      "parent-disabled"
+    );
+
+    parentSelect.value = "";
 
   }
 
 }
 
 
+/*
+  Product category dropdown.
+
+  Both main categories and subcategories
+  can be selected for a product.
+*/
+
 function updateCategoryDropdown() {
 
   const select =
-    document.getElementById("product-category-id");
+    document.getElementById(
+      "product-category-id"
+    );
 
   if (!select) return;
 
+
   const currentValue =
     select.value;
+
 
   const mainCategories =
     categories.filter(
@@ -1557,55 +1782,90 @@ function updateCategoryDropdown() {
         !category.parent_id
     );
 
+
   let html =
     `<option value="">Choose category</option>`;
 
-  mainCategories.forEach(parent => {
+
+  mainCategories.forEach(main => {
 
     html += `
-      <option value="${escapeHTML(parent.id)}">
-        ${escapeHTML(parent.name)}
+      <option value="${escapeHTML(main.id)}">
+        ${escapeHTML(main.name)}
       </option>
     `;
 
-    const children =
-      categories.filter(
+
+    categories
+      .filter(
         category =>
           String(category.parent_id) ===
-          String(parent.id)
-      );
+          String(main.id)
+      )
+      .forEach(sub => {
 
-    children.forEach(child => {
+        html += `
+          <option value="${escapeHTML(sub.id)}">
+            ↳ ${escapeHTML(sub.name)}
+          </option>
+        `;
+
+      });
+
+  });
+
+
+  /*
+    Legacy categories which aren't part of
+    the normal hierarchy.
+  */
+
+  categories
+    .filter(
+      category =>
+        category.legacy
+    )
+    .forEach(category => {
 
       html += `
-        <option value="${escapeHTML(child.id)}">
-          ↳ ${escapeHTML(child.name)}
+        <option value="${escapeHTML(category.id)}">
+          ${escapeHTML(category.name)}
         </option>
       `;
 
     });
 
-  });
 
-  select.innerHTML = html;
+  select.innerHTML =
+    html;
+
 
   if (
+    currentValue &&
     categories.some(
       category =>
         String(category.id) ===
         String(currentValue)
     )
   ) {
-    select.value = currentValue;
+
+    select.value =
+      currentValue;
+
   }
 
 }
 
 
+/* RENDER CATEGORIES */
+
 function renderCategories() {
 
   const container =
-    document.getElementById("categories-container");
+    document.getElementById(
+      "categories-container"
+    );
+
 
   if (!categories.length) {
 
@@ -1626,56 +1886,81 @@ function renderCategories() {
     );
 
 
+  const subcategories =
+    categories.filter(
+      category =>
+        category.parent_id
+    );
+
+
   let html =
     `<div class="category-list">`;
 
 
-  mainCategories.forEach(parent => {
+  mainCategories.forEach(category => {
 
-    html += categoryRowHTML(parent, false);
-
-    const children =
-      categories.filter(
-        category =>
-          String(category.parent_id) ===
-          String(parent.id)
-      );
-
-    children.forEach(child => {
-
-      html += categoryRowHTML(child, true);
-
-    });
-
-  });
-
-
-  const orphaned =
-    categories.filter(category =>
-      category.parent_id &&
-      !categories.some(
-        parent =>
-          String(parent.id) ===
-          String(category.parent_id)
-      )
+    html += renderCategoryRow(
+      category,
+      false
     );
 
 
-  orphaned.forEach(category => {
+    subcategories
+      .filter(
+        sub =>
+          String(sub.parent_id) ===
+          String(category.id)
+      )
+      .forEach(sub => {
 
-    html += categoryRowHTML(category, false);
+        html += renderCategoryRow(
+          sub,
+          true
+        );
+
+      });
 
   });
+
+
+  /*
+    In case a subcategory somehow has a parent
+    that isn't currently loaded, don't hide it.
+  */
+
+  subcategories
+    .filter(sub => {
+
+      return !mainCategories.some(
+        main =>
+          String(main.id) ===
+          String(sub.parent_id)
+      );
+
+    })
+    .forEach(sub => {
+
+      html += renderCategoryRow(
+        sub,
+        true
+      );
+
+    });
 
 
   html += `</div>`;
 
-  container.innerHTML = html;
+
+  container.innerHTML =
+    html;
 
 }
 
 
-function categoryRowHTML(category, isSubcategory) {
+function renderCategoryRow(
+  category,
+  isSubcategory
+) {
 
   const parent =
     categories.find(
@@ -1684,15 +1969,26 @@ function categoryRowHTML(category, isSubcategory) {
         String(category.parent_id)
     );
 
+
   return `
 
-    <div class="category-row ${isSubcategory ? "subcategory" : ""}">
+    <div
+      class="category-row ${
+        isSubcategory
+          ? "subcategory"
+          : ""
+      }"
+    >
 
-      <div class="category-left">
+      <div class="category-name-area">
 
-        <div class="category-icon">
-          ${isSubcategory ? "↳" : "🍒"}
-        </div>
+        ${
+          isSubcategory
+          ?
+          `<span class="category-arrow">↳</span>`
+          :
+          `<span class="category-arrow">🍒</span>`
+        }
 
         <div>
 
@@ -1700,21 +1996,22 @@ function categoryRowHTML(category, isSubcategory) {
             ${escapeHTML(category.name)}
           </div>
 
-          ${
-            isSubcategory && parent
-            ?
-            `
-              <div class="category-parent-label">
-                Subcategory of ${escapeHTML(parent.name)}
-              </div>
-            `
-            :
-            `
-              <div class="category-parent-label">
-                Main category
-              </div>
-            `
-          }
+          <div class="category-type">
+
+            ${
+              isSubcategory
+              ?
+              `Subcategory · ${
+                escapeHTML(
+                  parent?.name ||
+                  "Unknown parent"
+                )
+              }`
+              :
+              "Main category"
+            }
+
+          </div>
 
         </div>
 
@@ -1723,18 +2020,36 @@ function categoryRowHTML(category, isSubcategory) {
 
       <div class="category-actions">
 
-        <button
-          onclick="renameCategory('${escapeHTML(category.id)}')"
-        >
-          Rename
-        </button>
+        ${
+          category.legacy
+          ?
+          `
+            <span style="
+              color:#999;
+              font-size:9px;
+              text-transform:uppercase;
+              letter-spacing:1px;
+              padding:8px 0;
+            ">
+              Existing products
+            </span>
+          `
+          :
+          `
+            <button
+              onclick="renameCategory('${escapeHTML(category.id)}')"
+            >
+              Rename
+            </button>
 
-        <button
-          class="danger"
-          onclick="deleteCategory('${escapeHTML(category.id)}')"
-        >
-          Delete
-        </button>
+            <button
+              class="danger"
+              onclick="deleteCategory('${escapeHTML(category.id)}')"
+            >
+              Delete
+            </button>
+          `
+        }
 
       </div>
 
@@ -1745,30 +2060,33 @@ function categoryRowHTML(category, isSubcategory) {
 }
 
 
+/* ADD CATEGORY */
+
 async function addCategory() {
 
   const input =
-    document.getElementById("new-category-name");
+    document.getElementById(
+      "new-category-name"
+    );
 
   const type =
-    document.getElementById("new-category-type").value;
+    document.getElementById(
+      "new-category-type"
+    ).value;
 
   const parentSelect =
-    document.getElementById("new-category-parent");
+    document.getElementById(
+      "new-category-parent"
+    );
 
-  const errorBox =
-    document.getElementById("category-add-error");
 
   const name =
     input.value.trim();
 
-  errorBox.classList.add("hidden");
-  errorBox.textContent = "";
-
 
   if (!name) {
 
-    showCategoryError(
+    alert(
       "Please enter a category name."
     );
 
@@ -1776,18 +2094,65 @@ async function addCategory() {
   }
 
 
-  let parentId = null;
+  /*
+    Check duplicates case-insensitively
+    before attempting the database insert.
+  */
+
+  const exists =
+    categories.some(
+      category =>
+        String(category.name)
+          .trim()
+          .toLowerCase() ===
+        name.toLowerCase()
+    );
 
 
-  if (type === "subcategory") {
+  if (exists) {
+
+    alert(
+      "That category already exists."
+    );
+
+    return;
+  }
+
+
+  let parentId =
+    null;
+
+
+  if (type === "sub") {
 
     parentId =
       parentSelect.value;
 
+
     if (!parentId) {
 
-      showCategoryError(
+      alert(
         "Please choose a parent category for the subcategory."
+      );
+
+      return;
+    }
+
+
+    const parent =
+      categories.find(
+        category =>
+          String(category.id) ===
+          String(parentId) &&
+          !category.parent_id &&
+          !category.legacy
+      );
+
+
+    if (!parent) {
+
+      alert(
+        "Please choose a valid main category as the parent."
       );
 
       return;
@@ -1797,23 +2162,30 @@ async function addCategory() {
 
 
   /*
-    We check the exact database list here.
-    Category names remain case-sensitive because
-    that matches your existing UNIQUE(name) constraint.
+    Make sure there is actually a logged-in
+    Supabase user before inserting.
+
+    This is important because RLS only permits
+    authenticated users.
   */
 
-  const duplicate =
-    categories.some(
-      category =>
-        String(category.name || "").trim() === name
+  const {
+    data: sessionData,
+    error: sessionError
+  } =
+    await supabaseClient.auth.getSession();
+
+
+  if (
+    sessionError ||
+    !sessionData?.session
+  ) {
+
+    alert(
+      "Your admin session has expired. Please log in again."
     );
 
-
-  if (duplicate) {
-
-    showCategoryError(
-      `"${name}" already exists. Choose a different category name.`
-    );
+    await logout();
 
     return;
   }
@@ -1831,116 +2203,108 @@ async function addCategory() {
 
 
   const button =
-    document.querySelector(
-      ".category-add-grid .small-button"
-    );
-
-  if (button) {
-
-    button.disabled = true;
-    button.textContent = "Adding...";
-
-  }
-
-
-  try {
-
-    const { data, error } =
-      await supabaseClient
-        .from("categories")
-        .insert({
-          name,
-          sort_order: nextSortOrder,
-          parent_id: parentId
-        })
-        .select()
-        .single();
-
-
-    if (error) {
-
-      console.error(
-        "Category add error:",
-        error
-      );
-
-
-      if (error.code === "23505") {
-
-        throw new Error(
-          `A category named "${name}" already exists in the database.`
-        );
-
-      }
-
-
-      throw new Error(
-        error.message
-      );
-
-    }
-
-
-    console.log(
-      "Category created:",
-      data
-    );
-
-
-    input.value = "";
-    parentSelect.value = "";
-
     document.getElementById(
-      "new-category-type"
-    ).value = "main";
-
-    toggleParentCategory();
+      "add-category-button"
+    );
 
 
-    await loadCategories();
+  button.disabled =
+    true;
 
-    updateCategoryDropdown();
-    updateParentCategoryDropdown();
-    renderCategories();
+  button.textContent =
+    "Adding...";
 
 
-  } catch (error) {
+  const { error } =
+    await supabaseClient
+      .from("categories")
+      .insert({
+
+        name:
+          name,
+
+        parent_id:
+          parentId,
+
+        sort_order:
+          nextSortOrder
+
+      });
+
+
+  button.disabled =
+    false;
+
+  button.textContent =
+    "+ Add category";
+
+
+  if (error) {
 
     console.error(
       "Category add error:",
       error
     );
 
-    showCategoryError(
-      "Couldn't add that category.\n\n" +
+
+    /*
+      Give a useful error instead of silently failing.
+    */
+
+    if (
+      error.message &&
       error.message
-    );
+        .toLowerCase()
+        .includes("row-level security")
+    ) {
 
+      alert(
+        "Supabase is blocking the category insert with RLS.\n\n" +
+        "Your admin page is logged in, but Supabase is not accepting this insert for the current session.\n\n" +
+        error.message
+      );
 
-  } finally {
+    } else {
 
-    if (button) {
-
-      button.disabled = false;
-      button.textContent = "+ Add category";
+      alert(
+        "Couldn't add that category.\n\n" +
+        error.message
+      );
 
     }
 
+    return;
   }
 
+
+  input.value =
+    "";
+
+  document.getElementById(
+    "new-category-type"
+  ).value =
+    "main";
+
+
+  parentSelect.value =
+    "";
+
+
+  toggleParentCategory();
+
+
+  await loadCategories();
+
+
+  updateParentCategoryDropdown();
+  updateCategoryDropdown();
+  renderCategories();
+  renderAdminProducts();
+
 }
 
 
-function showCategoryError(message) {
-
-  const box =
-    document.getElementById("category-add-error");
-
-  box.textContent = message;
-  box.classList.remove("hidden");
-
-}
-
+/* RENAME CATEGORY */
 
 async function renameCategory(id) {
 
@@ -1951,7 +2315,19 @@ async function renameCategory(id) {
         String(id)
     );
 
+
   if (!category) return;
+
+
+  if (category.legacy) {
+
+    alert(
+      "This is an older category stored only in product data. " +
+      "Create a proper category instead."
+    );
+
+    return;
+  }
 
 
   const newName =
@@ -1961,7 +2337,9 @@ async function renameCategory(id) {
     );
 
 
-  if (newName === null) return;
+  if (newName === null) {
+    return;
+  }
 
 
   const cleanedName =
@@ -1981,16 +2359,18 @@ async function renameCategory(id) {
   const duplicate =
     categories.some(
       item =>
-        String(item.id) !== String(id) &&
-        String(item.name || "").trim() ===
-        cleanedName
+        String(item.id) !==
+        String(id) &&
+        String(item.name)
+          .toLowerCase() ===
+        cleanedName.toLowerCase()
     );
 
 
   if (duplicate) {
 
     alert(
-      `"${cleanedName}" already exists.`
+      "A category with that name already exists."
     );
 
     return;
@@ -2027,7 +2407,9 @@ async function renameCategory(id) {
     with the renamed category.
   */
 
-  const { error: productError } =
+  const {
+    error: productError
+  } =
     await supabaseClient
       .from("products")
       .update({
@@ -2044,8 +2426,8 @@ async function renameCategory(id) {
     );
 
     alert(
-      "The category was renamed, but the product category text " +
-      "couldn't be synchronized.\n\n" +
+      "The category was renamed, but some product category text " +
+      "couldn't be updated.\n\n" +
       productError.message
     );
 
@@ -2055,13 +2437,17 @@ async function renameCategory(id) {
   await loadCategories();
   await loadAdminProducts();
 
-  updateCategoryDropdown();
+
   updateParentCategoryDropdown();
+  updateCategoryDropdown();
+
   renderCategories();
   renderAdminProducts();
 
 }
 
+
+/* DELETE CATEGORY */
 
 async function deleteCategory(id) {
 
@@ -2072,27 +2458,14 @@ async function deleteCategory(id) {
         String(id)
     );
 
+
   if (!category) return;
 
 
-  /*
-    Don't allow deleting a category that has
-    subcategories.
-  */
-
-  const children =
-    categories.filter(
-      item =>
-        String(item.parent_id) ===
-        String(id)
-    );
-
-
-  if (children.length) {
+  if (category.legacy) {
 
     alert(
-      `"${category.name}" has ${children.length} subcategor${children.length === 1 ? "y" : "ies"}.\n\n` +
-      "Delete or move the subcategories first."
+      "This older category cannot be deleted from here."
     );
 
     return;
@@ -2100,11 +2473,13 @@ async function deleteCategory(id) {
 
 
   /*
-    Don't allow deleting a category assigned
-    to products.
+    First check products.
   */
 
-  const { count, error: countError } =
+  const {
+    count: productCount,
+    error: countError
+  } =
     await supabaseClient
       .from("products")
       .select("id", {
@@ -2130,12 +2505,57 @@ async function deleteCategory(id) {
   }
 
 
-  if (Number(count) > 0) {
+  if (Number(productCount) > 0) {
 
     alert(
       `"${category.name}" cannot be deleted yet.\n\n` +
-      `${count} product(s) are assigned to this category. ` +
-      `Edit those products and move them first.`
+      `${productCount} product(s) are assigned to this category. ` +
+      `Edit those products and move them to another category first.`
+    );
+
+    return;
+  }
+
+
+  /*
+    Also check subcategories.
+  */
+
+  const {
+    count: childCount,
+    error: childError
+  } =
+    await supabaseClient
+      .from("categories")
+      .select("id", {
+        count: "exact",
+        head: true
+      })
+      .eq("parent_id", id);
+
+
+  if (childError) {
+
+    console.error(
+      "Child category count error:",
+      childError
+    );
+
+    alert(
+      "I couldn't check whether this category has subcategories.\n\n" +
+      childError.message
+    );
+
+    return;
+  }
+
+
+  if (Number(childCount) > 0) {
+
+    alert(
+      `"${category.name}" cannot be deleted yet.\n\n` +
+      `It has ${childCount} subcategor${childCount === 1 ? "y" : "ies"} underneath it. ` +
+      `Delete or move those subcategories first.`
     );
 
     return;
@@ -2145,11 +2565,13 @@ async function deleteCategory(id) {
   const confirmed =
     confirm(
       `Delete the "${category.name}" category?\n\n` +
-      "No products or subcategories are currently using it."
+      `No products or subcategories are currently assigned to it.`
     );
 
 
-  if (!confirmed) return;
+  if (!confirmed) {
+    return;
+  }
 
 
   const { error } =
@@ -2177,8 +2599,10 @@ async function deleteCategory(id) {
 
   await loadCategories();
 
-  updateCategoryDropdown();
+
   updateParentCategoryDropdown();
+  updateCategoryDropdown();
+
   renderCategories();
 
 }
@@ -2195,6 +2619,7 @@ async function loadAdminProducts() {
         "id,name,category,category_id,price,size,status,image_url,description"
       );
 
+
   if (error) {
 
     console.error(
@@ -2202,8 +2627,13 @@ async function loadAdminProducts() {
       error
     );
 
-    document.getElementById("products-container").innerHTML = `
-      <div class="empty" style="grid-column:1/-1;">
+    document.getElementById(
+      "products-container"
+    ).innerHTML = `
+      <div
+        class="empty"
+        style="grid-column:1/-1;"
+      >
         Couldn't load products.<br><br>
         ${escapeHTML(error.message)}
       </div>
@@ -2214,6 +2644,7 @@ async function loadAdminProducts() {
     return;
   }
 
+
   adminProducts =
     Array.isArray(data)
       ? data
@@ -2222,21 +2653,34 @@ async function loadAdminProducts() {
 }
 
 
+/* STATS */
+
 function updateStats() {
 
-  document.getElementById("stat-orders").textContent =
+  document.getElementById(
+    "stat-orders"
+  ).textContent =
     orders.length;
 
-  document.getElementById("stat-pending").textContent =
+
+  document.getElementById(
+    "stat-pending"
+  ).textContent =
     orders.filter(
       order =>
         order.status === "pending"
     ).length;
 
-  document.getElementById("stat-products").textContent =
+
+  document.getElementById(
+    "stat-products"
+  ).textContent =
     adminProducts.length;
 
-  document.getElementById("stat-available").textContent =
+
+  document.getElementById(
+    "stat-available"
+  ).textContent =
     adminProducts.filter(
       product =>
         product.status === "available"
@@ -2244,6 +2688,8 @@ function updateStats() {
 
 }
 
+
+/* HELPERS */
 
 function formatPrice(value) {
 
@@ -2256,12 +2702,29 @@ function formatPrice(value) {
 
 function escapeHTML(value) {
 
-  return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+  return String(
+    value ?? ""
+  )
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
@@ -2272,18 +2735,20 @@ function formatDate(value) {
     return "Unknown date";
   }
 
-  return new Date(value).toLocaleString(
-    "en-PK",
-    {
-      dateStyle: "medium",
-      timeStyle: "short"
-    }
-  );
+
+  return new Date(value)
+    .toLocaleString(
+      "en-PK",
+      {
+        dateStyle: "medium",
+        timeStyle: "short"
+      }
+    );
 
 }
 
 
-/* ORDERS RENDER */
+/* ORDERS */
 
 function renderOrders() {
 
@@ -2344,7 +2809,9 @@ function renderOrders() {
               data-order-id="${escapeHTML(order.id)}"
               onchange="changeOrderStatus(this)"
             >
+
               ${statusOptions(order.status)}
+
             </select>
 
           </div>
@@ -2353,9 +2820,7 @@ function renderOrders() {
           <div class="order-details">
 
             <div>
-              <div class="detail-label">
-                Phone
-              </div>
+              <div class="detail-label">Phone</div>
 
               <div class="detail-value">
                 ${escapeHTML(order.phone)}
@@ -2364,9 +2829,7 @@ function renderOrders() {
 
 
             <div>
-              <div class="detail-label">
-                City
-              </div>
+              <div class="detail-label">City</div>
 
               <div class="detail-value">
                 ${escapeHTML(order.city)}
@@ -2375,9 +2838,7 @@ function renderOrders() {
 
 
             <div>
-              <div class="detail-label">
-                Address
-              </div>
+              <div class="detail-label">Address</div>
 
               <div class="detail-value">
                 ${escapeHTML(order.address)}
@@ -2386,9 +2847,7 @@ function renderOrders() {
 
 
             <div>
-              <div class="detail-label">
-                Payment
-              </div>
+              <div class="detail-label">Payment</div>
 
               <div class="detail-value">
                 ${escapeHTML(order.payment_method)}
@@ -2397,9 +2856,7 @@ function renderOrders() {
 
 
             <div>
-              <div class="detail-label">
-                Transaction ID
-              </div>
+              <div class="detail-label">Transaction ID</div>
 
               <div class="detail-value">
                 ${escapeHTML(order.transaction_id)}
@@ -2408,15 +2865,16 @@ function renderOrders() {
 
 
             <div>
-              <div class="detail-label">
-                Total
-              </div>
+              <div class="detail-label">Total</div>
 
               <div class="detail-value">
+
                 <strong>
                   Rs. ${formatPrice(order.total)}
                 </strong>
+
               </div>
+
             </div>
 
           </div>
@@ -2454,11 +2912,13 @@ function renderOrders() {
 
 
                   <strong>
+
                     Rs.
                     ${formatPrice(
                       Number(item.price) *
                       Number(item.quantity)
                     )}
+
                   </strong>
 
                 </div>
@@ -2507,16 +2967,25 @@ function statusOptions(current) {
   ];
 
 
-  return statuses.map(status => `
+  return statuses
+    .map(status => `
 
-    <option
-      value="${status}"
-      ${String(current) === status ? "selected" : ""}
-    >
-      ${status.charAt(0).toUpperCase() + status.slice(1)}
-    </option>
+      <option
+        value="${status}"
+        ${
+          String(current) === status
+          ? "selected"
+          : ""
+        }
+      >
+        ${
+          status.charAt(0).toUpperCase() +
+          status.slice(1)
+        }
+      </option>
 
-  `).join("");
+    `)
+    .join("");
 
 }
 
@@ -2529,15 +2998,9 @@ async function changeOrderStatus(select) {
   const newStatus =
     select.value;
 
-  const oldStatus =
-    orders.find(
-      order =>
-        String(order.id) ===
-        String(orderId)
-    )?.status;
 
-
-  select.disabled = true;
+  select.disabled =
+    true;
 
 
   const { error } =
@@ -2549,7 +3012,8 @@ async function changeOrderStatus(select) {
       .eq("id", orderId);
 
 
-  select.disabled = false;
+  select.disabled =
+    false;
 
 
   if (error) {
@@ -2564,8 +3028,10 @@ async function changeOrderStatus(select) {
       error.message
     );
 
-    select.value =
-      oldStatus || "pending";
+
+    await loadOrders();
+
+    renderOrders();
 
     return;
   }
@@ -2580,7 +3046,10 @@ async function changeOrderStatus(select) {
 
 
   if (order) {
-    order.status = newStatus;
+
+    order.status =
+      newStatus;
+
   }
 
 
@@ -2593,52 +3062,139 @@ async function changeOrderStatus(select) {
 
 function showTab(tab) {
 
-  const sections = [
-    "orders-section",
-    "products-section",
-    "categories-section",
-    "website-section"
-  ];
+  const ordersSection =
+    document.getElementById(
+      "orders-section"
+    );
+
+  const productsSection =
+    document.getElementById(
+      "products-section"
+    );
+
+  const categoriesSection =
+    document.getElementById(
+      "categories-section"
+    );
+
+  const websiteSection =
+    document.getElementById(
+      "website-section"
+    );
 
 
-  const tabs = [
-    "orders-tab",
-    "products-tab",
-    "categories-tab",
-    "website-tab"
-  ];
+  const ordersTab =
+    document.getElementById(
+      "orders-tab"
+    );
+
+  const productsTab =
+    document.getElementById(
+      "products-tab"
+    );
+
+  const categoriesTab =
+    document.getElementById(
+      "categories-tab"
+    );
+
+  const websiteTab =
+    document.getElementById(
+      "website-tab"
+    );
 
 
-  sections.forEach(id => {
+  ordersSection.classList.add(
+    "hidden"
+  );
 
-    document
-      .getElementById(id)
-      .classList.add("hidden");
+  productsSection.classList.add(
+    "hidden"
+  );
 
-  });
+  categoriesSection.classList.add(
+    "hidden"
+  );
 
-
-  tabs.forEach(id => {
-
-    document
-      .getElementById(id)
-      .classList.remove("active");
-
-  });
-
-
-  document
-    .getElementById(tab + "-section")
-    .classList.remove("hidden");
+  websiteSection.classList.add(
+    "hidden"
+  );
 
 
-  document
-    .getElementById(tab + "-tab")
-    .classList.add("active");
+  ordersTab.classList.remove(
+    "active"
+  );
+
+  productsTab.classList.remove(
+    "active"
+  );
+
+  categoriesTab.classList.remove(
+    "active"
+  );
+
+  websiteTab.classList.remove(
+    "active"
+  );
 
 
-  if (tab === "website") {
+  if (tab === "orders") {
+
+    ordersSection.classList.remove(
+      "hidden"
+    );
+
+    ordersTab.classList.add(
+      "active"
+    );
+
+  }
+
+
+  else if (tab === "products") {
+
+    productsSection.classList.remove(
+      "hidden"
+    );
+
+    productsTab.classList.add(
+      "active"
+    );
+
+  }
+
+
+  else if (tab === "categories") {
+
+    categoriesSection.classList.remove(
+      "hidden"
+    );
+
+    categoriesTab.classList.add(
+      "active"
+    );
+
+
+    updateParentCategoryDropdown();
+
+    toggleParentCategory();
+
+  }
+
+
+  else if (tab === "website") {
+
+    websiteSection.classList.remove(
+      "hidden"
+    );
+
+    websiteTab.classList.add(
+      "active"
+    );
+
+
     loadWebsiteContent();
+
   }
 
 }
@@ -2647,20 +3203,26 @@ function showTab(tab) {
 /* WEBSITE CONTENT */
 
 const websiteFields = [
+
   "announcement",
   "announcement-enabled",
+
   "hero-title",
   "hero-subtitle",
   "hero-button",
   "hero-link",
+
   "promo-enabled",
   "promo-title",
   "promo-description",
   "promo-button",
+
   "new-arrivals-title",
   "featured-title",
+
   "about-title",
   "about-text"
+
 ];
 
 
@@ -2702,10 +3264,15 @@ async function loadWebsiteContent() {
       );
 
 
-    if (!element) return;
+    if (!element) {
+      return;
+    }
 
 
-    if (content[key] !== undefined) {
+    if (
+      content[key] !==
+      undefined
+    ) {
 
       element.value =
         content[key];
@@ -2740,18 +3307,18 @@ async function saveWebsiteContent() {
   });
 
 
-  const button =
-    document.querySelector(
-      "#website-section .small-button"
+  const buttons =
+    document.querySelectorAll(
+      '#website-section .small-button, #website-section .black-button'
     );
 
 
-  if (button) {
+  buttons.forEach(button => {
 
-    button.disabled = true;
-    button.textContent = "Saving...";
+    button.disabled =
+      true;
 
-  }
+  });
 
 
   for (const key of websiteFields) {
@@ -2762,7 +3329,8 @@ async function saveWebsiteContent() {
         .upsert(
           {
             key,
-            value: values[key] || "",
+            value:
+              values[key] || "",
             updated_at:
               new Date().toISOString()
           },
@@ -2786,12 +3354,12 @@ async function saveWebsiteContent() {
       );
 
 
-      if (button) {
+      buttons.forEach(button => {
 
-        button.disabled = false;
-        button.textContent = "Save changes";
+        button.disabled =
+          false;
 
-      }
+      });
 
 
       return;
@@ -2800,12 +3368,12 @@ async function saveWebsiteContent() {
   }
 
 
-  if (button) {
+  buttons.forEach(button => {
 
-    button.disabled = false;
-    button.textContent = "Save changes";
+    button.disabled =
+      false;
 
-  }
+  });
 
 
   const message =
@@ -2822,7 +3390,8 @@ async function saveWebsiteContent() {
 
     setTimeout(() => {
 
-      message.textContent = "";
+      message.textContent =
+        "";
 
     }, 3000);
 
@@ -2841,7 +3410,9 @@ function openProductForm(product = null) {
     );
 
 
-  area.classList.remove("hidden");
+  area.classList.remove(
+    "hidden"
+  );
 
 
   document.getElementById(
@@ -2863,37 +3434,43 @@ function openProductForm(product = null) {
   document.getElementById(
     "product-name"
   ).value =
-    product?.name || "";
+    product?.name ||
+    "";
 
 
   document.getElementById(
     "product-price"
   ).value =
-    product?.price || "";
+    product?.price ||
+    "";
 
 
   document.getElementById(
     "product-size"
   ).value =
-    product?.size || "";
+    product?.size ||
+    "";
 
 
   document.getElementById(
     "product-status"
   ).value =
-    product?.status || "available";
+    product?.status ||
+    "available";
 
 
   document.getElementById(
     "product-image"
   ).value =
-    product?.image_url || "";
+    product?.image_url ||
+    "";
 
 
   document.getElementById(
     "product-description"
   ).value =
-    product?.description || "";
+    product?.description ||
+    "";
 
 
   updateCategoryDropdown();
@@ -2902,28 +3479,23 @@ function openProductForm(product = null) {
   document.getElementById(
     "product-category-id"
   ).value =
-    product?.category_id || "";
+    product?.category_id ||
+    "";
 
+
+  /*
+    Show existing image while editing.
+  */
 
   const preview =
     document.getElementById(
       "product-image-preview"
     );
 
-
   const previewImage =
     document.getElementById(
       "product-image-preview-img"
     );
-
-
-  const fileInput =
-    document.getElementById(
-      "product-image-file"
-    );
-
-
-  fileInput.value = "";
 
 
   if (product?.image_url) {
@@ -2936,12 +3508,23 @@ function openProductForm(product = null) {
 
   } else {
 
-    previewImage.src = "";
+    previewImage.src =
+      "";
 
     preview.style.display =
       "none";
 
   }
+
+
+  /*
+    Clear file picker.
+  */
+
+  document.getElementById(
+    "product-image-file"
+  ).value =
+    "";
 
 
   area.scrollIntoView({
@@ -2957,7 +3540,9 @@ function closeProductForm() {
     .getElementById(
       "product-form-area"
     )
-    .classList.add("hidden");
+    .classList.add(
+      "hidden"
+    );
 
 
   document
@@ -2970,24 +3555,38 @@ function closeProductForm() {
   document
     .getElementById(
       "editing-product-id"
-    ).value = "";
+    )
+    .value =
+    "";
+
+
+  document
+    .getElementById(
+      "product-image"
+    )
+    .value =
+    "";
 
 
   document
     .getElementById(
       "product-image-preview"
-    ).style.display = "none";
+    )
+    .style.display =
+    "none";
 
 
   document
     .getElementById(
       "product-image-preview-img"
-    ).src = "";
+    )
+    .src =
+    "";
 
 }
 
 
-/* IMAGE PREVIEW */
+/* IMAGE PICKER */
 
 document
   .getElementById(
@@ -3022,25 +3621,22 @@ document
           "";
 
         return;
-
       }
 
 
-      if (!file.type.startsWith("image/")) {
-
-        alert(
-          "Please choose an image file."
-        );
-
-        event.target.value = "";
-
-        return;
-
-      }
-
+      /*
+        Works with:
+        - iPhone Gallery
+        - iPhone Files
+        - Camera
+        - Android Gallery
+        - Android Files
+      */
 
       const imageURL =
-        URL.createObjectURL(file);
+        URL.createObjectURL(
+          file
+        );
 
 
       previewImage.src =
@@ -3098,7 +3694,6 @@ document
         );
 
         return;
-
       }
 
 
@@ -3108,8 +3703,11 @@ document
         );
 
 
-      button.disabled = true;
-      button.textContent = "Saving...";
+      button.disabled =
+        true;
+
+      button.textContent =
+        "Saving...";
 
 
       try {
@@ -3134,18 +3732,39 @@ document
 
 
         /*
-          DIRECT PHOTO UPLOAD
+          NEW PHOTO
 
-          Exact bucket name:
-          product-images
+          Upload directly to:
 
-          No URL needs to be copied.
+          product-images/products/...
         */
 
         if (selectedFile) {
 
+          /*
+            Basic size protection.
+            10 MB max.
+          */
+
+          if (
+            selectedFile.size >
+            10 * 1024 * 1024
+          ) {
+
+            throw new Error(
+              "That photo is too large. Please choose an image under 10 MB."
+            );
+
+          }
+
+
+          const originalName =
+            selectedFile.name ||
+            "product-image";
+
+
           const safeFileName =
-            selectedFile.name
+            originalName
               .replace(
                 /[^a-zA-Z0-9.-]/g,
                 "-"
@@ -3153,9 +3772,7 @@ document
 
 
           const fileName =
-            `${Date.now()}-${Math.random()
-              .toString(36)
-              .slice(2, 9)}-${safeFileName}`;
+            `${Date.now()}-${safeFileName}`;
 
 
           const filePath =
@@ -3167,15 +3784,22 @@ document
           } =
             await supabaseClient
               .storage
-              .from("product-images")
+              .from(
+                PRODUCT_IMAGE_BUCKET
+              )
               .upload(
                 filePath,
                 selectedFile,
                 {
-                  cacheControl: "3600",
-                  upsert: false,
+                  cacheControl:
+                    "3600",
+
+                  upsert:
+                    false,
+
                   contentType:
-                    selectedFile.type
+                    selectedFile.type ||
+                    "image/jpeg"
                 }
               );
 
@@ -3201,7 +3825,9 @@ document
           } =
             supabaseClient
               .storage
-              .from("product-images")
+              .from(
+                PRODUCT_IMAGE_BUCKET
+              )
               .getPublicUrl(
                 filePath
               );
@@ -3221,6 +3847,10 @@ document
         }
 
 
+        /*
+          PRODUCT DATA
+        */
+
         const productData = {
 
           name:
@@ -3231,11 +3861,14 @@ document
               .value
               .trim(),
 
+
           category:
             selectedCategory.name,
 
+
           category_id:
             Number(categoryId),
+
 
           price:
             Number(
@@ -3246,6 +3879,7 @@ document
                 .value
             ),
 
+
           size:
             document
               .getElementById(
@@ -3254,6 +3888,7 @@ document
               .value
               .trim(),
 
+
           status:
             document
               .getElementById(
@@ -3261,8 +3896,10 @@ document
               )
               .value,
 
+
           image_url:
             imageURL,
+
 
           description:
             document
@@ -3283,8 +3920,13 @@ document
           const result =
             await supabaseClient
               .from("products")
-              .update(productData)
-              .eq("id", editingId);
+              .update(
+                productData
+              )
+              .eq(
+                "id",
+                editingId
+              );
 
 
           error =
@@ -3329,6 +3971,7 @@ document
 
 
         updateStats();
+
         renderAdminProducts();
 
 
@@ -3348,7 +3991,9 @@ document
 
       } finally {
 
-        button.disabled = false;
+        button.disabled =
+          false;
+
         button.textContent =
           "Save product";
 
@@ -3380,13 +4025,12 @@ function renderAdminProducts() {
     `;
 
     return;
-
   }
 
 
   container.innerHTML =
-    adminProducts.map(
-      product => {
+    adminProducts
+      .map(product => {
 
         const image =
           product.image_url;
@@ -3400,7 +4044,7 @@ function renderAdminProducts() {
           );
 
 
-        const parent =
+        const parentCategory =
           category?.parent_id
           ?
           categories.find(
@@ -3412,18 +4056,18 @@ function renderAdminProducts() {
           null;
 
 
-        const categoryName =
+        let categoryName =
           category?.name ||
           product.category ||
           "Uncategorized";
 
 
-        const categoryDisplay =
-          parent
-          ?
-          `${parent.name} › ${categoryName}`
-          :
-          categoryName;
+        if (parentCategory) {
+
+          categoryName =
+            `${parentCategory.name} › ${category.name}`;
+
+        }
 
 
         let statusClass =
@@ -3484,9 +4128,7 @@ function renderAdminProducts() {
 
               <div class="product-card-meta">
 
-                ${escapeHTML(
-                  categoryDisplay
-                )}
+                ${escapeHTML(categoryName)}
 
                 ${
                   product.size
@@ -3507,8 +4149,10 @@ function renderAdminProducts() {
               <div
                 class="product-card-status ${statusClass}"
               >
+
                 ${
-                  product.status === "sold"
+                  product.status ===
+                  "sold"
                   ?
                   "Sold Out"
                   :
@@ -3517,6 +4161,7 @@ function renderAdminProducts() {
                     "hidden"
                   )
                 }
+
               </div>
 
 
@@ -3565,13 +4210,13 @@ function renderAdminProducts() {
 
         `;
 
-      }
-    ).join("");
+      })
+      .join("");
 
 }
 
 
-/* EDIT */
+/* EDIT PRODUCT */
 
 function editProduct(id) {
 
@@ -3583,15 +4228,19 @@ function editProduct(id) {
     );
 
 
-  if (!product) return;
+  if (!product) {
+    return;
+  }
 
 
-  openProductForm(product);
+  openProductForm(
+    product
+  );
 
 }
 
 
-/* STATUS */
+/* PRODUCT STATUS */
 
 async function setProductStatus(
   id,
@@ -3606,16 +4255,22 @@ async function setProductStatus(
     );
 
 
-  if (!product) return;
+  if (!product) {
+    return;
+  }
 
 
   const { error } =
     await supabaseClient
       .from("products")
       .update({
-        status: newStatus
+        status:
+          newStatus
       })
-      .eq("id", id);
+      .eq(
+        "id",
+        id
+      );
 
 
   if (error) {
@@ -3633,7 +4288,6 @@ async function setProductStatus(
 
 
     return;
-
   }
 
 
@@ -3642,6 +4296,7 @@ async function setProductStatus(
 
 
   updateStats();
+
   renderAdminProducts();
 
 }
@@ -3659,24 +4314,31 @@ async function deleteProduct(id) {
     );
 
 
-  if (!product) return;
+  if (!product) {
+    return;
+  }
 
 
   const confirmed =
     confirm(
       `Delete "${product.name}"?\n\n` +
-      "This will permanently remove the product from Cherry Club."
+      `This will permanently remove the product from Cherry Club.`
     );
 
 
-  if (!confirmed) return;
+  if (!confirmed) {
+    return;
+  }
 
 
   const { error } =
     await supabaseClient
       .from("products")
       .delete()
-      .eq("id", id);
+      .eq(
+        "id",
+        id
+      );
 
 
   if (error) {
@@ -3694,7 +4356,6 @@ async function deleteProduct(id) {
 
 
     return;
-
   }
 
 
@@ -3707,6 +4368,7 @@ async function deleteProduct(id) {
 
 
   updateStats();
+
   renderAdminProducts();
 
 }
