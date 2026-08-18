@@ -520,8 +520,6 @@
       font-size: 13px;
     }
 
-    /* CATEGORIES */
-
     .categories-container {
       padding: 20px;
     }
@@ -596,6 +594,19 @@
       font-size: 11px;
       line-height: 1.6;
       margin-bottom: 20px;
+    }
+
+    .upload-help {
+      color: #888;
+      font-size: 10px;
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+
+    .upload-status {
+      margin-top: 10px;
+      font-size: 11px;
+      line-height: 1.5;
     }
 
     @media(max-width: 700px) {
@@ -748,36 +759,22 @@
 
     <div class="tabs">
 
-      <button
-        class="tab active"
-        id="orders-tab"
-        onclick="showTab('orders')"
-      >
+      <button class="tab active" id="orders-tab" onclick="showTab('orders')">
         Orders
       </button>
 
-      <button
-        class="tab"
-        id="products-tab"
-        onclick="showTab('products')"
-      >
+      <button class="tab" id="products-tab" onclick="showTab('products')">
         Products
       </button>
 
-      <button
-        class="tab"
-        id="categories-tab"
-        onclick="showTab('categories')"
-      >
+      <button class="tab" id="categories-tab" onclick="showTab('categories')">
         Categories
       </button>
-<button
-  class="tab"
-  id="website-tab"
-  onclick="showTab('website')"
->
-  Website
-</button>
+
+      <button class="tab" id="website-tab" onclick="showTab('website')">
+        Website
+      </button>
+
     </div>
 
 
@@ -786,13 +783,11 @@
     <section id="orders-section" class="section-card">
 
       <div class="section-heading">
-
         <h2>Orders</h2>
 
         <button class="small-button" onclick="loadEverything()">
           Refresh
         </button>
-
       </div>
 
       <div id="orders-container" class="orders-container">
@@ -861,6 +856,7 @@
 
             <div>
               <label>Status</label>
+
               <select id="product-status">
                 <option value="available">Available</option>
                 <option value="sold">Sold Out</option>
@@ -868,24 +864,80 @@
               </select>
             </div>
 
+
+            <!-- DIRECT PHOTO UPLOAD -->
+
             <div>
-              <label>Image URL</label>
+
+              <label>Product photo</label>
+
+              <input
+                id="product-image-file"
+                type="file"
+                accept="image/*"
+                capture="environment"
+              >
+
+              <div
+                id="product-image-preview"
+                style="
+                  margin-top:10px;
+                  display:none;
+                "
+              >
+
+                <img
+                  id="product-image-preview-img"
+                  src=""
+                  alt="Product preview"
+                  style="
+                    width:100%;
+                    max-width:180px;
+                    aspect-ratio:4/5;
+                    object-fit:cover;
+                    display:block;
+                    border:1px solid #ddd;
+                  "
+                >
+
+              </div>
+
+              <!-- This stores the URL automatically.
+                   YOU DO NOT NEED TO TOUCH IT. -->
+
               <input
                 id="product-image"
-                type="url"
-                placeholder="Paste image link"
+                type="hidden"
               >
+
+              <div class="upload-help">
+                Choose a photo directly from your phone 📸
+                <br>
+                It will automatically upload to Cherry Club's
+                <strong>product-images</strong> storage bucket.
+              </div>
+
+              <div
+                id="upload-status"
+                class="upload-status"
+              ></div>
+
             </div>
 
+
             <div class="form-full">
+
               <label>Description</label>
+
               <textarea
                 id="product-description"
                 placeholder="Tell customers about this piece..."
               ></textarea>
+
             </div>
 
           </div>
+
 
           <div class="form-buttons">
 
@@ -909,9 +961,14 @@
 
 
       <div id="products-container" class="products-container">
-        <div class="loading" style="grid-column:1/-1;">
+
+        <div
+          class="loading"
+          style="grid-column:1/-1;"
+        >
           Loading products 🍒
         </div>
+
       </div>
 
     </section>
@@ -958,203 +1015,213 @@
       </div>
 
     </section>
-<!-- WEBSITE -->
-
-<section id="website-section" class="section-card hidden">
-
-  <div class="section-heading">
-    <h2>Website</h2>
-
-    <button
-      class="small-button"
-      onclick="saveWebsiteContent()"
-    >
-      Save changes
-    </button>
-  </div>
-
-  <div class="form-box">
-
-    <h3 style="
-      font-family:Georgia,serif;
-      font-size:28px;
-      font-weight:normal;
-      margin-bottom:25px;
-    ">
-      Announcement Bar
-    </h3>
-
-    <label>Announcement text</label>
-
-    <input
-      id="site-announcement"
-      placeholder="e.g. FLAT 40% OFF 🍒"
-    >
-
-    <label>Show announcement?</label>
-
-    <select id="site-announcement-enabled">
-      <option value="true">Yes</option>
-      <option value="false">No</option>
-    </select>
-
-  </div>
 
 
-  <div class="form-box">
+    <!-- WEBSITE -->
 
-    <h3 style="
-      font-family:Georgia,serif;
-      font-size:28px;
-      font-weight:normal;
-      margin-bottom:25px;
-    ">
-      Hero Section
-    </h3>
+    <section id="website-section" class="section-card hidden">
 
-    <label>Main heading</label>
+      <div class="section-heading">
 
-    <input
-      id="site-hero-title"
-      placeholder="e.g. The New Drop"
-    >
+        <h2>Website</h2>
 
-    <label>Subtitle</label>
+        <button
+          class="small-button"
+          onclick="saveWebsiteContent()"
+        >
+          Save changes
+        </button>
 
-    <textarea
-      id="site-hero-subtitle"
-      placeholder="e.g. Y2K pieces you'll obsess over."
-    ></textarea>
-
-    <label>Button text</label>
-
-    <input
-      id="site-hero-button"
-      placeholder="e.g. SHOP NOW"
-    >
-
-    <label>Button link</label>
-
-    <input
-      id="site-hero-link"
-      placeholder="e.g. #products"
-    >
-
-  </div>
+      </div>
 
 
-  <div class="form-box">
+      <div class="form-box">
 
-    <h3 style="
-      font-family:Georgia,serif;
-      font-size:28px;
-      font-weight:normal;
-      margin-bottom:25px;
-    ">
-      Promotion / Deal
-    </h3>
+        <h3 style="
+          font-family:Georgia,serif;
+          font-size:28px;
+          font-weight:normal;
+          margin-bottom:25px;
+        ">
+          Announcement Bar
+        </h3>
 
-    <label>Show promotion?</label>
+        <label>Announcement text</label>
 
-    <select id="site-promo-enabled">
-      <option value="true">Yes</option>
-      <option value="false">No</option>
-    </select>
+        <input
+          id="site-announcement"
+          placeholder="e.g. FLAT 40% OFF 🍒"
+        >
 
-    <label>Promotion title</label>
+        <label>Show announcement?</label>
 
-    <input
-      id="site-promo-title"
-      placeholder="e.g. FLAT 40% OFF"
-    >
+        <select id="site-announcement-enabled">
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
 
-    <label>Promotion description</label>
-
-    <textarea
-      id="site-promo-description"
-      placeholder="e.g. On selected Cherry Club pieces."
-    ></textarea>
-
-    <label>Promotion button</label>
-
-    <input
-      id="site-promo-button"
-      placeholder="e.g. SHOP SALE"
-    >
-
-  </div>
+      </div>
 
 
-  <div class="form-box">
+      <div class="form-box">
 
-    <h3 style="
-      font-family:Georgia,serif;
-      font-size:28px;
-      font-weight:normal;
-      margin-bottom:25px;
-    ">
-      Homepage Sections
-    </h3>
+        <h3 style="
+          font-family:Georgia,serif;
+          font-size:28px;
+          font-weight:normal;
+          margin-bottom:25px;
+        ">
+          Hero Section
+        </h3>
 
-    <label>New Arrivals title</label>
+        <label>Main heading</label>
 
-    <input
-      id="site-new-arrivals-title"
-      placeholder="New Arrivals"
-    >
+        <input
+          id="site-hero-title"
+          placeholder="e.g. The New Drop"
+        >
 
-    <label>Featured Products title</label>
+        <label>Subtitle</label>
 
-    <input
-      id="site-featured-title"
-      placeholder="Cherry Picks"
-    >
+        <textarea
+          id="site-hero-subtitle"
+          placeholder="e.g. Y2K pieces you'll obsess over."
+        ></textarea>
 
-    <label>About section title</label>
+        <label>Button text</label>
 
-    <input
-      id="site-about-title"
-      placeholder="About Cherry Club"
-    >
+        <input
+          id="site-hero-button"
+          placeholder="e.g. SHOP NOW"
+        >
 
-    <label>About section text</label>
+        <label>Button link</label>
 
-    <textarea
-      id="site-about-text"
-      placeholder="Tell customers about Cherry Club..."
-    ></textarea>
+        <input
+          id="site-hero-link"
+          placeholder="e.g. #products"
+        >
 
-  </div>
+      </div>
 
 
-  <div style="padding:25px;">
+      <div class="form-box">
 
-    <button
-      class="black-button"
-      style="max-width:300px;"
-      onclick="saveWebsiteContent()"
-    >
-      Save all website changes 🍒
-    </button>
+        <h3 style="
+          font-family:Georgia,serif;
+          font-size:28px;
+          font-weight:normal;
+          margin-bottom:25px;
+        ">
+          Promotion / Deal
+        </h3>
 
-    <div
-      id="website-save-message"
-      style="
-        margin-top:15px;
-        font-size:12px;
-        color:#176b3a;
-      "
-    ></div>
+        <label>Show promotion?</label>
 
-  </div>
+        <select id="site-promo-enabled">
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
 
-</section>
+        <label>Promotion title</label>
+
+        <input
+          id="site-promo-title"
+          placeholder="e.g. FLAT 40% OFF"
+        >
+
+        <label>Promotion description</label>
+
+        <textarea
+          id="site-promo-description"
+          placeholder="e.g. On selected Cherry Club pieces."
+        ></textarea>
+
+        <label>Promotion button</label>
+
+        <input
+          id="site-promo-button"
+          placeholder="e.g. SHOP SALE"
+        >
+
+      </div>
+
+
+      <div class="form-box">
+
+        <h3 style="
+          font-family:Georgia,serif;
+          font-size:28px;
+          font-weight:normal;
+          margin-bottom:25px;
+        ">
+          Homepage Sections
+        </h3>
+
+        <label>New Arrivals title</label>
+
+        <input
+          id="site-new-arrivals-title"
+          placeholder="New Arrivals"
+        >
+
+        <label>Featured Products title</label>
+
+        <input
+          id="site-featured-title"
+          placeholder="Cherry Picks"
+        >
+
+        <label>About section title</label>
+
+        <input
+          id="site-about-title"
+          placeholder="About Cherry Club"
+        >
+
+        <label>About section text</label>
+
+        <textarea
+          id="site-about-text"
+          placeholder="Tell customers about Cherry Club..."
+        ></textarea>
+
+      </div>
+
+
+      <div style="padding:25px;">
+
+        <button
+          class="black-button"
+          style="max-width:300px;"
+          onclick="saveWebsiteContent()"
+        >
+          Save all website changes 🍒
+        </button>
+
+        <div
+          id="website-save-message"
+          style="
+            margin-top:15px;
+            font-size:12px;
+            color:#176b3a;
+          "
+        ></div>
+
+      </div>
+
+    </section>
+
   </main>
 
 </div>
 
 
 <script>
+
+/* =========================================================
+   SUPABASE
+   ========================================================= */
 
 const SUPABASE_URL =
   "https://jqpkvttexoekaoylwtkg.supabase.co";
@@ -1169,13 +1236,23 @@ const supabaseClient =
   );
 
 
+/* =========================================================
+   IMPORTANT:
+   YOUR BUCKET NAME IS EXACTLY product-images
+   ========================================================= */
+
+const PRODUCT_IMAGE_BUCKET = "product-images";
+
+
 let orders = [];
 let orderItems = [];
 let adminProducts = [];
 let categories = [];
 
 
-/* LOGIN */
+/* =========================================================
+   LOGIN
+   ========================================================= */
 
 document
   .getElementById("login-form")
@@ -1262,7 +1339,9 @@ async function logout() {
 }
 
 
-/* LOAD EVERYTHING */
+/* =========================================================
+   LOAD EVERYTHING
+   ========================================================= */
 
 async function loadEverything() {
 
@@ -1282,7 +1361,9 @@ async function loadEverything() {
 }
 
 
-/* ORDERS */
+/* =========================================================
+   ORDERS
+   ========================================================= */
 
 async function loadOrders() {
 
@@ -1332,25 +1413,27 @@ async function loadOrderItems() {
 }
 
 
-/* CATEGORIES */
+/* =========================================================
+   CATEGORIES
+   ========================================================= */
 
 async function loadCategories() {
 
-  const { data, error } =
+  const { data: categoryData, error: categoryError } =
     await supabaseClient
       .from("categories")
       .select("id,name,sort_order,created_at")
       .order("sort_order", { ascending: true })
       .order("name", { ascending: true });
 
-  if (error) {
+  if (categoryError) {
 
-    console.error("Categories error:", error);
+    console.error("Categories error:", categoryError);
 
     document.getElementById("categories-container").innerHTML = `
       <div class="empty">
         Couldn't load categories.<br><br>
-        ${escapeHTML(error.message)}
+        ${escapeHTML(categoryError.message)}
       </div>
     `;
 
@@ -1358,7 +1441,74 @@ async function loadCategories() {
     return;
   }
 
-  categories = Array.isArray(data) ? data : [];
+  let properCategories =
+    Array.isArray(categoryData)
+      ? categoryData
+      : [];
+
+
+  const { data: productData, error: productError } =
+    await supabaseClient
+      .from("products")
+      .select("category,category_id");
+
+  if (productError) {
+
+    console.error(
+      "Product category lookup error:",
+      productError
+    );
+
+    categories = properCategories;
+    return;
+  }
+
+
+  const existingNames =
+    new Set(
+      properCategories.map(
+        category =>
+          String(category.name || "")
+            .trim()
+            .toLowerCase()
+      )
+    );
+
+
+  const missingCategories = [];
+
+
+  (productData || []).forEach(product => {
+
+    const productCategory =
+      String(product.category || "").trim();
+
+    if (!productCategory) return;
+
+    const normalized =
+      productCategory.toLowerCase();
+
+    if (!existingNames.has(normalized)) {
+
+      existingNames.add(normalized);
+
+      missingCategories.push({
+        id: `legacy-${missingCategories.length + 1}`,
+        name: productCategory,
+        sort_order: 9999,
+        created_at: null,
+        legacy: true
+      });
+
+    }
+
+  });
+
+
+  categories = [
+    ...properCategories,
+    ...missingCategories
+  ];
 
 }
 
@@ -1413,6 +1563,7 @@ function renderCategories() {
 
   container.innerHTML = `
     <div class="category-list">
+
       ${
         categories.map(category => `
 
@@ -1424,18 +1575,36 @@ function renderCategories() {
 
             <div class="category-actions">
 
-              <button
-                onclick="renameCategory('${escapeHTML(category.id)}')"
-              >
-                Rename
-              </button>
+              ${
+                category.legacy
+                ?
+                `
+                  <span style="
+                    color:#999;
+                    font-size:9px;
+                    text-transform:uppercase;
+                    letter-spacing:1px;
+                    padding:8px 0;
+                  ">
+                    Existing products
+                  </span>
+                `
+                :
+                `
+                  <button
+                    onclick="renameCategory('${escapeHTML(category.id)}')"
+                  >
+                    Rename
+                  </button>
 
-              <button
-                class="danger"
-                onclick="deleteCategory('${escapeHTML(category.id)}')"
-              >
-                Delete
-              </button>
+                  <button
+                    class="danger"
+                    onclick="deleteCategory('${escapeHTML(category.id)}')"
+                  >
+                    Delete
+                  </button>
+                `
+              }
 
             </div>
 
@@ -1443,6 +1612,7 @@ function renderCategories() {
 
         `).join("")
       }
+
     </div>
   `;
 
@@ -1570,13 +1740,6 @@ async function renameCategory(id) {
     return;
   }
 
-  /*
-    Keep the old products.category text in sync too.
-    This means the existing website can continue using
-    its current category column while we transition it
-    to category_id.
-  */
-
   const { error: productError } =
     await supabaseClient
       .from("products")
@@ -1688,7 +1851,9 @@ async function deleteCategory(id) {
 }
 
 
-/* PRODUCTS */
+/* =========================================================
+   PRODUCTS
+   ========================================================= */
 
 async function loadAdminProducts() {
 
@@ -1774,7 +1939,9 @@ function formatDate(value) {
 }
 
 
-/* ORDERS RENDER */
+/* =========================================================
+   ORDERS RENDER
+   ========================================================= */
 
 function renderOrders() {
 
@@ -1896,6 +2063,7 @@ function renderOrders() {
                 <div class="order-item">
 
                   <span>
+
                     ${escapeHTML(item.product_name)}
 
                     ${
@@ -1907,6 +2075,7 @@ function renderOrders() {
                     }
 
                     × ${item.quantity}
+
                   </span>
 
                   <strong>
@@ -2026,66 +2195,80 @@ async function changeOrderStatus(select) {
 }
 
 
-/* TABS */
+/* =========================================================
+   TABS
+   ========================================================= */
 
 function showTab(tab) {
 
-  const ordersSection =
-    document.getElementById("orders-section");
+  const sections = [
+    "orders-section",
+    "products-section",
+    "categories-section",
+    "website-section"
+  ];
 
-  const productsSection =
-    document.getElementById("products-section");
+  const tabs = [
+    "orders-tab",
+    "products-tab",
+    "categories-tab",
+    "website-tab"
+  ];
 
-  const categoriesSection =
-    document.getElementById("categories-section");
+  sections.forEach(id => {
+    document.getElementById(id).classList.add("hidden");
+  });
 
-  const websiteSection =
-    document.getElementById("website-section");
-
-  const ordersTab =
-    document.getElementById("orders-tab");
-
-  const productsTab =
-    document.getElementById("products-tab");
-
-  const categoriesTab =
-    document.getElementById("categories-tab");
-
-  const websiteTab =
-    document.getElementById("website-tab");
-
-
-  ordersSection.classList.add("hidden");
-  productsSection.classList.add("hidden");
-  categoriesSection.classList.add("hidden");
-  websiteSection.classList.add("hidden");
-
-
-  ordersTab.classList.remove("active");
-  productsTab.classList.remove("active");
-  categoriesTab.classList.remove("active");
-  websiteTab.classList.remove("active");
+  tabs.forEach(id => {
+    document.getElementById(id).classList.remove("active");
+  });
 
 
   if (tab === "orders") {
 
-    ordersSection.classList.remove("hidden");
-    ordersTab.classList.add("active");
+    document
+      .getElementById("orders-section")
+      .classList.remove("hidden");
 
-  } else if (tab === "products") {
+    document
+      .getElementById("orders-tab")
+      .classList.add("active");
 
-    productsSection.classList.remove("hidden");
-    productsTab.classList.add("active");
+  }
 
-  } else if (tab === "categories") {
+  else if (tab === "products") {
 
-    categoriesSection.classList.remove("hidden");
-    categoriesTab.classList.add("active");
+    document
+      .getElementById("products-section")
+      .classList.remove("hidden");
 
-  } else if (tab === "website") {
+    document
+      .getElementById("products-tab")
+      .classList.add("active");
 
-    websiteSection.classList.remove("hidden");
-    websiteTab.classList.add("active");
+  }
+
+  else if (tab === "categories") {
+
+    document
+      .getElementById("categories-section")
+      .classList.remove("hidden");
+
+    document
+      .getElementById("categories-tab")
+      .classList.add("active");
+
+  }
+
+  else if (tab === "website") {
+
+    document
+      .getElementById("website-section")
+      .classList.remove("hidden");
+
+    document
+      .getElementById("website-tab")
+      .classList.add("active");
 
     loadWebsiteContent();
 
@@ -2093,7 +2276,10 @@ function showTab(tab) {
 
 }
 
-/* WEBSITE CONTENT */
+
+/* =========================================================
+   WEBSITE CONTENT
+   ========================================================= */
 
 const websiteFields = [
   "announcement",
@@ -2243,7 +2429,11 @@ async function saveWebsiteContent() {
   }
 
 }
-/* PRODUCT FORM */
+
+
+/* =========================================================
+   PRODUCT FORM
+   ========================================================= */
 
 function openProductForm(product = null) {
 
@@ -2276,6 +2466,31 @@ function openProductForm(product = null) {
   document.getElementById("product-description").value =
     product?.description || "";
 
+  document.getElementById("product-image-file").value = "";
+
+  const preview =
+    document.getElementById("product-image-preview");
+
+  const previewImage =
+    document.getElementById("product-image-preview-img");
+
+  const uploadStatus =
+    document.getElementById("upload-status");
+
+  uploadStatus.textContent = "";
+
+  if (product?.image_url) {
+
+    previewImage.src = product.image_url;
+    preview.style.display = "block";
+
+  } else {
+
+    previewImage.src = "";
+    preview.style.display = "none";
+
+  }
+
   updateCategoryDropdown();
 
   document.getElementById("product-category-id").value =
@@ -2302,10 +2517,92 @@ function closeProductForm() {
     .getElementById("editing-product-id")
     .value = "";
 
+  document
+    .getElementById("product-image")
+    .value = "";
+
+  document
+    .getElementById("product-image-preview")
+    .style.display = "none";
+
+  document
+    .getElementById("product-image-preview-img")
+    .src = "";
+
+  document
+    .getElementById("upload-status")
+    .textContent = "";
+
 }
 
 
-/* SAVE PRODUCT */
+/* =========================================================
+   DIRECT PHOTO PREVIEW
+   ========================================================= */
+
+document
+  .getElementById("product-image-file")
+  .addEventListener("change", function(event) {
+
+    const file =
+      event.target.files[0];
+
+    const preview =
+      document.getElementById(
+        "product-image-preview"
+      );
+
+    const previewImage =
+      document.getElementById(
+        "product-image-preview-img"
+      );
+
+    const uploadStatus =
+      document.getElementById(
+        "upload-status"
+      );
+
+
+    uploadStatus.textContent = "";
+
+
+    if (!file) {
+
+      preview.style.display = "none";
+      previewImage.src = "";
+
+      return;
+    }
+
+
+    if (!file.type.startsWith("image/")) {
+
+      alert("Please choose an image file.");
+
+      event.target.value = "";
+
+      preview.style.display = "none";
+      previewImage.src = "";
+
+      return;
+    }
+
+
+    const imageURL =
+      URL.createObjectURL(file);
+
+    previewImage.src =
+      imageURL;
+
+    preview.style.display =
+      "block";
+
+  });
+
+
+/* =========================================================
+   SAVE PRODUCT
+   ========================================================= */
 
 document
   .getElementById("product-form")
@@ -2313,15 +2610,18 @@ document
 
     event.preventDefault();
 
+
     const editingId =
       document
         .getElementById("editing-product-id")
         .value;
 
+
     const categoryId =
       document
         .getElementById("product-category-id")
         .value;
+
 
     const selectedCategory =
       categories.find(
@@ -2329,6 +2629,7 @@ document
           String(category.id) ===
           String(categoryId)
       );
+
 
     if (!selectedCategory) {
 
@@ -2338,121 +2639,312 @@ document
     }
 
 
-    const productData = {
-
-      name:
-        document
-          .getElementById("product-name")
-          .value
-          .trim(),
-
-      category:
-        selectedCategory.name,
-
-      category_id:
-        Number(categoryId),
-
-      price:
-        Number(
-          document
-            .getElementById("product-price")
-            .value
-        ),
-
-      size:
-        document
-          .getElementById("product-size")
-          .value
-          .trim(),
-
-      status:
-        document
-          .getElementById("product-status")
-          .value,
-
-      image_url:
-        document
-          .getElementById("product-image")
-          .value
-          .trim(),
-
-      description:
-        document
-          .getElementById("product-description")
-          .value
-          .trim()
-
-    };
-
-
     const button =
-      document.getElementById("save-product-button");
+      document.getElementById(
+        "save-product-button"
+      );
+
+    const uploadStatus =
+      document.getElementById(
+        "upload-status"
+      );
+
 
     button.disabled = true;
     button.textContent = "Saving...";
 
-
-    let error;
-
-
-    if (editingId) {
-
-      const result =
-        await supabaseClient
-          .from("products")
-          .update(productData)
-          .eq("id", editingId);
-
-      error = result.error;
-
-    } else {
-
-      const result =
-        await supabaseClient
-          .from("products")
-          .insert(productData);
-
-      error = result.error;
-
-    }
+    uploadStatus.textContent = "";
 
 
-    button.disabled = false;
-    button.textContent = "Save product";
+    try {
+
+      /* ---------------------------------------------
+         GET CURRENT IMAGE URL
+         --------------------------------------------- */
+
+      let imageURL =
+        document
+          .getElementById("product-image")
+          .value
+          .trim();
 
 
-    if (error) {
+      /* ---------------------------------------------
+         GET NEW PHOTO
+         --------------------------------------------- */
+
+      const imageFileInput =
+        document.getElementById(
+          "product-image-file"
+        );
+
+
+      const selectedFile =
+        imageFileInput.files[0];
+
+
+      /* ---------------------------------------------
+         AUTOMATIC SUPABASE STORAGE UPLOAD
+         --------------------------------------------- */
+
+      if (selectedFile) {
+
+        uploadStatus.textContent =
+          "Uploading photo to Cherry Club... 📸";
+
+
+        const originalName =
+          selectedFile.name
+            .split(".")
+            .slice(0, -1)
+            .join(".")
+            .replace(
+              /[^a-zA-Z0-9-_]/g,
+              "-"
+            )
+            .substring(0, 60);
+
+
+        const extension =
+          selectedFile.name
+            .split(".")
+            .pop()
+            .toLowerCase();
+
+
+        const uniqueFileName =
+          `${Date.now()}-${crypto.randomUUID()}` +
+          `-${originalName}.${extension}`;
+
+
+        /*
+          Files go inside:
+
+          product-images/products/
+
+          You do NOT need to manually create
+          a URL or filename.
+        */
+
+        const filePath =
+          `products/${uniqueFileName}`;
+
+
+        const { error: uploadError } =
+          await supabaseClient
+            .storage
+            .from(PRODUCT_IMAGE_BUCKET)
+            .upload(
+              filePath,
+              selectedFile,
+              {
+                cacheControl: "3600",
+                upsert: false,
+                contentType: selectedFile.type
+              }
+            );
+
+
+        if (uploadError) {
+
+          console.error(
+            "Image upload error:",
+            uploadError
+          );
+
+          throw new Error(
+            "The photo couldn't be uploaded.\n\n" +
+            uploadError.message
+          );
+
+        }
+
+
+        /*
+          AUTOMATICALLY GET PUBLIC URL
+        */
+
+        const { data: publicURLData } =
+          supabaseClient
+            .storage
+            .from(PRODUCT_IMAGE_BUCKET)
+            .getPublicUrl(filePath);
+
+
+        imageURL =
+          publicURLData.publicUrl;
+
+
+        /*
+          Store URL automatically in hidden field.
+          User never needs to touch this.
+        */
+
+        document
+          .getElementById(
+            "product-image"
+          )
+          .value =
+          imageURL;
+
+
+        uploadStatus.textContent =
+          "✓ Photo uploaded successfully 🍒";
+
+      }
+
+
+      /* ---------------------------------------------
+         PRODUCT DATA
+         --------------------------------------------- */
+
+      const productData = {
+
+        name:
+          document
+            .getElementById("product-name")
+            .value
+            .trim(),
+
+        category:
+          selectedCategory.name,
+
+        category_id:
+          Number(categoryId),
+
+        price:
+          Number(
+            document
+              .getElementById("product-price")
+              .value
+          ),
+
+        size:
+          document
+            .getElementById("product-size")
+            .value
+            .trim(),
+
+        status:
+          document
+            .getElementById("product-status")
+            .value,
+
+        image_url:
+          imageURL,
+
+        description:
+          document
+            .getElementById("product-description")
+            .value
+            .trim()
+
+      };
+
+
+      /* ---------------------------------------------
+         SAVE / UPDATE PRODUCT
+         --------------------------------------------- */
+
+      let error;
+
+
+      if (editingId) {
+
+        const result =
+          await supabaseClient
+            .from("products")
+            .update(productData)
+            .eq("id", editingId);
+
+        error =
+          result.error;
+
+      } else {
+
+        const result =
+          await supabaseClient
+            .from("products")
+            .insert(productData);
+
+        error =
+          result.error;
+
+      }
+
+
+      if (error) {
+
+        console.error(
+          "Product save error:",
+          error
+        );
+
+        throw new Error(
+          "I couldn't save that product.\n\n" +
+          error.message
+        );
+
+      }
+
+
+      /* ---------------------------------------------
+         SUCCESS
+         --------------------------------------------- */
+
+      uploadStatus.textContent =
+        "✓ Product saved successfully 🍒";
+
+
+      closeProductForm();
+
+
+      await loadAdminProducts();
+
+
+      updateStats();
+      renderAdminProducts();
+
+
+    } catch (error) {
 
       console.error(
         "Product save error:",
         error
       );
 
+
+      uploadStatus.textContent =
+        "";
+
+
       alert(
-        "I couldn't save that product.\n\n" +
-        error.message
+        error.message ||
+        "Something went wrong while saving the product."
       );
 
-      return;
+
+    } finally {
+
+      button.disabled = false;
+      button.textContent =
+        "Save product";
+
     }
-
-
-    closeProductForm();
-
-    await loadAdminProducts();
-
-    updateStats();
-    renderAdminProducts();
 
   });
 
 
-/* RENDER PRODUCTS */
+/* =========================================================
+   RENDER PRODUCTS
+   ========================================================= */
 
 function renderAdminProducts() {
 
   const container =
-    document.getElementById("products-container");
+    document.getElementById(
+      "products-container"
+    );
 
   if (!adminProducts.length) {
 
@@ -2487,8 +2979,10 @@ function renderAdminProducts() {
         product.category ||
         "Uncategorized";
 
+
       let statusClass =
         "status-hidden";
+
 
       if (product.status === "available") {
         statusClass = "status-available";
@@ -2511,6 +3005,7 @@ function renderAdminProducts() {
                 class="product-image"
                 src="${escapeHTML(image)}"
                 alt="${escapeHTML(product.name)}"
+                loading="lazy"
               >
             `
             :
@@ -2547,11 +3042,16 @@ function renderAdminProducts() {
             </div>
 
             <div class="product-card-status ${statusClass}">
+
               ${
                 product.status === "sold"
                 ? "Sold Out"
-                : escapeHTML(product.status || "hidden")
+                : escapeHTML(
+                    product.status ||
+                    "hidden"
+                  )
               }
+
             </div>
 
 
@@ -2601,7 +3101,9 @@ function renderAdminProducts() {
 }
 
 
-/* EDIT */
+/* =========================================================
+   EDIT
+   ========================================================= */
 
 function editProduct(id) {
 
@@ -2619,7 +3121,9 @@ function editProduct(id) {
 }
 
 
-/* STATUS */
+/* =========================================================
+   STATUS
+   ========================================================= */
 
 async function setProductStatus(id, newStatus) {
 
@@ -2667,7 +3171,9 @@ async function setProductStatus(id, newStatus) {
 }
 
 
-/* DELETE PRODUCT */
+/* =========================================================
+   DELETE PRODUCT
+   ========================================================= */
 
 async function deleteProduct(id) {
 
@@ -2726,7 +3232,9 @@ async function deleteProduct(id) {
 }
 
 
-/* START */
+/* =========================================================
+   START
+   ========================================================= */
 
 checkLogin();
 
