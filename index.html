@@ -1,7 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -9,9 +13,11 @@
 <title>Cherry Club 🍒</title>
 
 <meta name="description"
+
 content="Cherry Club — Y2K pieces, one-of-one finds & clothes worth obsessing over.">
 
 <style>
+
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap');
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -19,10 +25,15 @@ content="Cherry Club — Y2K pieces, one-of-one finds & clothes worth obsessing 
 html{scroll-behavior:smooth}
 
 body{
+
   background:#f5f1eb;
+
   color:#111;
+
   font-family:'DM Sans',sans-serif;
+
   overflow-x:hidden;
+
 }
 
 body.no-scroll{overflow:hidden}
@@ -30,204 +41,349 @@ body.no-scroll{overflow:hidden}
 a{color:inherit;text-decoration:none}
 
 button,input,textarea{font:inherit}
+
 button{cursor:pointer}
 
 /* ================= INTRO ================= */
 
 .intro{
+
   position:fixed;
+
   inset:0;
+
   z-index:9999;
+
   background:#111;
+
   display:flex;
+
   align-items:center;
+
   justify-content:center;
+
   overflow:hidden;
+
   animation:introExit 1s ease forwards;
+
   animation-delay:3.7s;
+
 }
 
 .cherry-stage{
+
   position:relative;
+
   width:260px;
+
   height:240px;
+
 }
 
 .cherry{
+
   position:absolute;
+
   width:88px;
+
   height:88px;
+
   background:#a20f20;
+
   border-radius:50%;
+
   top:90px;
+
   box-shadow:inset -12px -10px 0 rgba(0,0,0,.12),0 12px 35px rgba(162,15,32,.25);
+
 }
 
 .cherry.left{
+
   left:10px;
+
   animation:cherryLeft 2s cubic-bezier(.7,0,.2,1) forwards;
+
 }
 
 .cherry.right{
+
   right:10px;
+
   animation:cherryRight 2s cubic-bezier(.7,0,.2,1) forwards;
+
 }
 
 .cherry::before{
+
   content:"";
+
   position:absolute;
+
   width:3px;
+
   height:75px;
+
   background:#7a5b35;
+
   top:-55px;
+
   left:51px;
+
   transform:rotate(-22deg);
+
   transform-origin:bottom;
+
 }
 
 .cherry.right::before{
+
   transform:rotate(22deg);
+
   left:34px;
+
 }
 
 .cherry::after{
+
   content:"";
+
   position:absolute;
+
   width:19px;
+
   height:10px;
+
   background:#71844b;
+
   border-radius:100% 0 100% 0;
+
   top:-59px;
+
   left:50px;
+
   transform:rotate(-15deg);
+
 }
 
 .cherry.right::after{
+
   left:20px;
+
   transform:rotate(15deg) scaleX(-1);
+
 }
 
 .intro-logo{
+
   position:absolute;
+
   color:white;
+
   text-align:center;
+
   opacity:0;
+
   animation:logoReveal 1s ease forwards;
+
   animation-delay:2.1s;
+
 }
 
 .intro-logo h1{
+
   font-family:'Playfair Display',serif;
+
   font-size:clamp(50px,11vw,105px);
+
   font-weight:500;
+
   font-style:italic;
+
   letter-spacing:-4px;
+
 }
 
 .intro-logo p{
+
   margin-top:8px;
+
   font-size:9px;
+
   text-transform:uppercase;
+
   letter-spacing:5px;
+
   color:#aaa;
+
 }
 
 @keyframes cherryLeft{
+
   0%{transform:translateX(-150px) rotate(-25deg)}
+
   65%{transform:translateX(0) rotate(0)}
+
   78%{transform:translateX(5px) scale(1.15)}
+
   100%{transform:translateX(0) scale(1)}
+
 }
 
 @keyframes cherryRight{
+
   0%{transform:translateX(150px) rotate(25deg)}
+
   65%{transform:translateX(0) rotate(0)}
+
   78%{transform:translateX(-5px) scale(1.15)}
+
   100%{transform:translateX(0) scale(1)}
+
 }
 
 @keyframes logoReveal{
+
   from{opacity:0;transform:translateY(20px)}
+
   to{opacity:1;transform:translateY(0)}
+
 }
 
 @keyframes introExit{
+
   to{opacity:0;visibility:hidden;pointer-events:none}
+
 }
 
 /* ================= ANNOUNCEMENT ================= */
 
 #announcement-bar{
+
   position:fixed;
+
   top:0;
+
   left:0;
+
   width:100%;
+
   z-index:1500;
+
   background:#a20f20;
+
   color:white;
+
   text-align:center;
+
   padding:10px 40px;
+
   font-size:10px;
+
   letter-spacing:2px;
+
   text-transform:uppercase;
+
   display:none;
+
 }
 
 body.has-announcement nav{
+
   top:38px;
+
 }
 
 body.has-announcement .hero{
+
   padding-top:178px;
+
 }
 
 /* ================= NAV ================= */
 
 nav{
+
   position:fixed;
+
   top:0;
+
   left:0;
+
   width:100%;
+
   height:72px;
+
   padding:0 5vw;
+
   display:flex;
+
   align-items:center;
+
   justify-content:space-between;
+
   background:rgba(245,241,235,.86);
+
   backdrop-filter:blur(18px);
+
   -webkit-backdrop-filter:blur(18px);
+
   border-bottom:1px solid rgba(17,17,17,.08);
+
   z-index:1000;
+
   transition:top .25s ease;
+
 }
 
 .menu-button,.bag-button{
+
   background:none;
+
   border:0;
+
   font-size:20px;
+
 }
 
 .menu-button{
+
   display:flex;
+
   flex-direction:column;
+
   gap:5px;
+
   width:25px;
+
 }
 
 .menu-line{
+
   height:1.5px;
+
   background:#111;
+
   width:100%;
+
 }
 
 .logo{
+
   position:absolute;
+
   left:50%;
+
   transform:translateX(-50%);
+
   font-family:'Playfair Display',serif;
+
   font-size:23px;
+
   font-style:italic;
+
   white-space:nowrap;
+
 }
 
 .logo span{color:#a20f20}
@@ -235,398 +391,865 @@ nav{
 /* ================= MENU ================= */
 
 .menu-overlay{
+
   position:fixed;
+
   inset:0;
+
   background:rgba(0,0,0,.45);
+
   z-index:2000;
+
   opacity:0;
+
   visibility:hidden;
+
   transition:.35s ease;
+
 }
 
 .menu-overlay.active{
+
   opacity:1;
+
   visibility:visible;
+
 }
 
 .side-menu{
+
   position:absolute;
+
   left:0;
+
   top:0;
+
   height:100%;
+
   width:min(390px,88vw);
+
   background:#f5f1eb;
+
   padding:100px 35px 35px;
+
   transform:translateX(-100%);
+
   transition:.45s cubic-bezier(.7,0,.2,1);
+
   overflow-y:auto;
+
 }
 
 .menu-overlay.active .side-menu{transform:translateX(0)}
 
 .close-menu{
+
   position:absolute;
+
   top:25px;
+
   right:25px;
+
   border:0;
+
   background:none;
+
   font-size:25px;
+
 }
 
 .menu-label{
+
   font-size:10px;
+
   letter-spacing:3px;
+
   color:#888;
+
   text-transform:uppercase;
+
   margin-bottom:20px;
+
 }
 
 .menu-links{
+
   display:flex;
+
   flex-direction:column;
+
   gap:13px;
+
 }
 
-.menu-links a{
+.menu-link{
+
   font-family:'Playfair Display',serif;
+
   font-size:32px;
+
   transition:.2s;
+
+  border:0;
+
+  background:none;
+
+  text-align:left;
+
+  padding:0;
+
+  color:#111;
+
 }
 
-.menu-links a:hover{
+.menu-link:hover{
+
   color:#a20f20;
+
   padding-left:8px;
+
+}
+
+.menu-link.active{
+
+  color:#a20f20;
+
+}
+
+.subcategory-menu{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:8px;
+
+  margin:-5px 0 8px 18px;
+
+}
+
+.subcategory-menu button{
+
+  border:0;
+
+  background:none;
+
+  text-align:left;
+
+  color:#777;
+
+  font-size:12px;
+
+  padding:3px 0;
+
+  transition:.2s;
+
+}
+
+.subcategory-menu button:hover{
+
+  color:#a20f20;
+
+  padding-left:5px;
+
 }
 
 .menu-divider{
+
   height:1px;
+
   background:#ddd7d0;
+
   margin:35px 0;
+
 }
 
 .menu-small{
+
   display:flex;
+
   flex-direction:column;
+
   gap:15px;
+
   font-size:12px;
+
   text-transform:uppercase;
+
   letter-spacing:1.5px;
+
 }
 
 /* ================= HERO ================= */
 
 .hero{
+
   min-height:100vh;
+
   padding:140px 6vw 70px;
+
   display:flex;
+
   align-items:center;
+
   justify-content:center;
+
   text-align:center;
+
   position:relative;
+
 }
 
 .hero-content{max-width:900px}
 
 .eyebrow{
+
   font-size:10px;
+
   letter-spacing:4px;
+
   text-transform:uppercase;
+
   color:#777;
+
   margin-bottom:25px;
+
 }
 
 .hero h2{
+
   font-family:'Playfair Display',serif;
+
   font-size:clamp(60px,12vw,150px);
+
   line-height:.85;
+
   font-weight:500;
+
   letter-spacing:-6px;
+
 }
 
 .hero h2 em{
+
   color:#a20f20;
+
   font-weight:500;
+
 }
 
 .hero-text{
+
   max-width:430px;
+
   margin:35px auto 0;
+
   color:#666;
+
   line-height:1.7;
+
   font-size:14px;
+
 }
 
 .shop-button{
+
   display:inline-block;
+
   margin-top:30px;
+
   padding:17px 28px;
+
   background:#111;
+
   color:white;
+
   font-size:11px;
+
   letter-spacing:2px;
+
   text-transform:uppercase;
+
   transition:.3s;
+
 }
 
 .shop-button:hover{
+
   background:#a20f20;
+
   transform:translateY(-3px);
+
 }
 
 .scroll-note{
+
   position:absolute;
+
   bottom:30px;
+
   left:50%;
+
   transform:translateX(-50%);
+
   font-size:9px;
+
   letter-spacing:3px;
+
   color:#888;
+
   text-transform:uppercase;
+
 }
 
 /* ================= MARQUEE ================= */
 
 .marquee{
+
   background:#a20f20;
+
   color:white;
+
   overflow:hidden;
+
   white-space:nowrap;
+
   padding:14px 0;
+
   font-size:10px;
+
   letter-spacing:3px;
+
 }
 
 .marquee-track{
+
   display:inline-block;
+
   animation:move 22s linear infinite;
+
 }
 
 .marquee span{margin:0 28px}
 
 @keyframes move{
+
   from{transform:translateX(0)}
+
   to{transform:translateX(-50%)}
+
 }
 
 /* ================= PROMOTION ================= */
 
 #promo-section{
+
   display:none;
+
   padding:80px 6vw;
+
   background:#111;
+
   color:white;
+
   text-align:center;
+
 }
 
-#promo-section.visible{display:block}
-
 #promo-title{
+
   font-family:'Playfair Display',serif;
+
   font-size:clamp(40px,7vw,75px);
+
   font-weight:500;
+
   line-height:1;
+
 }
 
 #promo-description{
+
   max-width:600px;
+
   margin:20px auto 0;
+
   color:#aaa;
+
   font-size:14px;
+
   line-height:1.7;
+
 }
 
 #promo-button{
+
   display:inline-block;
+
   margin-top:25px;
+
   padding:15px 25px;
+
   background:#a20f20;
+
   color:white;
+
   font-size:10px;
+
   text-transform:uppercase;
+
   letter-spacing:2px;
+
 }
 
 /* ================= SHOP ================= */
 
 .section{
+
   padding:110px 6vw;
+
 }
 
 .section-header{
+
   display:flex;
+
   justify-content:space-between;
+
   align-items:end;
-  margin-bottom:45px;
+
+  margin-bottom:30px;
+
+  gap:25px;
+
 }
 
 .section-kicker{
+
   font-size:10px;
+
   letter-spacing:3px;
+
   text-transform:uppercase;
+
   color:#777;
+
   margin-bottom:12px;
+
 }
 
 .section-title{
+
   font-family:'Playfair Display',serif;
+
   font-size:clamp(48px,7vw,82px);
+
   font-weight:500;
+
   letter-spacing:-3px;
+
 }
 
 .view-all{
+
   font-size:10px;
+
   text-transform:uppercase;
+
   letter-spacing:2px;
+
   border-bottom:1px solid;
+
   padding-bottom:5px;
+
+  white-space:nowrap;
+
+}
+
+/* CATEGORY BAR */
+
+.category-bar{
+
+  display:flex;
+
+  gap:10px;
+
+  overflow-x:auto;
+
+  padding:4px 0 20px;
+
+  margin-bottom:25px;
+
+  scrollbar-width:none;
+
+}
+
+.category-bar::-webkit-scrollbar{
+
+  display:none;
+
+}
+
+.category-filter{
+
+  flex:0 0 auto;
+
+  border:1px solid #d2cbc4;
+
+  background:transparent;
+
+  padding:10px 16px;
+
+  font-size:9px;
+
+  text-transform:uppercase;
+
+  letter-spacing:1.5px;
+
+  transition:.2s;
+
+}
+
+.category-filter:hover,
+
+.category-filter.active{
+
+  background:#111;
+
+  border-color:#111;
+
+  color:white;
+
+}
+
+.category-group{
+
+  flex:0 0 auto;
+
+  position:relative;
+
+}
+
+.subcategory-dropdown{
+
+  position:absolute;
+
+  left:0;
+
+  top:calc(100% + 5px);
+
+  min-width:180px;
+
+  background:#f5f1eb;
+
+  border:1px solid #d2cbc4;
+
+  box-shadow:0 10px 30px rgba(0,0,0,.1);
+
+  padding:8px;
+
+  z-index:20;
+
+  display:none;
+
+}
+
+.category-group:hover .subcategory-dropdown{
+
+  display:block;
+
+}
+
+.subcategory-dropdown button{
+
+  display:block;
+
+  width:100%;
+
+  text-align:left;
+
+  border:0;
+
+  background:none;
+
+  padding:9px 10px;
+
+  font-size:10px;
+
+  color:#555;
+
+}
+
+.subcategory-dropdown button:hover{
+
+  background:#e9e2db;
+
+  color:#a20f20;
+
 }
 
 .products{
+
   display:grid;
+
   grid-template-columns:repeat(3,1fr);
+
   gap:18px;
+
 }
 
 .product{
+
   cursor:pointer;
+
   min-width:0;
+
 }
 
 .product-image{
+
   aspect-ratio:4/5;
+
   background:#ddd6cf;
+
   display:flex;
+
   align-items:center;
+
   justify-content:center;
+
   position:relative;
+
   overflow:hidden;
+
   transition:.4s;
+
 }
 
 .product-image img{
+
   width:100%;
+
   height:100%;
+
   object-fit:cover;
+
   display:block;
+
   transition:.4s;
+
 }
 
 .product:hover .product-image{
+
   transform:translateY(-6px);
+
 }
 
 .product:hover .product-image img{
+
   transform:scale(1.03);
+
 }
 
 .placeholder{
+
   font-family:'Playfair Display',serif;
+
   font-size:60px;
+
   font-style:italic;
+
   color:rgba(17,17,17,.15);
+
 }
 
 .tag{
+
   position:absolute;
+
   top:14px;
+
   left:14px;
+
   background:white;
+
   padding:7px 10px;
+
   font-size:8px;
+
   text-transform:uppercase;
+
   letter-spacing:1.5px;
+
   z-index:2;
+
 }
 
 .product-info{
+
   padding:15px 2px;
+
   display:flex;
+
   justify-content:space-between;
+
   gap:15px;
+
 }
 
 .product-name{font-size:13px}
 
 .product-meta{
+
   font-size:10px;
+
   color:#888;
+
   margin-top:5px;
+
   text-transform:lowercase;
+
 }
 
 .price{
+
   font-size:13px;
+
   white-space:nowrap;
+
 }
 
 .add-to-bag{
+
   margin-top:9px;
+
   border:0;
+
   border-bottom:1px solid #111;
+
   background:none;
+
   padding:4px 0;
+
   font-size:9px;
+
   text-transform:uppercase;
+
   letter-spacing:1.5px;
+
 }
 
 .add-to-bag:hover{
+
   color:#a20f20;
+
   border-color:#a20f20;
+
 }
 
 .loading-message,
+
 .products-error,
+
 .empty-products{
+
   grid-column:1/-1;
+
   text-align:center;
+
   color:#888;
+
   padding:70px 20px;
+
   font-size:13px;
+
 }
 
 .products-error{color:#a20f20}
 
 .retry-products{
+
   display:inline-block;
+
   margin-top:15px;
+
   border:0;
+
   background:#111;
+
   color:white;
+
   padding:12px 18px;
+
   font-size:10px;
+
   text-transform:uppercase;
+
   letter-spacing:1.5px;
+
+}
+
+.active-filter-note{
+
+  font-size:10px;
+
+  color:#888;
+
+  margin:-8px 0 25px;
+
+  text-transform:uppercase;
+
+  letter-spacing:1.5px;
+
 }
 
 /* ================= ABOUT ================= */
 
 .about{
+
   background:#111;
+
   color:white;
+
   padding:120px 6vw;
+
   display:grid;
+
   grid-template-columns:1fr 1fr;
+
   gap:10vw;
+
   align-items:center;
+
 }
 
 .about h2{
+
   font-family:'Playfair Display',serif;
+
   font-size:clamp(50px,7vw,95px);
+
   line-height:.92;
+
   font-weight:500;
+
   letter-spacing:-4px;
+
 }
 
 .about h2 em{color:#d83b4c}
 
 .about-copy{
+
   max-width:440px;
+
   color:#aaa;
+
   font-size:14px;
+
   line-height:1.9;
+
 }
 
 .about-copy strong{color:white}
@@ -634,406 +1257,689 @@ nav{
 /* ================= CONTACT ================= */
 
 .contact-section{
+
   background:#f5f1eb;
+
   padding:110px 6vw;
+
   border-top:1px solid #ddd7d0;
+
 }
 
 .contact-header{
+
   max-width:650px;
+
   margin-bottom:55px;
+
 }
 
 .contact-header h2{
+
   font-family:'Playfair Display',serif;
+
   font-size:clamp(52px,7vw,90px);
+
   font-weight:500;
+
   line-height:.95;
+
   letter-spacing:-4px;
+
 }
 
 .contact-header h2 em{
+
   color:#a20f20;
+
   font-weight:500;
+
 }
 
 .contact-header p{
+
   max-width:450px;
+
   margin-top:25px;
+
   color:#666;
+
   font-size:14px;
+
   line-height:1.8;
+
 }
 
 .contact-grid{
+
   display:grid;
+
   grid-template-columns:repeat(2,1fr);
+
   gap:1px;
+
   background:#d8d1ca;
+
   border:1px solid #d8d1ca;
+
 }
 
 .contact-card{
+
   background:#f5f1eb;
+
   padding:38px;
+
   min-height:220px;
+
 }
 
 .contact-label{
+
   display:block;
+
   font-size:9px;
+
   text-transform:uppercase;
+
   letter-spacing:2.5px;
+
   color:#888;
+
   margin-bottom:15px;
+
 }
 
 .contact-card h3{
+
   font-family:'Playfair Display',serif;
+
   font-size:28px;
+
   font-weight:500;
+
   margin-bottom:12px;
+
 }
 
 .contact-card p{
+
   color:#666;
+
   font-size:12px;
+
   line-height:1.7;
+
   max-width:300px;
+
 }
 
 .contact-link{
+
   display:inline-block;
+
   margin-top:22px;
+
   font-size:10px;
+
   text-transform:uppercase;
+
   letter-spacing:1.8px;
+
   border-bottom:1px solid #111;
+
   padding-bottom:5px;
+
 }
 
 .contact-note{
+
   display:block;
+
   margin-top:18px;
+
   color:#555;
+
   font-size:11px;
+
 }
 
 .policy-box{
+
   margin-top:1px;
+
   padding:45px 38px;
+
   background:#111;
+
   color:white;
+
   display:grid;
+
   grid-template-columns:.7fr 1.3fr;
+
   gap:8vw;
+
 }
 
 .policy-box h3{
+
   font-family:'Playfair Display',serif;
+
   font-size:32px;
+
   font-weight:500;
+
 }
 
 .policy-text{
+
   color:#aaa;
+
   font-size:12px;
+
   line-height:1.9;
+
 }
 
 .policy-text p+p{margin-top:18px}
+
 .policy-text strong{color:white}
 
 /* ================= FOOTER ================= */
 
 footer{
+
   background:#111;
+
   color:white;
+
   border-top:1px solid #333;
+
   padding:60px 6vw 30px;
+
 }
 
 .footer-top{
+
   display:flex;
+
   justify-content:space-between;
+
   gap:30px;
+
   padding-bottom:60px;
+
 }
 
 .footer-logo{
+
   font-family:'Playfair Display',serif;
+
   font-size:45px;
+
   font-style:italic;
+
 }
 
 .footer-links{
+
   display:flex;
+
   gap:30px;
+
   font-size:10px;
+
   text-transform:uppercase;
+
   letter-spacing:1.5px;
+
 }
 
 .footer-bottom{
+
   border-top:1px solid #333;
+
   padding-top:22px;
+
   display:flex;
+
   justify-content:space-between;
+
   color:#777;
+
   font-size:9px;
+
 }
 
 /* ================= OVERLAYS ================= */
 
 .cherry-overlay{
+
   position:fixed;
+
   inset:0;
+
   background:rgba(0,0,0,.45);
+
   z-index:5000;
+
   opacity:0;
+
   visibility:hidden;
+
   transition:.3s ease;
+
 }
 
 .cherry-overlay.active{
+
   opacity:1;
+
   visibility:visible;
+
 }
 
 .cherry-cart{
+
   position:absolute;
+
   right:0;
+
   top:0;
+
   width:min(440px,94vw);
+
   height:100%;
+
   background:#f5f1eb;
+
   padding:35px;
+
   overflow-y:auto;
+
   transform:translateX(100%);
+
   transition:.4s cubic-bezier(.7,0,.2,1);
+
 }
 
 .cherry-overlay.active .cherry-cart{
+
   transform:translateX(0);
+
 }
 
 .cherry-header{
+
   display:flex;
+
   justify-content:space-between;
+
   align-items:center;
+
   margin-bottom:30px;
+
 }
 
 .cherry-title{
+
   font-family:'Playfair Display',serif;
+
   font-size:38px;
+
 }
 
 .cherry-close{
+
   border:0;
+
   background:none;
+
   font-size:27px;
+
 }
 
 .cart-item{
+
   display:grid;
+
   grid-template-columns:80px 1fr;
+
   gap:15px;
+
   padding:18px 0;
+
   border-bottom:1px solid #ddd7d0;
+
 }
 
 .cart-image{
+
   width:80px;
+
   height:100px;
+
   background:#ddd6cf;
+
   object-fit:cover;
+
   display:block;
+
 }
 
 .cart-name{font-size:13px}
 
 .cart-meta{
+
   color:#888;
+
   font-size:10px;
+
   margin-top:5px;
+
 }
 
 .cart-price{
+
   margin-top:10px;
+
   font-size:12px;
+
 }
 
 .quantity-row{
+
   display:flex;
+
   align-items:center;
+
   gap:12px;
+
   margin-top:12px;
+
   flex-wrap:wrap;
+
 }
 
 .quantity-row button{
+
   width:25px;
+
   height:25px;
+
   border:1px solid #ccc;
+
   background:white;
+
 }
 
 .remove-item{
+
   width:auto!important;
+
   border:0!important;
+
   background:none!important;
+
   font-size:9px;
+
   text-transform:uppercase;
+
   letter-spacing:1px;
+
 }
 
 .cart-summary{
+
   margin-top:30px;
+
   padding-top:20px;
+
   border-top:1px solid #111;
+
 }
 
 .summary-row{
+
   display:flex;
+
   justify-content:space-between;
+
   margin-bottom:12px;
+
   font-size:12px;
+
 }
 
 .summary-total{
+
   font-size:16px;
+
   font-weight:600;
+
   padding-top:12px;
+
   border-top:1px solid #ddd7d0;
+
 }
 
 .checkout-button{
+
   width:100%;
+
   border:0;
+
   background:#111;
+
   color:white;
+
   padding:17px;
+
   margin-top:20px;
+
   text-transform:uppercase;
+
   letter-spacing:2px;
+
   font-size:10px;
+
 }
 
 .checkout-button:hover{background:#a20f20}
 
 .checkout-button:disabled{
+
   opacity:.55;
+
   cursor:not-allowed;
+
 }
 
 .empty-cart{
+
   text-align:center;
+
   color:#777;
+
   padding:70px 0;
+
   font-size:13px;
+
 }
 
 .checkout-box,
+
 .success-box{
+
   position:absolute;
+
   left:50%;
+
   top:50%;
+
   transform:translate(-50%,-50%);
+
   width:min(600px,94vw);
+
   max-height:92vh;
+
   overflow-y:auto;
+
   background:#f5f1eb;
+
   padding:35px;
+
 }
 
 .success-box{
+
   width:min(500px,92vw);
+
   text-align:center;
+
 }
 
 .checkout-title{
+
   font-family:'Playfair Display',serif;
+
   font-size:42px;
+
   margin-bottom:25px;
+
 }
 
 .checkout-field{margin-bottom:17px}
 
 .checkout-field label{
+
   display:block;
+
   font-size:9px;
+
   text-transform:uppercase;
+
   letter-spacing:2px;
+
   margin-bottom:7px;
+
   color:#777;
+
 }
 
 .checkout-field input,
+
 .checkout-field textarea{
+
   width:100%;
+
   border:1px solid #d4cec7;
+
   background:white;
+
   padding:13px;
+
   font:inherit;
+
   font-size:13px;
+
   outline:none;
+
 }
 
 .checkout-field input:focus,
+
 .checkout-field textarea:focus{
+
   border-color:#111;
+
 }
 
 .checkout-field textarea{
+
   min-height:90px;
+
   resize:vertical;
+
 }
 
 .jazzcash-box{
+
   background:#111;
+
   color:white;
+
   padding:25px;
+
   margin:25px 0;
+
 }
 
 .jazzcash-box h3{
+
   font-family:'Playfair Display',serif;
+
   font-size:26px;
+
   margin-bottom:12px;
+
 }
 
 .jazzcash-details{
+
   margin:15px 0;
+
   line-height:1.9;
+
   font-size:12px;
+
 }
 
 .jazzcash-instructions{
+
   color:#aaa;
+
   font-size:11px;
+
   line-height:1.8;
+
 }
 
 .order-total{
+
   display:flex;
+
   justify-content:space-between;
+
   border-top:1px solid #ddd7d0;
+
   padding-top:18px;
+
   margin-top:20px;
+
 }
 
 .success-box h2{
+
   font-family:'Playfair Display',serif;
+
   font-size:45px;
+
   font-weight:500;
+
 }
 
 .success-box p{
+
   color:#666;
+
   font-size:13px;
+
   line-height:1.8;
+
   margin-top:18px;
+
 }
 
 /* ================= MOBILE ================= */
@@ -1041,53 +1947,103 @@ footer{
 @media(max-width:700px){
 
   #announcement-bar{
+
     font-size:8px;
+
     padding:9px 25px;
+
   }
 
   nav{
+
     height:64px;
+
     padding:0 20px;
+
   }
 
   .logo{font-size:19px}
 
   .hero{
+
     padding:120px 20px 70px;
+
   }
 
   body.has-announcement .hero{
+
     padding-top:155px;
+
   }
 
   .hero h2{
+
     font-size:70px;
+
     letter-spacing:-4px;
+
   }
 
   .hero-text{font-size:13px}
 
   .section{padding:80px 20px}
 
-  .section-header{margin-bottom:30px}
+  .section-header{
+
+    margin-bottom:25px;
+
+    align-items:flex-end;
+
+  }
 
   .section-title{font-size:50px}
 
+  .category-bar{
+
+    margin-right:-20px;
+
+    padding-right:20px;
+
+  }
+
+  .subcategory-dropdown{
+
+    position:fixed;
+
+    left:20px;
+
+    right:20px;
+
+    top:auto;
+
+    min-width:0;
+
+  }
+
   .products{
+
     grid-template-columns:repeat(2,1fr);
+
     gap:12px;
+
   }
 
   .product-info{display:block}
 
   .price{
+
     display:block;
+
     margin-top:6px;
+
   }
 
   .about{
+
     display:block;
+
     padding:85px 20px;
+
   }
 
   .about-copy{margin-top:40px}
@@ -1095,8 +2051,11 @@ footer{
   .contact-section{padding:80px 20px}
 
   .contact-header h2{
+
     font-size:52px;
+
     letter-spacing:-3px;
+
   }
 
   .contact-grid{grid-template-columns:1fr}
@@ -1106,8 +2065,11 @@ footer{
   .contact-card h3{font-size:25px}
 
   .policy-box{
+
     display:block;
+
     padding:35px 30px;
+
   }
 
   .policy-text{margin-top:30px}
@@ -1115,13 +2077,19 @@ footer{
   .footer-top{display:block}
 
   .footer-links{
+
     margin-top:35px;
+
     flex-wrap:wrap;
+
   }
 
   .footer-bottom{
+
     display:block;
+
     line-height:2;
+
   }
 
   .cherry-cart{padding:25px 20px}
@@ -1129,8 +2097,11 @@ footer{
   .checkout-box{padding:30px 22px}
 
   .checkout-title{font-size:36px}
+
 }
+
 </style>
+
 </head>
 
 <body>
@@ -1138,38 +2109,57 @@ footer{
 <div id="announcement-bar"></div>
 
 <!-- INTRO -->
+
 <div class="intro" id="intro">
+
   <div class="cherry-stage">
+
     <div class="cherry left"></div>
+
     <div class="cherry right"></div>
+
   </div>
 
   <div class="intro-logo">
+
     <h1>Cherry Club</h1>
+
     <p>Welcome to the club</p>
+
   </div>
+
 </div>
 
 <!-- SIDE MENU -->
+
 <div class="menu-overlay" id="menuOverlay">
+
   <div class="side-menu">
 
     <button class="close-menu" type="button" onclick="closeMenu()">×</button>
 
     <div class="menu-label">Shop</div>
 
-    <div class="menu-links">
-      <a href="#shop" onclick="closeMenu()">New Arrivals</a>
-      <a href="#shop" onclick="closeMenu()">Dresses</a>
-      <a href="#shop" onclick="closeMenu()">Tops</a>
-      <a href="#shop" onclick="closeMenu()">Jeans</a>
-      <a href="#shop" onclick="closeMenu()">Bottoms</a>
-      <a href="#shop" onclick="closeMenu()">Shoes</a>
-      <a href="#shop" onclick="closeMenu()">Accessories</a>
-      <a href="#shop" onclick="closeMenu()">Women</a>
-      <a href="#shop" onclick="closeMenu()">Men</a>
-      <a href="#shop" onclick="closeMenu()">Unisex</a>
-      <a href="#shop" onclick="closeMenu()">Sale</a>
+    <div class="menu-links" id="menu-category-links">
+
+      <button
+
+        class="menu-link active"
+
+        type="button"
+
+        onclick="selectCategory(null);closeMenu();">
+
+        New Arrivals
+
+      </button>
+
+      <div style="color:#888;font-size:11px;padding:10px 0;">
+
+        Loading categories…
+
+      </div>
+
     </div>
 
     <div class="menu-divider"></div>
@@ -1177,142 +2167,305 @@ footer{
     <div class="menu-label">The Club</div>
 
     <div class="menu-small">
+
       <a href="#about" onclick="closeMenu()">About Us</a>
+
       <a href="#contact-us" onclick="closeMenu()">Size Guide</a>
+
       <a href="#contact-us" onclick="closeMenu()">Shipping & Returns</a>
+
       <a href="#contact-us" onclick="closeMenu()">Contact</a>
+
     </div>
 
   </div>
+
 </div>
 
 <!-- NAV -->
+
 <nav>
-  <button class="menu-button" type="button" onclick="openMenu()" aria-label="Open menu">
+
+  <button
+
+    class="menu-button"
+
+    type="button"
+
+    onclick="openMenu()"
+
+    aria-label="Open menu">
+
     <span class="menu-line"></span>
+
     <span class="menu-line"></span>
+
     <span class="menu-line"></span>
+
   </button>
 
-  <a href="#" class="logo">Cherry <span>🍒</span> Club</a>
+  <a href="#" class="logo">
 
-  <button class="bag-button" type="button" aria-label="Shopping bag" onclick="openCart()">♡</button>
+    Cherry <span>🍒</span> Club
+
+  </a>
+
+  <button
+
+    class="bag-button"
+
+    type="button"
+
+    aria-label="Shopping bag"
+
+    onclick="openCart()">
+
+    ♡
+
+  </button>
+
 </nav>
 
 <main>
 
 <!-- HERO -->
+
 <section class="hero">
 
   <div class="hero-content">
 
-    <div class="eyebrow">Est. 2026 · Pakistan</div>
+    <div class="eyebrow">
+
+      Est. 2026 · Pakistan
+
+    </div>
 
     <h2 id="hero-title">
+
       Dress<br>
+
       <em>different.</em>
+
     </h2>
 
     <p class="hero-text" id="hero-subtitle">
+
       Y2K pieces, one-of-one finds & clothes
+
       you probably shouldn't be this obsessed with.
+
     </p>
 
-    <a href="#shop" class="shop-button" id="hero-button">
+    <a
+
+      href="#shop"
+
+      class="shop-button"
+
+      id="hero-button">
+
       Shop the drop →
+
     </a>
 
   </div>
 
-  <div class="scroll-note">Scroll to explore ↓</div>
+  <div class="scroll-note">
+
+    Scroll to explore ↓
+
+  </div>
 
 </section>
 
 <!-- MARQUEE -->
+
 <div class="marquee">
+
   <div class="marquee-track">
+
     <span>🍒 CHERRY CLUB</span>
+
     <span>Y2K · THRIFT · ONE OF ONE</span>
+
     <span>🍒 CHERRY CLUB</span>
+
     <span>Y2K · THRIFT · ONE OF ONE</span>
+
     <span>🍒 CHERRY CLUB</span>
+
     <span>Y2K · THRIFT · ONE OF ONE</span>
+
     <span>🍒 CHERRY CLUB</span>
+
     <span>Y2K · THRIFT · ONE OF ONE</span>
+
   </div>
+
 </div>
 
 <!-- PROMOTION -->
+
 <section id="promo-section">
 
-  <h2 id="promo-title">Your promotion title</h2>
+  <h2 id="promo-title">
+
+    Your promotion title
+
+  </h2>
 
   <p id="promo-description">
+
     Your promotion description
+
   </p>
 
   <a href="#shop" id="promo-button">
+
     Shop now →
+
   </a>
 
 </section>
 
 <!-- SHOP -->
+
 <section class="section" id="shop">
 
   <div class="section-header">
 
     <div>
-      <div class="section-kicker">Freshly picked</div>
 
-      <h2 class="section-title" id="new-arrivals-title">
+      <div class="section-kicker">
+
+        Freshly picked
+
+      </div>
+
+      <h2
+
+        class="section-title"
+
+        id="new-arrivals-title">
+
         The Drop
+
       </h2>
+
     </div>
 
-    <a href="#shop" class="view-all">View all →</a>
+    <button
+
+      type="button"
+
+      class="view-all"
+
+      onclick="selectCategory(null)">
+
+      View all →
+
+    </button>
 
   </div>
 
-  <div class="products" id="products-container">
+  <!-- DYNAMIC CATEGORIES -->
+
+  <div
+
+    class="category-bar"
+
+    id="category-bar">
+
+    <button
+
+      class="category-filter active"
+
+      type="button"
+
+      data-category-id=""
+
+      onclick="selectCategory(null)">
+
+      All
+
+    </button>
+
+  </div>
+
+  <div
+
+    class="active-filter-note"
+
+    id="active-filter-note"
+
+    style="display:none;">
+
+  </div>
+
+  <div
+
+    class="products"
+
+    id="products-container">
+
     <div class="loading-message">
+
       Loading the drop 🍒
+
     </div>
+
   </div>
 
 </section>
 
 <!-- ABOUT -->
+
 <section class="about" id="about">
 
   <div>
+
     <h2 id="about-title">
+
       Not your<br>
+
       average <em>thrift.</em>
+
     </h2>
+
   </div>
 
   <div class="about-copy" id="about-text">
 
     <p>
+
       <strong>Cherry Club</strong> is a curated little
+
       corner of the internet for people who refuse
+
       to dress boring.
+
     </p>
 
     <br>
 
     <p>
+
       Every piece is picked because we'd want it
+
       in our own wardrobe — from Y2K finds to
+
       reworked one-of-one pieces.
+
     </p>
 
     <br>
 
     <p>
+
       Once it's gone, it's gone.
+
       <strong>So if you like it, don't sleep on it. 🍒</strong>
+
     </p>
 
   </div>
@@ -1322,19 +2475,29 @@ footer{
 </main>
 
 <!-- CONTACT -->
+
 <section class="contact-section" id="contact-us">
 
   <div class="contact-header">
 
-    <div class="section-kicker">Need us?</div>
+    <div class="section-kicker">
+
+      Need us?
+
+    </div>
 
     <h2>
+
       Contact <em>Cherry.</em>
+
     </h2>
 
     <p>
+
       Questions about a piece, your order, sizing, or delivery?
+
       We're here.
+
     </p>
 
   </div>
@@ -1342,58 +2505,129 @@ footer{
   <div class="contact-grid">
 
     <div class="contact-card">
-      <span class="contact-label">Instagram</span>
 
-      <h3>@reejscherryclub</h3>
+      <span class="contact-label">
 
-      <p>For orders, questions & updates.</p>
+        Instagram
 
-      <a href="https://instagram.com/reejscherryclub"
-         target="_blank"
-         rel="noopener noreferrer"
-         class="contact-link">
-        Message us →
-      </a>
-    </div>
-
-    <div class="contact-card">
-      <span class="contact-label">Email</span>
-
-      <h3>reejscherryclub@gmail.com</h3>
-
-      <p>For enquiries & order-related questions.</p>
-
-      <a href="mailto:reejscherryclub@gmail.com"
-         class="contact-link">
-        Email Cherry Club →
-      </a>
-    </div>
-
-    <div class="contact-card">
-      <span class="contact-label">Delivery</span>
-
-      <h3>Pakistan-wide</h3>
-
-      <p>Flat delivery fee of Rs. 370.</p>
-
-      <span class="contact-note">
-        Estimated delivery: 5–7 working days.
       </span>
-    </div>
 
-    <div class="contact-card">
-      <span class="contact-label">Payments</span>
+      <h3>
 
-      <h3>JazzCash only</h3>
+        @reejscherryclub
+
+      </h3>
 
       <p>
-        Orders are confirmed after payment is submitted
-        and verified.
+
+        For orders, questions & updates.
+
+      </p>
+
+      <a
+
+        href="https://instagram.com/reejscherryclub"
+
+        target="_blank"
+
+        rel="noopener noreferrer"
+
+        class="contact-link">
+
+        Message us →
+
+      </a>
+
+    </div>
+
+    <div class="contact-card">
+
+      <span class="contact-label">
+
+        Email
+
+      </span>
+
+      <h3>
+
+        reejscherryclub@gmail.com
+
+      </h3>
+
+      <p>
+
+        For enquiries & order-related questions.
+
+      </p>
+
+      <a
+
+        href="mailto:reejscherryclub@gmail.com"
+
+        class="contact-link">
+
+        Email Cherry Club →
+
+      </a>
+
+    </div>
+
+    <div class="contact-card">
+
+      <span class="contact-label">
+
+        Delivery
+
+      </span>
+
+      <h3>
+
+        Pakistan-wide
+
+      </h3>
+
+      <p>
+
+        Flat delivery fee of Rs. 370.
+
       </p>
 
       <span class="contact-note">
-        Areej Fatima · 03054400537
+
+        Estimated delivery: 5–7 working days.
+
       </span>
+
+    </div>
+
+    <div class="contact-card">
+
+      <span class="contact-label">
+
+        Payments
+
+      </span>
+
+      <h3>
+
+        JazzCash only
+
+      </h3>
+
+      <p>
+
+        Orders are confirmed after payment is submitted
+
+        and verified.
+
+      </p>
+
+      <span class="contact-note">
+
+        Areej Fatima · 03054400537
+
+      </span>
+
     </div>
 
   </div>
@@ -1401,28 +2635,49 @@ footer{
   <div class="policy-box">
 
     <div>
-      <span class="contact-label">Please note</span>
 
-      <h3>Before you order 🍒</h3>
+      <span class="contact-label">
+
+        Please note
+
+      </span>
+
+      <h3>
+
+        Before you order 🍒
+
+      </h3>
+
     </div>
 
     <div class="policy-text">
 
       <p>
+
         All sales are final. We do not accept returns or
+
         exchanges for change of mind, sizing, fit, or preference.
+
       </p>
 
       <p>
+
         Exchanges are only considered if an item arrives
+
         genuinely defective or damaged. Any defect must be
+
         reported within <strong>24 hours of delivery</strong>
+
         with clear photos or videos for verification.
+
       </p>
 
       <p>
+
         Please make sure your delivery information and
+
         contact details are correct before submitting your order.
+
       </p>
 
     </div>
@@ -1432,27 +2687,44 @@ footer{
 </section>
 
 <!-- FOOTER -->
+
 <footer id="contact">
 
   <div class="footer-top">
 
     <div class="footer-logo">
+
       Cherry Club 🍒
+
     </div>
 
     <div class="footer-links">
 
-      <a href="https://instagram.com/reejscherryclub"
-         target="_blank"
-         rel="noopener noreferrer">
+      <a
+
+        href="https://instagram.com/reejscherryclub"
+
+        target="_blank"
+
+        rel="noopener noreferrer">
+
         Instagram
+
       </a>
 
       <a href="#">TikTok</a>
 
-      <a href="#contact-us">Contact</a>
+      <a href="#contact-us">
 
-      <a href="#contact-us">Shipping</a>
+        Contact
+
+      </a>
+
+      <a href="#contact-us">
+
+        Shipping
+
+      </a>
 
     </div>
 
@@ -1460,27 +2732,50 @@ footer{
 
   <div class="footer-bottom">
 
-    <span>© 2026 Cherry Club</span>
+    <span>
 
-    <span>Made with questionable financial decisions 🍒</span>
+      © 2026 Cherry Club
+
+    </span>
+
+    <span>
+
+      Made with questionable financial decisions 🍒
+
+    </span>
 
   </div>
 
 </footer>
 
 <!-- CART -->
-<div class="cherry-overlay" id="cherry-cart">
+
+<div
+
+  class="cherry-overlay"
+
+  id="cherry-cart">
 
   <div class="cherry-cart">
 
     <div class="cherry-header">
 
-      <div class="cherry-title">Your Bag</div>
+      <div class="cherry-title">
 
-      <button class="cherry-close"
-              type="button"
-              onclick="closeCart()">
+        Your Bag
+
+      </div>
+
+      <button
+
+        class="cherry-close"
+
+        type="button"
+
+        onclick="closeCart()">
+
         ×
+
       </button>
 
     </div>
@@ -1492,55 +2787,141 @@ footer{
 </div>
 
 <!-- CHECKOUT -->
-<div class="cherry-overlay" id="cherry-checkout">
+
+<div
+
+  class="cherry-overlay"
+
+  id="cherry-checkout">
 
   <div class="checkout-box">
 
-    <button class="cherry-close"
-            type="button"
-            onclick="closeCheckout()"
-            style="position:absolute;right:25px;top:20px;">
+    <button
+
+      class="cherry-close"
+
+      type="button"
+
+      onclick="closeCheckout()"
+
+      style="position:absolute;right:25px;top:20px;">
+
       ×
+
     </button>
 
-    <div class="checkout-title">Checkout</div>
+    <div class="checkout-title">
+
+      Checkout
+
+    </div>
 
     <form id="checkout-form">
 
       <div class="checkout-field">
-        <label for="customer-name">Full Name</label>
-        <input id="customer-name" type="text" autocomplete="name" required>
+
+        <label for="customer-name">
+
+          Full Name
+
+        </label>
+
+        <input
+
+          id="customer-name"
+
+          type="text"
+
+          autocomplete="name"
+
+          required>
+
       </div>
 
       <div class="checkout-field">
-        <label for="customer-phone">Phone Number</label>
-        <input id="customer-phone" type="tel" autocomplete="tel" required>
+
+        <label for="customer-phone">
+
+          Phone Number
+
+        </label>
+
+        <input
+
+          id="customer-phone"
+
+          type="tel"
+
+          autocomplete="tel"
+
+          required>
+
       </div>
 
       <div class="checkout-field">
-        <label for="customer-city">City</label>
-        <input id="customer-city" type="text" autocomplete="address-level2" required>
+
+        <label for="customer-city">
+
+          City
+
+        </label>
+
+        <input
+
+          id="customer-city"
+
+          type="text"
+
+          autocomplete="address-level2"
+
+          required>
+
       </div>
 
       <div class="checkout-field">
-        <label for="customer-address">Delivery Address</label>
-        <textarea id="customer-address"
-                  autocomplete="street-address"
-                  required></textarea>
+
+        <label for="customer-address">
+
+          Delivery Address
+
+        </label>
+
+        <textarea
+
+          id="customer-address"
+
+          autocomplete="street-address"
+
+          required></textarea>
+
       </div>
 
       <div class="jazzcash-box">
 
-        <h3>Pay with JazzCash 🍒</h3>
+        <h3>
+
+          Pay with JazzCash 🍒
+
+        </h3>
 
         <div class="jazzcash-details">
 
-          <strong>Account name:</strong>
+          <strong>
+
+            Account name:
+
+          </strong>
+
           Areej Fatima
 
           <br>
 
-          <strong>JazzCash number:</strong>
+          <strong>
+
+            JazzCash number:
+
+          </strong>
+
           03054400537
 
         </div>
@@ -1548,18 +2929,27 @@ footer{
         <div class="jazzcash-instructions">
 
           1. Check your total below.<br>
+
           2. Send the exact amount manually to
+
           the JazzCash account above.<br>
+
           3. After paying, return to this page.<br>
+
           4. Enter your JazzCash transaction/reference
+
           number below.<br>
+
           5. Submit your order.
 
           <br><br>
 
           <strong>
+
             Your order will remain pending until
+
             Cherry Club verifies your payment.
+
           </strong>
 
         </div>
@@ -1569,30 +2959,49 @@ footer{
       <div class="checkout-field">
 
         <label for="transaction-id">
+
           JazzCash Transaction / Reference Number
+
         </label>
 
-        <input id="transaction-id"
-               type="text"
-               required
-               placeholder="Enter your transaction ID">
+        <input
+
+          id="transaction-id"
+
+          type="text"
+
+          required
+
+          placeholder="Enter your transaction ID">
 
       </div>
 
       <div class="order-total">
 
-        <span>Total</span>
+        <span>
+
+          Total
+
+        </span>
 
         <strong id="checkout-total">
+
           Rs. 0
+
         </strong>
 
       </div>
 
-      <button class="checkout-button"
-              type="submit"
-              id="place-order-button">
+      <button
+
+        class="checkout-button"
+
+        type="submit"
+
+        id="place-order-button">
+
         Place Order →
+
       </button>
 
     </form>
@@ -1602,35 +3011,63 @@ footer{
 </div>
 
 <!-- SUCCESS -->
-<div class="cherry-overlay" id="cherry-success">
+
+<div
+
+  class="cherry-overlay"
+
+  id="cherry-success">
 
   <div class="success-box">
 
-    <button class="cherry-close"
-            type="button"
-            onclick="closeSuccess()"
-            style="position:absolute;right:20px;top:15px;">
+    <button
+
+      class="cherry-close"
+
+      type="button"
+
+      onclick="closeSuccess()"
+
+      style="position:absolute;right:20px;top:15px;">
+
       ×
+
     </button>
 
-    <h2>Order received 🍒</h2>
+    <h2>
+
+      Order received 🍒
+
+    </h2>
 
     <p>
+
       Thank you for joining the club.
+
       Your order has been submitted successfully.
+
     </p>
 
     <p>
+
       We'll verify your JazzCash payment and
+
       contact you using the details you provided.
+
     </p>
 
     <p id="success-order-number"></p>
 
-    <button class="checkout-button"
-            type="button"
-            onclick="closeSuccess()">
+    <button
+
+      class="checkout-button"
+
+      type="button"
+
+      onclick="closeSuccess()">
+
       Done
+
     </button>
 
   </div>
@@ -1638,289 +3075,455 @@ footer{
 </div>
 
 <script>
+
 /* =========================================================
+
    SUPABASE
+
    ========================================================= */
 
 const SUPABASE_URL =
+
   "https://jqpkvttexoekaoylwtkg.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
+
   "sb_publishable_QzAhQAxVVhrOdR0zhPbHBg_5c0LDxKF";
 
 let supabaseClient = null;
 
 try {
+
   if (
+
     typeof supabase === "undefined" ||
+
     typeof supabase.createClient !== "function"
+
   ) {
-    throw new Error("Supabase library failed to load.");
+
+    throw new Error(
+
+      "Supabase library failed to load."
+
+    );
+
   }
 
-  supabaseClient = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
+  supabaseClient =
+
+    supabase.createClient(
+
+      SUPABASE_URL,
+
+      SUPABASE_PUBLISHABLE_KEY
+
+    );
 
 } catch(error) {
-  console.error("Supabase initialization error:", error);
+
+  console.error(
+
+    "Supabase initialization error:",
+
+    error
+
+  );
+
 }
 
 /* =========================================================
+
    SETTINGS
+
    ========================================================= */
 
 const DELIVERY_FEE = 370;
 
 let products = [];
+
+let categories = [];
+
 let cart = [];
 
+let activeCategoryId = null;
+
+let activeCategoryName = "";
+
 /* =========================================================
+
    HELPERS
+
    ========================================================= */
 
 function escapeHTML(value) {
+
   return String(value ?? "")
+
     .replace(/&/g,"&amp;")
+
     .replace(/</g,"&lt;")
+
     .replace(/>/g,"&gt;")
+
     .replace(/"/g,"&quot;")
+
     .replace(/'/g,"&#039;");
+
 }
 
 function formatMoney(value) {
-  return (Number(value) || 0).toLocaleString("en-PK");
+
+  return (
+
+    Number(value) || 0
+
+  ).toLocaleString("en-PK");
+
 }
 
-/*
-  Content entered through the Cherry Club admin is trusted
-  because it comes from your own site_content table.
+function normalizeCategoryName(value) {
 
-  IMPORTANT:
-  innerHTML is intentionally used for editable rich text.
-  This means:
-      Dress<br><em>different.</em>
-  actually renders as intended instead of displaying
-  everything on one line.
-*/
+  return String(value ?? "")
 
-function setContent(id, value, rich = false) {
+    .trim()
 
-  const element = document.getElementById(id);
+    .toLowerCase();
 
-  if (!element || value === undefined || value === null) {
+}
+
+function setContent(id,value,rich=false) {
+
+  const element =
+
+    document.getElementById(id);
+
+  if (
+
+    !element ||
+
+    value === undefined ||
+
+    value === null
+
+  ) {
+
     return;
+
   }
 
   if (rich) {
-    element.innerHTML = String(value);
+
+    element.innerHTML =
+
+      String(value);
+
   } else {
-    element.textContent = String(value);
+
+    element.textContent =
+
+      String(value);
+
   }
+
 }
 
 /* =========================================================
-   LOAD WEBSITE CONTENT
+
+   WEBSITE CONTENT
+
    ========================================================= */
 
 async function loadWebsiteContent() {
 
-  if (!supabaseClient) {
-    console.error("Supabase is not connected.");
-    return;
-  }
+  if (!supabaseClient) return;
 
   try {
 
-    const { data, error } =
+    const {
+
+      data,
+
+      error
+
+    } =
+
       await supabaseClient
+
         .from("site_content")
+
         .select("key,value");
 
-    if (error) {
-      throw error;
-    }
+    if (error) throw error;
 
     const content = {};
 
     (data || []).forEach(item => {
 
-      if (!item || !item.key) {
-        return;
-      }
+      if (!item || !item.key) return;
 
       content[String(item.key)] =
+
         item.value == null
+
           ? ""
+
           : String(item.value);
 
     });
 
-    console.log("🍒 Cherry Club website content:", content);
-
-    /* -----------------------------------------
-       ANNOUNCEMENT
-       ----------------------------------------- */
+    /* ANNOUNCEMENT */
 
     const announcement =
-      document.getElementById("announcement-bar");
+
+      document.getElementById(
+
+        "announcement-bar"
+
+      );
 
     if (announcement) {
 
       const announcementText =
+
         content["announcement"] || "";
 
       const enabled =
+
         content["announcement-enabled"] !== "false";
 
-      if (enabled && announcementText.trim()) {
+      if (
+
+        enabled &&
+
+        announcementText.trim()
+
+      ) {
 
         announcement.innerHTML =
+
           announcementText;
 
-        announcement.style.display = "block";
+        announcement.style.display =
+
+          "block";
 
         document.body.classList.add(
+
           "has-announcement"
+
         );
 
       } else {
 
-        announcement.style.display = "none";
+        announcement.style.display =
+
+          "none";
 
         document.body.classList.remove(
+
           "has-announcement"
+
         );
 
       }
 
     }
 
-    /* -----------------------------------------
-       HERO
-       ----------------------------------------- */
+    /* HERO */
 
     setContent(
+
       "hero-title",
+
       content["hero-title"],
+
       true
+
     );
 
     setContent(
+
       "hero-subtitle",
+
       content["hero-subtitle"],
+
       true
+
     );
 
     setContent(
+
       "hero-button",
+
       content["hero-button"]
+
     );
 
     const heroButton =
-      document.getElementById("hero-button");
+
+      document.getElementById(
+
+        "hero-button"
+
+      );
 
     if (
+
       heroButton &&
-      content["hero-link"] !== undefined &&
-      content["hero-link"] !== ""
+
+      content["hero-link"]
+
     ) {
+
       heroButton.href =
+
         content["hero-link"];
+
     }
 
-    /* -----------------------------------------
-       PROMOTION
-       ----------------------------------------- */
+    /* PROMOTION */
 
     const promo =
-      document.getElementById("promo-section");
+
+      document.getElementById(
+
+        "promo-section"
+
+      );
 
     const promoEnabled =
+
       content["promo-enabled"] !== "false";
 
     const hasPromoContent =
+
       Boolean(
+
         (
+
           content["promo-title"] ||
+
           content["promo-description"]
-        )?.trim()
+
+        ).trim()
+
       );
 
     if (
+
       promo &&
+
       promoEnabled &&
+
       hasPromoContent
+
     ) {
 
-      promo.style.display = "block";
+      promo.style.display =
+
+        "block";
 
       setContent(
+
         "promo-title",
+
         content["promo-title"],
+
         true
+
       );
 
       setContent(
+
         "promo-description",
+
         content["promo-description"],
+
         true
+
       );
 
       setContent(
+
         "promo-button",
+
         content["promo-button"]
+
       );
 
       const promoButton =
-        document.getElementById("promo-button");
+
+        document.getElementById(
+
+          "promo-button"
+
+        );
 
       if (
+
         promoButton &&
+
         content["promo-link"]
+
       ) {
+
         promoButton.href =
+
           content["promo-link"];
+
       }
 
     } else if (promo) {
 
-      promo.style.display = "none";
+      promo.style.display =
+
+        "none";
 
     }
 
-    /* -----------------------------------------
-       SHOP TITLE
-       ----------------------------------------- */
+    /* SHOP TITLE */
 
     setContent(
+
       "new-arrivals-title",
+
       content["new-arrivals-title"],
+
       true
+
     );
 
-    /* -----------------------------------------
-       ABOUT
-       ----------------------------------------- */
+    /* ABOUT */
 
     setContent(
+
       "about-title",
+
       content["about-title"],
+
       true
+
     );
 
     setContent(
+
       "about-text",
+
       content["about-text"],
+
       true
+
     );
 
   } catch(error) {
 
     console.error(
+
       "Could not load website content:",
+
       error
+
     );
 
   }
@@ -1928,125 +3531,1069 @@ async function loadWebsiteContent() {
 }
 
 /* =========================================================
+
+   CATEGORIES
+
+   ========================================================= */
+
+async function loadCategories() {
+
+  if (!supabaseClient) return;
+
+  try {
+
+    const {
+
+      data,
+
+      error
+
+    } =
+
+      await supabaseClient
+
+        .from("categories")
+
+        .select("id,name,sort_order,parent_id")
+
+        .order("sort_order",{ascending:true})
+
+        .order("name",{ascending:true});
+
+    if (error) throw error;
+
+    categories =
+
+      Array.isArray(data)
+
+        ? data
+
+        : [];
+
+    console.log(
+
+      "🍒 Categories loaded:",
+
+      categories
+
+    );
+
+    renderCategoryBar();
+
+    renderMenuCategories();
+
+  } catch(error) {
+
+    console.error(
+
+      "Could not load categories:",
+
+      error
+
+    );
+
+    /*
+
+      The storefront still works if categories
+
+      cannot be loaded.
+
+    */
+
+    categories = [];
+
+    renderCategoryBar();
+
+    renderMenuCategories();
+
+  }
+
+}
+
+/* =========================================================
+
+   CATEGORY TREE
+
+   ========================================================= */
+
+function getMainCategories() {
+
+  return categories.filter(category =>
+
+    category.parent_id === null ||
+
+    category.parent_id === undefined
+
+  );
+
+}
+
+function getSubcategories(parentId) {
+
+  return categories.filter(category =>
+
+    String(category.parent_id) ===
+
+    String(parentId)
+
+  );
+
+}
+
+/* =========================================================
+
+   CATEGORY BAR
+
+   ========================================================= */
+
+function renderCategoryBar() {
+
+  const bar =
+
+    document.getElementById(
+
+      "category-bar"
+
+    );
+
+  if (!bar) return;
+
+  let html = `
+
+    <button
+
+      class="category-filter ${
+
+        activeCategoryId === null
+
+          ? "active"
+
+          : ""
+
+      }"
+
+      type="button"
+
+      onclick="selectCategory(null)">
+
+      All
+
+    </button>
+
+  `;
+
+  const mainCategories =
+
+    getMainCategories();
+
+  mainCategories.forEach(category => {
+
+    const subs =
+
+      getSubcategories(category.id);
+
+    html += `
+
+      <div class="category-group">
+
+        <button
+
+          class="category-filter ${
+
+            String(activeCategoryId) ===
+
+            String(category.id)
+
+              ? "active"
+
+              : ""
+
+          }"
+
+          type="button"
+
+          onclick="selectCategory('${escapeHTML(category.id)}')">
+
+          ${escapeHTML(category.name)}
+
+        </button>
+
+        ${
+
+          subs.length
+
+            ? `
+
+              <div class="subcategory-dropdown">
+
+                <button
+
+                  type="button"
+
+                  onclick="selectCategory('${escapeHTML(category.id)}')">
+
+                  All ${escapeHTML(category.name)}
+
+                </button>
+
+                ${subs.map(sub => `
+
+                  <button
+
+                    type="button"
+
+                    onclick="selectCategory('${escapeHTML(sub.id)}')">
+
+                    ${escapeHTML(sub.name)}
+
+                  </button>
+
+                `).join("")}
+
+              </div>
+
+            `
+
+            : ""
+
+        }
+
+      </div>
+
+    `;
+
+  });
+
+  /*
+
+    If a subcategory somehow exists without
+
+    a valid parent, don't make it disappear.
+
+  */
+
+  const orphanCategories =
+
+    categories.filter(category =>
+
+      category.parent_id !== null &&
+
+      category.parent_id !== undefined &&
+
+      !categories.some(parent =>
+
+        String(parent.id) ===
+
+        String(category.parent_id)
+
+      )
+
+    );
+
+  orphanCategories.forEach(category => {
+
+    html += `
+
+      <button
+
+        class="category-filter"
+
+        type="button"
+
+        onclick="selectCategory('${escapeHTML(category.id)}')">
+
+        ${escapeHTML(category.name)}
+
+      </button>
+
+    `;
+
+  });
+
+  bar.innerHTML = html;
+
+}
+
+/* =========================================================
+
+   SIDE MENU CATEGORIES
+
+   ========================================================= */
+
+function renderMenuCategories() {
+
+  const container =
+
+    document.getElementById(
+
+      "menu-category-links"
+
+    );
+
+  if (!container) return;
+
+  let html = `
+
+    <button
+
+      class="menu-link ${
+
+        activeCategoryId === null
+
+          ? "active"
+
+          : ""
+
+      }"
+
+      type="button"
+
+      onclick="selectCategory(null);closeMenu();">
+
+      New Arrivals
+
+    </button>
+
+  `;
+
+  const mainCategories =
+
+    getMainCategories();
+
+  if (!mainCategories.length) {
+
+    html += `
+
+      <div style="color:#888;font-size:11px;padding:10px 0;">
+
+        No categories yet.
+
+      </div>
+
+    `;
+
+  }
+
+  mainCategories.forEach(category => {
+
+    const subs =
+
+      getSubcategories(category.id);
+
+    html += `
+
+      <button
+
+        class="menu-link ${
+
+          String(activeCategoryId) ===
+
+          String(category.id)
+
+            ? "active"
+
+            : ""
+
+        }"
+
+        type="button"
+
+        onclick="selectCategory('${escapeHTML(category.id)}');closeMenu();">
+
+        ${escapeHTML(category.name)}
+
+      </button>
+
+    `;
+
+    if (subs.length) {
+
+      html += `
+
+        <div class="subcategory-menu">
+
+      `;
+
+      subs.forEach(sub => {
+
+        html += `
+
+          <button
+
+            type="button"
+
+            onclick="selectCategory('${escapeHTML(sub.id)}');closeMenu();">
+
+            ${escapeHTML(sub.name)}
+
+          </button>
+
+        `;
+
+      });
+
+      html += `
+
+        </div>
+
+      `;
+
+    }
+
+  });
+
+  container.innerHTML =
+
+    html;
+
+}
+
+/* =========================================================
+
+   FIND CATEGORY
+
+   ========================================================= */
+
+function getCategoryById(id) {
+
+  return categories.find(
+
+    category =>
+
+      String(category.id) ===
+
+      String(id)
+
+  );
+
+}
+
+/*
+
+  Products currently store their category as TEXT.
+
+  This helper therefore supports:
+
+    - exact category name
+
+    - case-insensitive category name
+
+    - product category containing a parent/subcategory name
+
+*/
+
+function productMatchesCategory(
+
+  product,
+
+  selectedCategory
+
+) {
+
+  if (!selectedCategory) {
+
+    return true;
+
+  }
+
+  const productCategory =
+
+    normalizeCategoryName(
+
+      product.category
+
+    );
+
+  const selectedName =
+
+    normalizeCategoryName(
+
+      selectedCategory.name
+
+    );
+
+  if (!productCategory) {
+
+    return false;
+
+  }
+
+  if (
+
+    productCategory ===
+
+    selectedName
+
+  ) {
+
+    return true;
+
+  }
+
+  /*
+
+    Also support values such as:
+
+      "Nails · Press Ons"
+
+      "Nails / Press Ons"
+
+      "Press Ons"
+
+  */
+
+  const pieces =
+
+    productCategory
+
+      .split(/[·|/>,]+/)
+
+      .map(part =>
+
+        normalizeCategoryName(part)
+
+      )
+
+      .filter(Boolean);
+
+  return pieces.includes(
+
+    selectedName
+
+  );
+
+}
+
+/* =========================================================
+
+   SELECT CATEGORY
+
+   ========================================================= */
+
+function selectCategory(categoryId) {
+
+  if (
+
+    categoryId === null ||
+
+    categoryId === undefined ||
+
+    categoryId === ""
+
+  ) {
+
+    activeCategoryId =
+
+      null;
+
+    activeCategoryName =
+
+      "";
+
+  } else {
+
+    const category =
+
+      getCategoryById(categoryId);
+
+    if (!category) {
+
+      console.warn(
+
+        "Category not found:",
+
+        categoryId
+
+      );
+
+      return;
+
+    }
+
+    activeCategoryId =
+
+      category.id;
+
+    activeCategoryName =
+
+      category.name;
+
+  }
+
+  renderCategoryBar();
+
+  renderMenuCategories();
+
+  renderProducts();
+
+  const shop =
+
+    document.getElementById("shop");
+
+  if (shop) {
+
+    shop.scrollIntoView({
+
+      behavior:"smooth",
+
+      block:"start"
+
+    });
+
+  }
+
+}
+
+/* =========================================================
+
    PRODUCT IMAGE
+
    ========================================================= */
 
 function createProductImage(product) {
 
   if (!product.image_url) {
-    return `<div class="placeholder">🍒</div>`;
+
+    return `
+
+      <div class="placeholder">
+
+        🍒
+
+      </div>
+
+    `;
+
   }
 
   return `
+
     <img
+
       src="${escapeHTML(product.image_url)}"
+
       alt="${escapeHTML(product.name)}"
+
       loading="lazy"
+
       onerror="
+
         this.style.display='none';
+
         this.parentElement.querySelector('.image-fallback').style.display='flex';
+
       "
+
     >
 
     <div
+
       class="placeholder image-fallback"
-      style="display:none;"
-    >
+
+      style="display:none;">
+
       🍒
+
     </div>
+
   `;
+
 }
 
 /* =========================================================
-   PRODUCTS
+
+   LOAD PRODUCTS
+
    ========================================================= */
 
 async function loadProducts() {
 
   const container =
-    document.getElementById("products-container");
+
+    document.getElementById(
+
+      "products-container"
+
+    );
 
   if (!container) return;
 
   container.innerHTML = `
+
     <div class="loading-message">
+
       Loading the drop 🍒
+
     </div>
+
   `;
 
   if (!supabaseClient) {
 
     container.innerHTML = `
+
       <div class="products-error">
+
         The shop connection could not be started.
+
         <br>
+
         <button
+
           class="retry-products"
+
           type="button"
+
           onclick="loadProducts()">
+
           Try again
+
         </button>
+
       </div>
+
     `;
 
     return;
+
   }
 
   try {
 
     const {
+
       data,
+
       error
-    } = await supabaseClient
-      .from("products")
-      .select(
-        "id,name,category,price,size,status,image_url,description,created_at"
-      )
-      .eq("status","available")
-      .order("created_at",{ascending:false});
+
+    } =
+
+      await supabaseClient
+
+        .from("products")
+
+        .select(
+
+          "id,name,category,price,size,status,image_url,description,created_at"
+
+        )
+
+        .eq(
+
+          "status",
+
+          "available"
+
+        )
+
+        .order(
+
+          "created_at",
+
+          {ascending:false}
+
+        );
 
     if (error) throw error;
 
     products =
+
       Array.isArray(data)
+
         ? data
+
         : [];
 
-    if (!products.length) {
+    renderProducts();
 
-      container.innerHTML = `
-        <div class="empty-products">
-          No pieces available right now 🍒
-        </div>
-      `;
+    updateBagButton();
 
-      updateBagButton();
+  } catch(error) {
 
-      return;
+    console.error(
+
+      "Error loading products:",
+
+      error
+
+    );
+
+    container.innerHTML = `
+
+      <div class="products-error">
+
+        Unable to load the drop right now 🍒
+
+        <br>
+
+        <small>
+
+          ${escapeHTML(
+
+            error.message ||
+
+            "Unknown Supabase error"
+
+          )}
+
+        </small>
+
+        <br>
+
+        <button
+
+          class="retry-products"
+
+          type="button"
+
+          onclick="loadProducts()">
+
+          Try again
+
+        </button>
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+/* =========================================================
+
+   RENDER PRODUCTS
+
+   ========================================================= */
+
+function renderProducts() {
+
+  const container =
+
+    document.getElementById(
+
+      "products-container"
+
+    );
+
+  if (!container) return;
+
+  let visibleProducts =
+
+    products.slice();
+
+  const selectedCategory =
+
+    activeCategoryId !== null
+
+      ? getCategoryById(
+
+          activeCategoryId
+
+        )
+
+      : null;
+
+  if (selectedCategory) {
+
+    /*
+
+      If a MAIN category is selected,
+
+      show products belonging to it OR
+
+      one of its subcategories.
+
+    */
+
+    const children =
+
+      getSubcategories(
+
+        selectedCategory.id
+
+      );
+
+    if (children.length) {
+
+      visibleProducts =
+
+        products.filter(product => {
+
+          if (
+
+            productMatchesCategory(
+
+              product,
+
+              selectedCategory
+
+            )
+
+          ) {
+
+            return true;
+
+          }
+
+          return children.some(
+
+            child =>
+
+              productMatchesCategory(
+
+                product,
+
+                child
+
+              )
+
+          );
+
+        });
+
+    } else {
+
+      visibleProducts =
+
+        products.filter(product =>
+
+          productMatchesCategory(
+
+            product,
+
+            selectedCategory
+
+          )
+
+        );
+
     }
 
-    container.innerHTML = "";
+  }
 
-    products.forEach(product => {
+  /* FILTER LABEL */
+
+  const note =
+
+    document.getElementById(
+
+      "active-filter-note"
+
+    );
+
+  if (note) {
+
+    if (selectedCategory) {
+
+      note.style.display =
+
+        "block";
+
+      note.textContent =
+
+        `Showing: ${selectedCategory.name}`;
+
+    } else {
+
+      note.style.display =
+
+        "none";
+
+      note.textContent =
+
+        "";
+
+    }
+
+  }
+
+  if (!visibleProducts.length) {
+
+    container.innerHTML = `
+
+      <div class="empty-products">
+
+        ${
+
+          selectedCategory
+
+            ? `
+
+              No pieces in ${escapeHTML(
+
+                selectedCategory.name
+
+              )} right now 🍒
+
+            `
+
+            : `
+
+              No pieces available right now 🍒
+
+            `
+
+        }
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+  container.innerHTML =
+
+    "";
+
+  visibleProducts.forEach(
+
+    product => {
 
       const article =
-        document.createElement("article");
 
-      article.className = "product";
+        document.createElement(
+
+          "article"
+
+        );
+
+      article.className =
+
+        "product";
 
       const category =
+
         product.category
-          ? escapeHTML(product.category)
+
+          ? escapeHTML(
+
+              product.category
+
+            )
+
           : "";
 
       const size =
+
         product.size
-          ? escapeHTML(product.size)
+
+          ? escapeHTML(
+
+              product.size
+
+            )
+
           : "";
 
       const meta =
+
         [category,size]
+
           .filter(Boolean)
+
           .join(" · ");
 
       article.innerHTML = `
@@ -2056,13 +4603,21 @@ async function loadProducts() {
           ${createProductImage(product)}
 
           ${
+
             category
+
               ? `
+
                 <div class="tag">
+
                   ${category}
+
                 </div>
+
               `
+
               : ""
+
           }
 
         </div>
@@ -2072,17 +4627,31 @@ async function loadProducts() {
           <div>
 
             <div class="product-name">
-              ${escapeHTML(product.name)}
+
+              ${escapeHTML(
+
+                product.name
+
+              )}
+
             </div>
 
             ${
+
               meta
+
                 ? `
+
                   <div class="product-meta">
+
                     ${meta}
+
                   </div>
+
                 `
+
                 : ""
+
             }
 
           </div>
@@ -2090,77 +4659,73 @@ async function loadProducts() {
           <div>
 
             <div class="price">
-              Rs. ${formatMoney(product.price)}
+
+              Rs. ${formatMoney(
+
+                product.price
+
+              )}
+
             </div>
 
             <button
+
               class="add-to-bag"
+
               type="button">
+
               Add to Bag
+
             </button>
 
           </div>
 
         </div>
+
       `;
 
       const addButton =
-        article.querySelector(".add-to-bag");
+
+        article.querySelector(
+
+          ".add-to-bag"
+
+        );
 
       addButton.addEventListener(
+
         "click",
+
         event => {
 
           event.stopPropagation();
 
-          addToBag(product.id);
+          addToBag(
+
+            product.id
+
+          );
 
         }
+
       );
 
-      container.appendChild(article);
+      container.appendChild(
 
-    });
+        article
 
-    updateBagButton();
+      );
 
-  } catch(error) {
+    }
 
-    console.error(
-      "Error loading products:",
-      error
-    );
+  );
 
-    container.innerHTML = `
-      <div class="products-error">
-
-        Unable to load the drop right now 🍒
-
-        <br>
-
-        <small>
-          ${escapeHTML(
-            error.message ||
-            "Unknown Supabase error"
-          )}
-        </small>
-
-        <br>
-
-        <button
-          class="retry-products"
-          type="button"
-          onclick="loadProducts()">
-          Try again
-        </button>
-
-      </div>
-    `;
-  }
 }
 
 /* =========================================================
+
    CART STORAGE
+
    ========================================================= */
 
 function saveCart() {
@@ -2168,18 +4733,25 @@ function saveCart() {
   try {
 
     localStorage.setItem(
+
       "cherryClubCart",
+
       JSON.stringify(cart)
+
     );
 
   } catch(error) {
 
     console.error(
+
       "Could not save cart:",
+
       error
+
     );
 
   }
+
 }
 
 function loadCart() {
@@ -2187,62 +4759,91 @@ function loadCart() {
   try {
 
     const saved =
+
       localStorage.getItem(
+
         "cherryClubCart"
+
       );
 
     if (!saved) {
+
       cart = [];
+
       return;
+
     }
 
     const parsed =
+
       JSON.parse(saved);
 
     cart =
+
       Array.isArray(parsed)
+
         ? parsed
+
         : [];
 
   } catch(error) {
 
     console.error(
+
       "Could not load cart:",
+
       error
+
     );
 
     cart = [];
 
   }
+
 }
 
 /* =========================================================
+
    CART
+
    ========================================================= */
 
 function addToBag(productId) {
 
   const product =
+
     products.find(
+
       item =>
+
         String(item.id) ===
+
         String(productId)
+
     );
 
   if (!product) {
 
     alert(
+
       "Sorry, this item is no longer available."
+
     );
 
     return;
+
   }
 
   const existing =
+
     cart.find(
+
       item =>
+
         String(item.id) ===
+
         String(productId)
+
     );
 
   if (existing) {
@@ -2252,28 +4853,61 @@ function addToBag(productId) {
   } else {
 
     cart.push({
-      id:product.id,
-      name:product.name,
-      price:Number(product.price) || 0,
-      size:product.size || "",
-      image_url:product.image_url || "",
-      quantity:1
+
+      id:
+
+        product.id,
+
+      name:
+
+        product.name,
+
+      price:
+
+        Number(product.price) || 0,
+
+      size:
+
+        product.size || "",
+
+      image_url:
+
+        product.image_url || "",
+
+      quantity:
+
+        1
+
     });
 
   }
 
   saveCart();
+
   updateBagButton();
+
   openCart();
+
 }
 
-function changeQuantity(productId,amount) {
+function changeQuantity(
+
+  productId,
+
+  amount
+
+) {
 
   const item =
+
     cart.find(
+
       current =>
+
         String(current.id) ===
+
         String(productId)
+
     );
 
   if (!item) return;
@@ -2283,92 +4917,153 @@ function changeQuantity(productId,amount) {
   if (item.quantity <= 0) {
 
     cart =
+
       cart.filter(
+
         current =>
+
           String(current.id) !==
+
           String(productId)
+
       );
 
   }
 
   saveCart();
+
   renderCart();
+
   updateBagButton();
+
 }
 
-function removeFromBag(productId) {
+function removeFromBag(
+
+  productId
+
+) {
 
   cart =
+
     cart.filter(
+
       item =>
+
         String(item.id) !==
+
         String(productId)
+
     );
 
   saveCart();
+
   renderCart();
+
   updateBagButton();
+
 }
 
 function cartSubtotal() {
 
   return cart.reduce(
+
     (total,item) =>
+
       total +
+
       (Number(item.price) || 0) *
+
       (Number(item.quantity) || 0),
+
     0
+
   );
+
 }
 
 function cartTotal() {
 
   if (!cart.length) return 0;
 
-  return cartSubtotal() + DELIVERY_FEE;
+  return (
+
+    cartSubtotal() +
+
+    DELIVERY_FEE
+
+  );
+
 }
 
 function updateBagButton() {
 
   const button =
-    document.querySelector(".bag-button");
+
+    document.querySelector(
+
+      ".bag-button"
+
+    );
 
   if (!button) return;
 
   const count =
+
     cart.reduce(
+
       (total,item) =>
+
         total +
+
         (Number(item.quantity) || 0),
+
       0
+
     );
 
   button.textContent =
+
     count > 0
+
       ? `♡ ${count}`
+
       : "♡";
+
 }
 
 /* =========================================================
+
    RENDER CART
+
    ========================================================= */
 
 function renderCart() {
 
   const container =
-    document.getElementById("cart-items");
+
+    document.getElementById(
+
+      "cart-items"
+
+    );
 
   if (!container) return;
 
   if (!cart.length) {
 
     container.innerHTML = `
+
       <div class="empty-cart">
+
         Your bag is empty 🍒
+
       </div>
+
     `;
 
     return;
+
   }
 
   let html = "";
@@ -2380,63 +5075,145 @@ function renderCart() {
       <div class="cart-item">
 
         ${
+
           item.image_url
+
             ? `
+
               <img
+
                 class="cart-image"
-                src="${escapeHTML(item.image_url)}"
-                alt="${escapeHTML(item.name)}">
+
+                src="${escapeHTML(
+
+                  item.image_url
+
+                )}"
+
+                alt="${escapeHTML(
+
+                  item.name
+
+                )}">
+
             `
+
             : `
+
               <div class="cart-image">
-                <div class="placeholder">🍒</div>
+
+                <div class="placeholder">
+
+                  🍒
+
+                </div>
+
               </div>
+
             `
+
         }
 
         <div>
 
           <div class="cart-name">
-            ${escapeHTML(item.name)}
+
+            ${escapeHTML(
+
+              item.name
+
+            )}
+
           </div>
 
           ${
+
             item.size
+
               ? `
+
                 <div class="cart-meta">
-                  Size: ${escapeHTML(item.size)}
+
+                  Size:
+
+                  ${escapeHTML(
+
+                    item.size
+
+                  )}
+
                 </div>
+
               `
+
               : ""
+
           }
 
           <div class="cart-price">
-            Rs. ${formatMoney(item.price)}
+
+            Rs. ${formatMoney(
+
+              item.price
+
+            )}
+
           </div>
 
           <div class="quantity-row">
 
             <button
+
               type="button"
-              onclick="changeQuantity('${escapeHTML(item.id)}',-1)">
+
+              onclick="changeQuantity('${escapeHTML(
+
+                item.id
+
+              )}',-1)">
+
               −
+
             </button>
 
             <span>
-              ${Number(item.quantity) || 0}
+
+              ${Number(
+
+                item.quantity
+
+              ) || 0}
+
             </span>
 
             <button
+
               type="button"
-              onclick="changeQuantity('${escapeHTML(item.id)}',1)">
+
+              onclick="changeQuantity('${escapeHTML(
+
+                item.id
+
+              )}',1)">
+
               +
+
             </button>
 
             <button
+
               class="remove-item"
+
               type="button"
-              onclick="removeFromBag('${escapeHTML(item.id)}')">
+
+              onclick="removeFromBag('${escapeHTML(
+
+                item.id
+
+              )}')">
+
               Remove
+
             </button>
 
           </div>
@@ -2444,7 +5221,9 @@ function renderCart() {
         </div>
 
       </div>
+
     `;
+
   });
 
   html += `
@@ -2452,35 +5231,91 @@ function renderCart() {
     <div class="cart-summary">
 
       <div class="summary-row">
-        <span>Subtotal</span>
-        <span>Rs. ${formatMoney(cartSubtotal())}</span>
+
+        <span>
+
+          Subtotal
+
+        </span>
+
+        <span>
+
+          Rs. ${formatMoney(
+
+            cartSubtotal()
+
+          )}
+
+        </span>
+
       </div>
 
       <div class="summary-row">
-        <span>Delivery</span>
-        <span>Rs. ${formatMoney(DELIVERY_FEE)}</span>
+
+        <span>
+
+          Delivery
+
+        </span>
+
+        <span>
+
+          Rs. ${formatMoney(
+
+            DELIVERY_FEE
+
+          )}
+
+        </span>
+
       </div>
 
       <div class="summary-row summary-total">
-        <span>Total</span>
-        <span>Rs. ${formatMoney(cartTotal())}</span>
+
+        <span>
+
+          Total
+
+        </span>
+
+        <span>
+
+          Rs. ${formatMoney(
+
+            cartTotal()
+
+          )}
+
+        </span>
+
       </div>
 
       <button
+
         class="checkout-button"
+
         type="button"
+
         onclick="openCheckout()">
+
         Proceed to Checkout →
+
       </button>
 
     </div>
+
   `;
 
-  container.innerHTML = html;
+  container.innerHTML =
+
+    html;
+
 }
 
 /* =========================================================
+
    OVERLAYS
+
    ========================================================= */
 
 function openCart() {
@@ -2488,135 +5323,295 @@ function openCart() {
   renderCart();
 
   const overlay =
-    document.getElementById("cherry-cart");
+
+    document.getElementById(
+
+      "cherry-cart"
+
+    );
 
   if (!overlay) return;
 
-  overlay.classList.add("active");
-  document.body.classList.add("no-scroll");
+  overlay.classList.add(
+
+    "active"
+
+  );
+
+  document.body.classList.add(
+
+    "no-scroll"
+
+  );
+
 }
 
 function closeCart() {
 
   const overlay =
-    document.getElementById("cherry-cart");
+
+    document.getElementById(
+
+      "cherry-cart"
+
+    );
 
   if (!overlay) return;
 
-  overlay.classList.remove("active");
+  overlay.classList.remove(
 
-  if (!document.querySelector(".cherry-overlay.active")) {
-    document.body.classList.remove("no-scroll");
+    "active"
+
+  );
+
+  if (
+
+    !document.querySelector(
+
+      ".cherry-overlay.active"
+
+    )
+
+  ) {
+
+    document.body.classList.remove(
+
+      "no-scroll"
+
+    );
+
   }
+
 }
 
 function openCheckout() {
 
   if (!cart.length) {
-    alert("Your bag is empty 🍒");
+
+    alert(
+
+      "Your bag is empty 🍒"
+
+    );
+
     return;
+
   }
 
   closeCart();
 
   const total =
-    document.getElementById("checkout-total");
+
+    document.getElementById(
+
+      "checkout-total"
+
+    );
 
   if (total) {
+
     total.textContent =
-      `Rs. ${formatMoney(cartTotal())}`;
+
+      `Rs. ${formatMoney(
+
+        cartTotal()
+
+      )}`;
+
   }
 
   const overlay =
-    document.getElementById("cherry-checkout");
+
+    document.getElementById(
+
+      "cherry-checkout"
+
+    );
 
   if (overlay) {
 
-    overlay.classList.add("active");
-    document.body.classList.add("no-scroll");
+    overlay.classList.add(
+
+      "active"
+
+    );
+
+    document.body.classList.add(
+
+      "no-scroll"
+
+    );
 
   }
+
 }
 
 function closeCheckout() {
 
   const overlay =
-    document.getElementById("cherry-checkout");
+
+    document.getElementById(
+
+      "cherry-checkout"
+
+    );
 
   if (!overlay) return;
 
-  overlay.classList.remove("active");
+  overlay.classList.remove(
 
-  if (!document.querySelector(".cherry-overlay.active")) {
-    document.body.classList.remove("no-scroll");
+    "active"
+
+  );
+
+  if (
+
+    !document.querySelector(
+
+      ".cherry-overlay.active"
+
+    )
+
+  ) {
+
+    document.body.classList.remove(
+
+      "no-scroll"
+
+    );
+
   }
+
 }
 
 function closeSuccess() {
 
   const overlay =
-    document.getElementById("cherry-success");
+
+    document.getElementById(
+
+      "cherry-success"
+
+    );
 
   if (!overlay) return;
 
-  overlay.classList.remove("active");
+  overlay.classList.remove(
 
-  if (!document.querySelector(".cherry-overlay.active")) {
-    document.body.classList.remove("no-scroll");
+    "active"
+
+  );
+
+  if (
+
+    !document.querySelector(
+
+      ".cherry-overlay.active"
+
+    )
+
+  ) {
+
+    document.body.classList.remove(
+
+      "no-scroll"
+
+    );
+
   }
+
 }
 
 /* =========================================================
+
    ORDER SUBMISSION
+
    ========================================================= */
 
-async function submitOrder(event) {
+async function submitOrder(
+
+  event
+
+) {
 
   event.preventDefault();
 
   if (!cart.length) {
-    alert("Your bag is empty 🍒");
+
+    alert(
+
+      "Your bag is empty 🍒"
+
+    );
+
     return;
+
   }
 
   if (!supabaseClient) {
+
     alert(
+
       "The shop connection is unavailable. Please refresh the page and try again."
+
     );
+
     return;
+
   }
 
   const button =
+
     document.getElementById(
+
       "place-order-button"
+
     );
 
   button.disabled = true;
-  button.textContent = "Submitting order...";
+
+  button.textContent =
+
+    "Submitting order...";
 
   const customerName =
+
     document.getElementById(
+
       "customer-name"
+
     ).value.trim();
 
   const customerPhone =
+
     document.getElementById(
+
       "customer-phone"
+
     ).value.trim();
 
   const customerCity =
+
     document.getElementById(
+
       "customer-city"
+
     ).value.trim();
 
   const customerAddress =
+
     document.getElementById(
+
       "customer-address"
+
     ).value.trim();
 
   const transactionId =
+
     document.getElementById(
+
       "transaction-id"
+
     ).value.trim();
 
   try {
@@ -2624,93 +5619,143 @@ async function submitOrder(event) {
     /* CREATE ORDER */
 
     const {
+
       data:order,
+
       error:orderError
+
     } =
+
       await supabaseClient
+
         .from("orders")
+
         .insert({
 
           customer_name:
+
             customerName,
 
           phone:
+
             customerPhone,
 
           address:
+
             customerAddress,
 
           city:
+
             customerCity,
 
           payment_method:
+
             "JazzCash",
 
           transaction_id:
+
             transactionId,
 
           total:
+
             cartTotal(),
 
           status:
+
             "pending"
 
         })
+
         .select()
+
         .single();
 
     if (orderError) {
-      throw new Error(orderError.message);
+
+      throw new Error(
+
+        orderError.message
+
+      );
+
     }
 
-    if (!order || !order.id) {
+    if (
+
+      !order ||
+
+      !order.id
+
+    ) {
+
       throw new Error(
+
         "The order could not be created."
+
       );
+
     }
 
     /* CREATE ORDER ITEMS */
 
     const items =
+
       cart.map(item => ({
 
         order_id:
+
           order.id,
 
         product_id:
+
           item.id,
 
         product_name:
+
           item.name,
 
         size:
+
           item.size || null,
 
         price:
+
           Number(item.price) || 0,
 
         quantity:
+
           Number(item.quantity) || 1
 
       }));
 
     const {
+
       error:itemsError
+
     } =
+
       await supabaseClient
+
         .from("order_items")
+
         .insert(items);
 
     if (itemsError) {
 
       console.error(
+
         "Order items error:",
+
         itemsError
+
       );
 
       throw new Error(
+
         "Your order was created, but the products could not be attached to it. Please contact Cherry Club before placing another order."
+
       );
+
     }
 
     /* OPTIONAL EMAIL FUNCTION */
@@ -2718,35 +5763,77 @@ async function submitOrder(event) {
     try {
 
       const {
+
         error:emailError
+
       } =
-        await supabaseClient.functions.invoke(
-          "smooth-worker",
-          {
-            body:{
-              customer_name:customerName,
-              phone:customerPhone,
-              address:customerAddress,
-              city:customerCity,
-              transaction_id:transactionId,
-              total:cartTotal(),
-              order_id:order.id
+
+        await supabaseClient
+
+          .functions
+
+          .invoke(
+
+            "smooth-worker",
+
+            {
+
+              body:{
+
+                customer_name:
+
+                  customerName,
+
+                phone:
+
+                  customerPhone,
+
+                address:
+
+                  customerAddress,
+
+                city:
+
+                  customerCity,
+
+                transaction_id:
+
+                  transactionId,
+
+                total:
+
+                  cartTotal(),
+
+                order_id:
+
+                  order.id
+
+              }
+
             }
-          }
-        );
+
+          );
 
       if (emailError) {
+
         console.warn(
+
           "Optional order email failed:",
+
           emailError
+
         );
+
       }
 
     } catch(emailError) {
 
       console.warn(
+
         "Optional email function unavailable:",
+
         emailError
+
       );
 
     }
@@ -2756,7 +5843,9 @@ async function submitOrder(event) {
     cart = [];
 
     localStorage.removeItem(
+
       "cherryClubCart"
+
     );
 
     updateBagButton();
@@ -2764,41 +5853,59 @@ async function submitOrder(event) {
     /* RESET FORM */
 
     const form =
+
       document.getElementById(
+
         "checkout-form"
+
       );
 
-    if (form) form.reset();
+    if (form) {
+
+      form.reset();
+
+    }
 
     closeCheckout();
 
     /* SUCCESS */
 
     const orderNumber =
+
       document.getElementById(
+
         "success-order-number"
+
       );
 
     if (orderNumber) {
 
       orderNumber.textContent =
+
         `Order ID: ${order.id}`;
 
     }
 
     const successOverlay =
+
       document.getElementById(
+
         "cherry-success"
+
       );
 
     if (successOverlay) {
 
       successOverlay.classList.add(
+
         "active"
+
       );
 
       document.body.classList.add(
+
         "no-scroll"
+
       );
 
     }
@@ -2806,137 +5913,241 @@ async function submitOrder(event) {
   } catch(error) {
 
     console.error(
+
       "Order submission error:",
+
       error
+
     );
 
     alert(
+
       error.message ||
+
       "Something went wrong while placing your order."
+
     );
 
   } finally {
 
-    button.disabled = false;
-    button.textContent = "Place Order →";
+    button.disabled =
+
+      false;
+
+    button.textContent =
+
+      "Place Order →";
 
   }
+
 }
 
 /* =========================================================
+
    MENU
+
    ========================================================= */
 
 function openMenu() {
 
   const overlay =
+
     document.getElementById(
+
       "menuOverlay"
+
     );
 
   if (!overlay) return;
 
-  overlay.classList.add("active");
-  document.body.classList.add("no-scroll");
+  overlay.classList.add(
+
+    "active"
+
+  );
+
+  document.body.classList.add(
+
+    "no-scroll"
+
+  );
+
 }
 
 function closeMenu() {
 
   const overlay =
+
     document.getElementById(
+
       "menuOverlay"
+
     );
 
   if (!overlay) return;
 
-  overlay.classList.remove("active");
+  overlay.classList.remove(
 
-  if (!document.querySelector(".cherry-overlay.active")) {
-    document.body.classList.remove("no-scroll");
+    "active"
+
+  );
+
+  if (
+
+    !document.querySelector(
+
+      ".cherry-overlay.active"
+
+    )
+
+  ) {
+
+    document.body.classList.remove(
+
+      "no-scroll"
+
+    );
+
   }
+
 }
 
 /* =========================================================
+
    EVENTS
+
    ========================================================= */
 
 document.addEventListener(
+
   "click",
+
   function(event) {
 
     const menuOverlay =
+
       document.getElementById(
+
         "menuOverlay"
+
       );
 
     if (
+
       menuOverlay &&
+
       event.target === menuOverlay
+
     ) {
+
       closeMenu();
+
     }
 
     const cartOverlay =
+
       document.getElementById(
+
         "cherry-cart"
+
       );
 
     if (
+
       cartOverlay &&
+
       event.target === cartOverlay
+
     ) {
+
       closeCart();
+
     }
 
     const checkoutOverlay =
+
       document.getElementById(
+
         "cherry-checkout"
+
       );
 
     if (
+
       checkoutOverlay &&
+
       event.target === checkoutOverlay
+
     ) {
+
       closeCheckout();
+
     }
 
     const successOverlay =
+
       document.getElementById(
+
         "cherry-success"
+
       );
 
     if (
+
       successOverlay &&
+
       event.target === successOverlay
+
     ) {
+
       closeSuccess();
+
     }
 
   }
+
 );
 
 document.addEventListener(
+
   "keydown",
+
   function(event) {
 
-    if (event.key !== "Escape") return;
+    if (
+
+      event.key !== "Escape"
+
+    ) {
+
+      return;
+
+    }
 
     closeMenu();
+
     closeCart();
+
     closeCheckout();
+
     closeSuccess();
 
   }
+
 );
 
 /* =========================================================
+
    INITIALIZE
+
    ========================================================= */
 
 async function initializeCherryClub() {
 
   console.log(
+
     "🍒 Cherry Club starting..."
+
   );
 
   loadCart();
@@ -2944,42 +6155,67 @@ async function initializeCherryClub() {
   updateBagButton();
 
   /*
-    BOTH are loaded once, in one initialization.
-    The old file was calling loadWebsiteContent()
-    multiple times.
+
+    Load all three independent pieces
+
+    together. Categories are now fetched
+
+    directly from Supabase.
+
   */
 
   await Promise.all([
+
     loadWebsiteContent(),
+
+    loadCategories(),
+
     loadProducts()
+
   ]);
 
   console.log(
+
     "🍒 Cherry Club ready."
+
   );
+
 }
 
 const checkoutForm =
+
   document.getElementById(
+
     "checkout-form"
+
   );
 
 if (checkoutForm) {
 
   checkoutForm.addEventListener(
+
     "submit",
+
     submitOrder
+
   );
 
 }
 
 if (
-  document.readyState === "loading"
+
+  document.readyState ===
+
+  "loading"
+
 ) {
 
   document.addEventListener(
+
     "DOMContentLoaded",
+
     initializeCherryClub
+
   );
 
 } else {
@@ -2987,7 +6223,9 @@ if (
   initializeCherryClub();
 
 }
+
 </script>
 
 </body>
+
 </html>
