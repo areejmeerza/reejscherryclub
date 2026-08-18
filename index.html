@@ -3599,10 +3599,6 @@ async function loadCategories() {
       cannot be loaded.
 
     */
-    alert(
-  "CATEGORY ERROR:\n\n" +
-  (error.message || "Unknown error")
-);
 
     categories = [];
 
@@ -4275,10 +4271,12 @@ async function loadProducts() {
       await supabaseClient
 
         .from("products")
-.select(
-  "id,name,category,price,size,status,image_url,description,created_at,quantity,sold_quantity"
-)
-      
+
+        .select(
+
+          "id,name,category,price,size,status,image_url,description,created_at"
+
+        )
 
         .eq(
 
@@ -4813,48 +4811,42 @@ function loadCart() {
 function addToBag(productId) {
 
   const product =
+
     products.find(
+
       item =>
+
         String(item.id) ===
+
         String(productId)
+
     );
 
   if (!product) {
+
     alert(
+
       "Sorry, this item is no longer available."
+
     );
+
     return;
-  }
 
-  const stock =
-    Number(product.quantity) || 0;
-
-  const sold =
-    Number(product.sold_quantity) || 0;
-
-  const remaining =
-    Math.max(0, stock - sold);
-
-  if (remaining <= 0) {
-    alert("This item is sold out 🍒");
-    return;
   }
 
   const existing =
+
     cart.find(
+
       item =>
+
         String(item.id) ===
+
         String(productId)
+
     );
 
   if (existing) {
-
-    if (existing.quantity >= remaining) {
-      alert(
-        `Only ${remaining} available 🍒`
-      );
-      return;
-    }
 
     existing.quantity += 1;
 
@@ -4862,100 +4854,89 @@ function addToBag(productId) {
 
     cart.push({
 
-      id: product.id,
+      id:
 
-      name: product.name,
+        product.id,
+
+      name:
+
+        product.name,
 
       price:
+
         Number(product.price) || 0,
 
       size:
+
         product.size || "",
 
       image_url:
+
         product.image_url || "",
 
-      quantity: 1
+      quantity:
+
+        1
+
     });
+
   }
 
   saveCart();
-  updateBagButton();
-  openCart();
-}
-
-  saveCart();
 
   updateBagButton();
 
   openCart();
 
 }
+
 function changeQuantity(
+
   productId,
+
   amount
+
 ) {
 
   const item =
+
     cart.find(
+
       current =>
+
         String(current.id) ===
+
         String(productId)
+
     );
 
   if (!item) return;
 
-  const product =
-    products.find(
-      current =>
-        String(current.id) ===
-        String(productId)
-    );
+  item.quantity += amount;
 
-  if (!product) return;
-
-  const stock =
-    Number(product.quantity) || 0;
-
-  const sold =
-    Number(product.sold_quantity) || 0;
-
-  const remaining =
-    Math.max(0, stock - sold);
-
-  const newQuantity =
-    item.quantity + amount;
-
-  if (newQuantity <= 0) {
+  if (item.quantity <= 0) {
 
     cart =
+
       cart.filter(
+
         current =>
+
           String(current.id) !==
+
           String(productId)
+
       );
 
-  } else if (newQuantity > remaining) {
-
-    alert(
-      remaining === 1
-        ? "Only 1 available 🍒"
-        : `Only ${remaining} available 🍒`
-    );
-
-    return;
-
-  } else {
-
-    item.quantity =
-      newQuantity;
   }
 
   saveCart();
-  renderCart();
-  updateBagButton();
-}
 
+  renderCart();
+
+  updateBagButton();
+
+}
 
 function removeFromBag(
 
@@ -6248,3 +6229,5 @@ if (
 </body>
 
 </html>
+
+alsooo theres another issue like our website is allowing people to order more than one quantity of some products that are specifically one on one we should have an option in admin while posting products to choose the number of the item and the website should keep track of the sold ones and mention the left quantity
