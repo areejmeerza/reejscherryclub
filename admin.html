@@ -520,6 +520,76 @@
       font-size: 13px;
     }
 
+    /* IMAGE UPLOAD */
+
+    .image-upload-box {
+      border: 1px solid #ddd;
+      background: #fafafa;
+      padding: 15px;
+    }
+
+    .image-upload-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 5px;
+    }
+
+    .image-upload-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background: white;
+      color: #111;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .image-upload-button:hover {
+      background: #111;
+      color: white;
+    }
+
+    .image-upload-input {
+      display: none !important;
+    }
+
+    .image-preview {
+      margin-top: 15px;
+      display: none;
+    }
+
+    .image-preview img {
+      width: 100%;
+      max-width: 180px;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      display: block;
+      border: 1px solid #ddd;
+    }
+
+    .image-preview-label {
+      margin-top: 7px;
+      color: #176b3a;
+      font-size: 10px;
+    }
+
+    .current-image-label {
+      color: #888;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    /* CATEGORIES */
+
     .categories-container {
       padding: 20px;
     }
@@ -596,20 +666,8 @@
       margin-bottom: 20px;
     }
 
-    .upload-help {
-      color: #888;
-      font-size: 10px;
-      line-height: 1.5;
-      margin-top: 8px;
-    }
-
-    .upload-status {
-      margin-top: 10px;
-      font-size: 11px;
-      line-height: 1.5;
-    }
-
     @media(max-width: 700px) {
+
       header {
         padding: 0 20px;
       }
@@ -677,6 +735,10 @@
       .category-actions button {
         flex: 1;
       }
+
+      .image-upload-buttons {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -714,6 +776,7 @@
 <div id="admin-screen" class="hidden">
 
   <header>
+
     <div class="admin-logo">
       Cherry <span>🍒</span> Club
     </div>
@@ -721,14 +784,18 @@
     <button class="logout-button" onclick="logout()">
       Log out
     </button>
+
   </header>
 
 
   <main>
 
     <div class="welcome">
+
       <small>Your private control room</small>
+
       <h1>Welcome back 🍒</h1>
+
     </div>
 
 
@@ -759,19 +826,35 @@
 
     <div class="tabs">
 
-      <button class="tab active" id="orders-tab" onclick="showTab('orders')">
+      <button
+        class="tab active"
+        id="orders-tab"
+        onclick="showTab('orders')"
+      >
         Orders
       </button>
 
-      <button class="tab" id="products-tab" onclick="showTab('products')">
+      <button
+        class="tab"
+        id="products-tab"
+        onclick="showTab('products')"
+      >
         Products
       </button>
 
-      <button class="tab" id="categories-tab" onclick="showTab('categories')">
+      <button
+        class="tab"
+        id="categories-tab"
+        onclick="showTab('categories')"
+      >
         Categories
       </button>
 
-      <button class="tab" id="website-tab" onclick="showTab('website')">
+      <button
+        class="tab"
+        id="website-tab"
+        onclick="showTab('website')"
+      >
         Website
       </button>
 
@@ -783,15 +866,25 @@
     <section id="orders-section" class="section-card">
 
       <div class="section-heading">
+
         <h2>Orders</h2>
 
-        <button class="small-button" onclick="loadEverything()">
+        <button
+          class="small-button"
+          onclick="loadEverything()"
+        >
           Refresh
         </button>
+
       </div>
 
-      <div id="orders-container" class="orders-container">
-        <div class="loading">Loading orders 🍒</div>
+      <div
+        id="orders-container"
+        class="orders-container"
+      >
+        <div class="loading">
+          Loading orders 🍒
+        </div>
       </div>
 
     </section>
@@ -799,20 +892,29 @@
 
     <!-- PRODUCTS -->
 
-    <section id="products-section" class="section-card hidden">
+    <section
+      id="products-section"
+      class="section-card hidden"
+    >
 
       <div class="section-heading">
 
         <h2>Products</h2>
 
-        <button class="small-button" onclick="openProductForm()">
+        <button
+          class="small-button"
+          onclick="openProductForm()"
+        >
           + Add product
         </button>
 
       </div>
 
 
-      <div id="product-form-area" class="form-box hidden">
+      <div
+        id="product-form-area"
+        class="form-box hidden"
+      >
 
         <h3
           id="product-form-title"
@@ -826,108 +928,221 @@
           Add product
         </h3>
 
+
         <form id="product-form">
 
-          <input type="hidden" id="editing-product-id">
+          <input
+            type="hidden"
+            id="editing-product-id"
+          >
+
 
           <div class="form-grid">
 
-            <div>
-              <label>Product name</label>
-              <input id="product-name" required>
-            </div>
 
             <div>
-              <label>Category</label>
-              <select id="product-category-id" required>
-                <option value="">Choose category</option>
+
+              <label>
+                Product name
+              </label>
+
+              <input
+                id="product-name"
+                required
+              >
+
+            </div>
+
+
+            <div>
+
+              <label>
+                Category
+              </label>
+
+              <select
+                id="product-category-id"
+                required
+              >
+
+                <option value="">
+                  Choose category
+                </option>
+
               </select>
+
             </div>
 
-            <div>
-              <label>Price (PKR)</label>
-              <input id="product-price" type="number" min="0" required>
-            </div>
 
             <div>
-              <label>Size</label>
-              <input id="product-size" placeholder="e.g. S / M / 28-32">
+
+              <label>
+                Price (PKR)
+              </label>
+
+              <input
+                id="product-price"
+                type="number"
+                min="0"
+                required
+              >
+
             </div>
 
+
             <div>
-              <label>Status</label>
+
+              <label>
+                Size
+              </label>
+
+              <input
+                id="product-size"
+                placeholder="e.g. S / M / 28-32"
+              >
+
+            </div>
+
+
+            <div>
+
+              <label>
+                Status
+              </label>
 
               <select id="product-status">
-                <option value="available">Available</option>
-                <option value="sold">Sold Out</option>
-                <option value="hidden">Hidden</option>
+
+                <option value="available">
+                  Available
+                </option>
+
+                <option value="sold">
+                  Sold Out
+                </option>
+
+                <option value="hidden">
+                  Hidden
+                </option>
+
               </select>
+
             </div>
 
 
-            <!-- DIRECT PHOTO UPLOAD -->
+            <!-- IMAGE UPLOAD -->
 
             <div>
 
-              <label>Product photo</label>
+              <label>
+                Product photo
+              </label>
 
-              <input
-                id="product-image-file"
-                type="file"
-                accept="image/*"
-                capture="environment"
-              >
 
-              <div
-                id="product-image-preview"
-                style="
-                  margin-top:10px;
-                  display:none;
-                "
-              >
+              <div class="image-upload-box">
 
-                <img
-                  id="product-image-preview-img"
-                  src=""
-                  alt="Product preview"
-                  style="
-                    width:100%;
-                    max-width:180px;
-                    aspect-ratio:4/5;
-                    object-fit:cover;
-                    display:block;
-                    border:1px solid #ddd;
-                  "
+
+                <div
+                  class="image-upload-buttons"
                 >
 
+                  <!-- GALLERY -->
+
+                  <label
+                    class="image-upload-button"
+                    for="product-image-gallery"
+                  >
+                    🖼️ Choose from gallery
+                  </label>
+
+                  <input
+                    id="product-image-gallery"
+                    class="image-upload-input"
+                    type="file"
+                    accept="image/*"
+                  >
+
+
+                  <!-- CAMERA -->
+
+                  <label
+                    class="image-upload-button"
+                    for="product-image-camera"
+                  >
+                    📸 Take photo
+                  </label>
+
+                  <input
+                    id="product-image-camera"
+                    class="image-upload-input"
+                    type="file"
+                    accept="image/*"
+                    capture="environment"
+                  >
+
+                </div>
+
+
+                <div
+                  id="product-image-preview"
+                  class="image-preview"
+                >
+
+                  <div class="current-image-label">
+                    Selected photo
+                  </div>
+
+                  <img
+                    id="product-image-preview-img"
+                    src=""
+                    alt="Product preview"
+                  >
+
+                  <div
+                    id="product-image-preview-label"
+                    class="image-preview-label"
+                  >
+                    Photo ready to upload 🍒
+                  </div>
+
+                </div>
+
+
+                <!--
+                  This is intentionally hidden.
+                  You NEVER need to paste a URL.
+                  The JavaScript automatically fills it
+                  after Supabase uploads the image.
+                -->
+
+                <input
+                  id="product-image"
+                  type="hidden"
+                >
+
+
+                <div
+                  style="
+                    color:#888;
+                    font-size:10px;
+                    line-height:1.5;
+                    margin-top:12px;
+                  "
+                >
+                  Choose an existing photo from your gallery
+                  or take a new one. It will automatically
+                  upload to Cherry Club's image storage 🍒
+                </div>
+
               </div>
-
-              <!-- This stores the URL automatically.
-                   YOU DO NOT NEED TO TOUCH IT. -->
-
-              <input
-                id="product-image"
-                type="hidden"
-              >
-
-              <div class="upload-help">
-                Choose a photo directly from your phone 📸
-                <br>
-                It will automatically upload to Cherry Club's
-                <strong>product-images</strong> storage bucket.
-              </div>
-
-              <div
-                id="upload-status"
-                class="upload-status"
-              ></div>
 
             </div>
 
 
             <div class="form-full">
 
-              <label>Description</label>
+              <label>
+                Description
+              </label>
 
               <textarea
                 id="product-description"
@@ -936,12 +1151,16 @@
 
             </div>
 
+
           </div>
 
 
           <div class="form-buttons">
 
-            <button type="submit" id="save-product-button">
+            <button
+              type="submit"
+              id="save-product-button"
+            >
               Save product
             </button>
 
@@ -955,12 +1174,16 @@
 
           </div>
 
+
         </form>
 
       </div>
 
 
-      <div id="products-container" class="products-container">
+      <div
+        id="products-container"
+        class="products-container"
+      >
 
         <div
           class="loading"
@@ -976,18 +1199,30 @@
 
     <!-- CATEGORIES -->
 
-    <section id="categories-section" class="section-card hidden">
+    <section
+      id="categories-section"
+      class="section-card hidden"
+    >
 
       <div class="section-heading">
+
         <h2>Categories</h2>
+
       </div>
+
 
       <div class="categories-container">
 
         <div class="category-help">
-          Manage the categories shown throughout Cherry Club.
-          A category cannot be deleted while products are assigned to it.
+
+          Manage the categories shown throughout
+          Cherry Club.
+
+          A category cannot be deleted while
+          products are assigned to it.
+
         </div>
+
 
         <div class="category-add">
 
@@ -1006,10 +1241,13 @@
 
         </div>
 
+
         <div id="categories-container">
+
           <div class="loading">
             Loading categories 🍒
           </div>
+
         </div>
 
       </div>
@@ -1019,7 +1257,10 @@
 
     <!-- WEBSITE -->
 
-    <section id="website-section" class="section-card hidden">
+    <section
+      id="website-section"
+      class="section-card hidden"
+    >
 
       <div class="section-heading">
 
@@ -1046,18 +1287,29 @@
           Announcement Bar
         </h3>
 
-        <label>Announcement text</label>
+        <label>
+          Announcement text
+        </label>
 
         <input
           id="site-announcement"
           placeholder="e.g. FLAT 40% OFF 🍒"
         >
 
-        <label>Show announcement?</label>
+        <label>
+          Show announcement?
+        </label>
 
         <select id="site-announcement-enabled">
-          <option value="true">Yes</option>
-          <option value="false">No</option>
+
+          <option value="true">
+            Yes
+          </option>
+
+          <option value="false">
+            No
+          </option>
+
         </select>
 
       </div>
@@ -1074,28 +1326,36 @@
           Hero Section
         </h3>
 
-        <label>Main heading</label>
+        <label>
+          Main heading
+        </label>
 
         <input
           id="site-hero-title"
           placeholder="e.g. The New Drop"
         >
 
-        <label>Subtitle</label>
+        <label>
+          Subtitle
+        </label>
 
         <textarea
           id="site-hero-subtitle"
           placeholder="e.g. Y2K pieces you'll obsess over."
         ></textarea>
 
-        <label>Button text</label>
+        <label>
+          Button text
+        </label>
 
         <input
           id="site-hero-button"
           placeholder="e.g. SHOP NOW"
         >
 
-        <label>Button link</label>
+        <label>
+          Button link
+        </label>
 
         <input
           id="site-hero-link"
@@ -1116,28 +1376,43 @@
           Promotion / Deal
         </h3>
 
-        <label>Show promotion?</label>
+        <label>
+          Show promotion?
+        </label>
 
         <select id="site-promo-enabled">
-          <option value="true">Yes</option>
-          <option value="false">No</option>
+
+          <option value="true">
+            Yes
+          </option>
+
+          <option value="false">
+            No
+          </option>
+
         </select>
 
-        <label>Promotion title</label>
+        <label>
+          Promotion title
+        </label>
 
         <input
           id="site-promo-title"
           placeholder="e.g. FLAT 40% OFF"
         >
 
-        <label>Promotion description</label>
+        <label>
+          Promotion description
+        </label>
 
         <textarea
           id="site-promo-description"
           placeholder="e.g. On selected Cherry Club pieces."
         ></textarea>
 
-        <label>Promotion button</label>
+        <label>
+          Promotion button
+        </label>
 
         <input
           id="site-promo-button"
@@ -1158,28 +1433,36 @@
           Homepage Sections
         </h3>
 
-        <label>New Arrivals title</label>
+        <label>
+          New Arrivals title
+        </label>
 
         <input
           id="site-new-arrivals-title"
           placeholder="New Arrivals"
         >
 
-        <label>Featured Products title</label>
+        <label>
+          Featured Products title
+        </label>
 
         <input
           id="site-featured-title"
           placeholder="Cherry Picks"
         >
 
-        <label>About section title</label>
+        <label>
+          About section title
+        </label>
 
         <input
           id="site-about-title"
           placeholder="About Cherry Club"
         >
 
-        <label>About section text</label>
+        <label>
+          About section text
+        </label>
 
         <textarea
           id="site-about-text"
@@ -1212,16 +1495,13 @@
 
     </section>
 
+
   </main>
 
 </div>
 
 
 <script>
-
-/* =========================================================
-   SUPABASE
-   ========================================================= */
 
 const SUPABASE_URL =
   "https://jqpkvttexoekaoylwtkg.supabase.co";
@@ -1236,12 +1516,17 @@ const supabaseClient =
   );
 
 
-/* =========================================================
-   IMPORTANT:
-   YOUR BUCKET NAME IS EXACTLY product-images
-   ========================================================= */
+/*
+  IMPORTANT:
 
-const PRODUCT_IMAGE_BUCKET = "product-images";
+  This is the exact Supabase Storage bucket name.
+
+  Do not change this unless you rename the bucket
+  inside Supabase.
+*/
+
+const PRODUCT_IMAGE_BUCKET =
+  "product-images";
 
 
 let orders = [];
@@ -1250,63 +1535,80 @@ let adminProducts = [];
 let categories = [];
 
 
-/* =========================================================
-   LOGIN
-   ========================================================= */
+/* LOGIN */
 
 document
   .getElementById("login-form")
-  .addEventListener("submit", async function(event) {
+  .addEventListener(
+    "submit",
+    async function(event) {
 
-    event.preventDefault();
+      event.preventDefault();
 
-    const email =
-      document.getElementById("login-email").value.trim();
+      const email =
+        document
+          .getElementById("login-email")
+          .value
+          .trim();
 
-    const password =
-      document.getElementById("login-password").value;
+      const password =
+        document
+          .getElementById("login-password")
+          .value;
 
-    const button =
-      document.getElementById("login-button");
+      const button =
+        document
+          .getElementById("login-button");
 
-    const errorBox =
-      document.getElementById("login-error");
+      const errorBox =
+        document
+          .getElementById("login-error");
 
-    errorBox.classList.add("hidden");
+      errorBox.classList.add("hidden");
 
-    button.disabled = true;
-    button.textContent = "Logging in...";
+      button.disabled = true;
+      button.textContent = "Logging in...";
 
-    const { error } =
-      await supabaseClient.auth.signInWithPassword({
-        email,
-        password
-      });
 
-    if (error) {
+      const { error } =
+        await supabaseClient.auth
+          .signInWithPassword({
+            email,
+            password
+          });
 
-      console.error("Login error:", error);
 
-      errorBox.textContent =
-        "Login didn't work. Check your email and password.";
+      if (error) {
 
-      errorBox.classList.remove("hidden");
+        console.error(
+          "Login error:",
+          error
+        );
 
-      button.disabled = false;
-      button.textContent = "Enter Cherry Club →";
+        errorBox.textContent =
+          "Login didn't work. Check your email and password.";
 
-      return;
+        errorBox.classList.remove("hidden");
+
+        button.disabled = false;
+        button.textContent =
+          "Enter Cherry Club →";
+
+        return;
+      }
+
+
+      showAdmin();
+
     }
-
-    showAdmin();
-
-  });
+  );
 
 
 async function checkLogin() {
 
   const { data } =
-    await supabaseClient.auth.getSession();
+    await supabaseClient.auth
+      .getSession();
 
   if (data && data.session) {
     showAdmin();
@@ -1339,9 +1641,7 @@ async function logout() {
 }
 
 
-/* =========================================================
-   LOAD EVERYTHING
-   ========================================================= */
+/* LOAD EVERYTHING */
 
 async function loadEverything() {
 
@@ -1361,9 +1661,7 @@ async function loadEverything() {
 }
 
 
-/* =========================================================
-   ORDERS
-   ========================================================= */
+/* ORDERS */
 
 async function loadOrders() {
 
@@ -1371,24 +1669,40 @@ async function loadOrders() {
     await supabaseClient
       .from("orders")
       .select("*")
-      .order("created_at", { ascending: false });
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      );
+
 
   if (error) {
 
-    console.error("Orders error:", error);
+    console.error(
+      "Orders error:",
+      error
+    );
 
-    document.getElementById("orders-container").innerHTML = `
-      <div class="empty">
-        We couldn't load the orders.<br><br>
-        ${escapeHTML(error.message)}
-      </div>
-    `;
+    document
+      .getElementById("orders-container")
+      .innerHTML = `
+        <div class="empty">
+          We couldn't load the orders.<br><br>
+          ${escapeHTML(error.message)}
+        </div>
+      `;
 
     orders = [];
+
     return;
   }
 
-  orders = Array.isArray(data) ? data : [];
+
+  orders =
+    Array.isArray(data)
+      ? data
+      : [];
 
 }
 
@@ -1400,46 +1714,76 @@ async function loadOrderItems() {
       .from("order_items")
       .select("*");
 
+
   if (error) {
 
-    console.error("Order items error:", error);
+    console.error(
+      "Order items error:",
+      error
+    );
 
     orderItems = [];
+
     return;
   }
 
-  orderItems = Array.isArray(data) ? data : [];
+
+  orderItems =
+    Array.isArray(data)
+      ? data
+      : [];
 
 }
 
 
-/* =========================================================
-   CATEGORIES
-   ========================================================= */
+/* CATEGORIES */
 
 async function loadCategories() {
 
-  const { data: categoryData, error: categoryError } =
+  const {
+    data: categoryData,
+    error: categoryError
+  } =
     await supabaseClient
       .from("categories")
-      .select("id,name,sort_order,created_at")
-      .order("sort_order", { ascending: true })
-      .order("name", { ascending: true });
+      .select(
+        "id,name,sort_order,created_at"
+      )
+      .order(
+        "sort_order",
+        {
+          ascending: true
+        }
+      )
+      .order(
+        "name",
+        {
+          ascending: true
+        }
+      );
+
 
   if (categoryError) {
 
-    console.error("Categories error:", categoryError);
+    console.error(
+      "Categories error:",
+      categoryError
+    );
 
-    document.getElementById("categories-container").innerHTML = `
-      <div class="empty">
-        Couldn't load categories.<br><br>
-        ${escapeHTML(categoryError.message)}
-      </div>
-    `;
+    document
+      .getElementById("categories-container")
+      .innerHTML = `
+        <div class="empty">
+          Couldn't load categories.<br><br>
+          ${escapeHTML(categoryError.message)}
+        </div>
+      `;
 
     categories = [];
+
     return;
   }
+
 
   let properCategories =
     Array.isArray(categoryData)
@@ -1447,10 +1791,16 @@ async function loadCategories() {
       : [];
 
 
-  const { data: productData, error: productError } =
+  const {
+    data: productData,
+    error: productError
+  } =
     await supabaseClient
       .from("products")
-      .select("category,category_id");
+      .select(
+        "category,category_id"
+      );
+
 
   if (productError) {
 
@@ -1459,7 +1809,9 @@ async function loadCategories() {
       productError
     );
 
-    categories = properCategories;
+    categories =
+      properCategories;
+
     return;
   }
 
@@ -1468,7 +1820,9 @@ async function loadCategories() {
     new Set(
       properCategories.map(
         category =>
-          String(category.name || "")
+          String(
+            category.name || ""
+          )
             .trim()
             .toLowerCase()
       )
@@ -1478,31 +1832,50 @@ async function loadCategories() {
   const missingCategories = [];
 
 
-  (productData || []).forEach(product => {
+  (productData || [])
+    .forEach(product => {
 
-    const productCategory =
-      String(product.category || "").trim();
+      const productCategory =
+        String(
+          product.category || ""
+        ).trim();
 
-    if (!productCategory) return;
 
-    const normalized =
-      productCategory.toLowerCase();
+      if (!productCategory) {
+        return;
+      }
 
-    if (!existingNames.has(normalized)) {
 
-      existingNames.add(normalized);
+      const normalized =
+        productCategory.toLowerCase();
 
-      missingCategories.push({
-        id: `legacy-${missingCategories.length + 1}`,
-        name: productCategory,
-        sort_order: 9999,
-        created_at: null,
-        legacy: true
-      });
 
-    }
+      if (
+        !existingNames.has(
+          normalized
+        )
+      ) {
 
-  });
+        existingNames.add(
+          normalized
+        );
+
+        missingCategories.push({
+          id:
+            `legacy-${missingCategories.length + 1}`,
+          name:
+            productCategory,
+          sort_order:
+            9999,
+          created_at:
+            null,
+          legacy:
+            true
+        });
+
+      }
+
+    });
 
 
   categories = [
@@ -1516,30 +1889,48 @@ async function loadCategories() {
 function updateCategoryDropdown() {
 
   const select =
-    document.getElementById("product-category-id");
+    document
+      .getElementById(
+        "product-category-id"
+      );
+
+
+  if (!select) return;
+
 
   const currentValue =
     select.value;
 
+
   select.innerHTML = `
-    <option value="">Choose category</option>
+    <option value="">
+      Choose category
+    </option>
+
     ${
-      categories.map(category => `
-        <option value="${escapeHTML(category.id)}">
-          ${escapeHTML(category.name)}
-        </option>
-      `).join("")
+      categories
+        .map(category => `
+          <option value="${escapeHTML(category.id)}">
+            ${escapeHTML(category.name)}
+          </option>
+        `)
+        .join("")
     }
   `;
+
 
   if (
     currentValue &&
     categories.some(
       category =>
-        String(category.id) === String(currentValue)
+        String(category.id) ===
+        String(currentValue)
     )
   ) {
-    select.value = currentValue;
+
+    select.value =
+      currentValue;
+
   }
 
 }
@@ -1548,7 +1939,11 @@ function updateCategoryDropdown() {
 function renderCategories() {
 
   const container =
-    document.getElementById("categories-container");
+    document
+      .getElementById(
+        "categories-container"
+      );
+
 
   if (!categories.length) {
 
@@ -1561,56 +1956,59 @@ function renderCategories() {
     return;
   }
 
+
   container.innerHTML = `
     <div class="category-list">
 
       ${
-        categories.map(category => `
+        categories
+          .map(category => `
 
-          <div class="category-row">
+            <div class="category-row">
 
-            <div class="category-name">
-              ${escapeHTML(category.name)}
+              <div class="category-name">
+                ${escapeHTML(category.name)}
+              </div>
+
+              <div class="category-actions">
+
+                ${
+                  category.legacy
+                  ?
+                  `
+                    <span style="
+                      color:#999;
+                      font-size:9px;
+                      text-transform:uppercase;
+                      letter-spacing:1px;
+                      padding:8px 0;
+                    ">
+                      Existing products
+                    </span>
+                  `
+                  :
+                  `
+                    <button
+                      onclick="renameCategory('${escapeHTML(category.id)}')"
+                    >
+                      Rename
+                    </button>
+
+                    <button
+                      class="danger"
+                      onclick="deleteCategory('${escapeHTML(category.id)}')"
+                    >
+                      Delete
+                    </button>
+                  `
+                }
+
+              </div>
+
             </div>
 
-            <div class="category-actions">
-
-              ${
-                category.legacy
-                ?
-                `
-                  <span style="
-                    color:#999;
-                    font-size:9px;
-                    text-transform:uppercase;
-                    letter-spacing:1px;
-                    padding:8px 0;
-                  ">
-                    Existing products
-                  </span>
-                `
-                :
-                `
-                  <button
-                    onclick="renameCategory('${escapeHTML(category.id)}')"
-                  >
-                    Rename
-                  </button>
-
-                  <button
-                    class="danger"
-                    onclick="deleteCategory('${escapeHTML(category.id)}')"
-                  >
-                    Delete
-                  </button>
-                `
-              }
-
-            </div>
-
-          </div>
-
-        `).join("")
+          `)
+          .join("")
       }
 
     </div>
@@ -1622,47 +2020,75 @@ function renderCategories() {
 async function addCategory() {
 
   const input =
-    document.getElementById("new-category-name");
+    document
+      .getElementById(
+        "new-category-name"
+      );
+
 
   const name =
     input.value.trim();
 
+
   if (!name) {
-    alert("Please enter a category name.");
+
+    alert(
+      "Please enter a category name."
+    );
+
     return;
   }
+
 
   const exists =
     categories.some(
       category =>
-        category.name.toLowerCase() === name.toLowerCase()
+        category.name.toLowerCase() ===
+        name.toLowerCase()
     );
 
+
   if (exists) {
-    alert("That category already exists.");
+
+    alert(
+      "That category already exists."
+    );
+
     return;
   }
 
+
   const nextSortOrder =
     categories.length
-      ? Math.max(
-          ...categories.map(
-            category => Number(category.sort_order) || 0
-          )
-        ) + 1
-      : 1;
+    ?
+    Math.max(
+      ...categories.map(
+        category =>
+          Number(
+            category.sort_order
+          ) || 0
+      )
+    ) + 1
+    :
+    1;
+
 
   const { error } =
     await supabaseClient
       .from("categories")
       .insert({
         name,
-        sort_order: nextSortOrder
+        sort_order:
+          nextSortOrder
       });
+
 
   if (error) {
 
-    console.error("Category add error:", error);
+    console.error(
+      "Category add error:",
+      error
+    );
 
     alert(
       "I couldn't add that category.\n\n" +
@@ -1671,6 +2097,7 @@ async function addCategory() {
 
     return;
   }
+
 
   input.value = "";
 
@@ -1687,10 +2114,13 @@ async function renameCategory(id) {
   const category =
     categories.find(
       item =>
-        String(item.id) === String(id)
+        String(item.id) ===
+        String(id)
     );
 
+
   if (!category) return;
+
 
   const newName =
     prompt(
@@ -1698,39 +2128,65 @@ async function renameCategory(id) {
       category.name
     );
 
-  if (newName === null) return;
+
+  if (newName === null) {
+    return;
+  }
+
 
   const cleanedName =
     newName.trim();
 
+
   if (!cleanedName) {
-    alert("Category name cannot be empty.");
+
+    alert(
+      "Category name cannot be empty."
+    );
+
     return;
   }
+
 
   const duplicate =
     categories.some(
       item =>
-        String(item.id) !== String(id) &&
-        item.name.toLowerCase() === cleanedName.toLowerCase()
+        String(item.id) !==
+        String(id) &&
+        item.name.toLowerCase() ===
+        cleanedName.toLowerCase()
     );
 
+
   if (duplicate) {
-    alert("A category with that name already exists.");
+
+    alert(
+      "A category with that name already exists."
+    );
+
     return;
   }
+
 
   const { error } =
     await supabaseClient
       .from("categories")
       .update({
-        name: cleanedName
+        name:
+          cleanedName
       })
-      .eq("id", id);
+      .eq(
+        "id",
+        id
+      );
+
 
   if (error) {
 
-    console.error("Category rename error:", error);
+    console.error(
+      "Category rename error:",
+      error
+    );
 
     alert(
       "I couldn't rename that category.\n\n" +
@@ -1740,13 +2196,21 @@ async function renameCategory(id) {
     return;
   }
 
-  const { error: productError } =
+
+  const {
+    error: productError
+  } =
     await supabaseClient
       .from("products")
       .update({
-        category: cleanedName
+        category:
+          cleanedName
       })
-      .eq("category_id", id);
+      .eq(
+        "category_id",
+        id
+      );
+
 
   if (productError) {
 
@@ -1760,7 +2224,9 @@ async function renameCategory(id) {
       "couldn't be updated.\n\n" +
       productError.message
     );
+
   }
+
 
   await loadCategories();
   await loadAdminProducts();
@@ -1777,19 +2243,32 @@ async function deleteCategory(id) {
   const category =
     categories.find(
       item =>
-        String(item.id) === String(id)
+        String(item.id) ===
+        String(id)
     );
+
 
   if (!category) return;
 
-  const { count, error: countError } =
+
+  const {
+    count,
+    error: countError
+  } =
     await supabaseClient
       .from("products")
-      .select("id", {
-        count: "exact",
-        head: true
-      })
-      .eq("category_id", id);
+      .select(
+        "id",
+        {
+          count: "exact",
+          head: true
+        }
+      )
+      .eq(
+        "category_id",
+        id
+      );
+
 
   if (countError) {
 
@@ -1806,6 +2285,7 @@ async function deleteCategory(id) {
     return;
   }
 
+
   if (Number(count) > 0) {
 
     alert(
@@ -1817,23 +2297,33 @@ async function deleteCategory(id) {
     return;
   }
 
+
   const confirmed =
     confirm(
       `Delete the "${category.name}" category?\n\n` +
       `No products are currently assigned to it.`
     );
 
+
   if (!confirmed) return;
+
 
   const { error } =
     await supabaseClient
       .from("categories")
       .delete()
-      .eq("id", id);
+      .eq(
+        "id",
+        id
+      );
+
 
   if (error) {
 
-    console.error("Category delete error:", error);
+    console.error(
+      "Category delete error:",
+      error
+    );
 
     alert(
       "I couldn't delete that category.\n\n" +
@@ -1843,6 +2333,7 @@ async function deleteCategory(id) {
     return;
   }
 
+
   await loadCategories();
 
   updateCategoryDropdown();
@@ -1851,102 +2342,171 @@ async function deleteCategory(id) {
 }
 
 
-/* =========================================================
-   PRODUCTS
-   ========================================================= */
+/* PRODUCTS */
 
 async function loadAdminProducts() {
 
-  const { data, error } =
+  const {
+    data,
+    error
+  } =
     await supabaseClient
       .from("products")
       .select(
         "id,name,category,category_id,price,size,status,image_url,description"
       );
 
+
   if (error) {
 
-    console.error("Products error:", error);
+    console.error(
+      "Products error:",
+      error
+    );
 
-    document.getElementById("products-container").innerHTML = `
-      <div class="empty" style="grid-column:1/-1;">
-        Couldn't load products.<br><br>
-        ${escapeHTML(error.message)}
-      </div>
-    `;
+    document
+      .getElementById(
+        "products-container"
+      )
+      .innerHTML = `
+        <div
+          class="empty"
+          style="grid-column:1/-1;"
+        >
+          Couldn't load products.<br><br>
+          ${escapeHTML(error.message)}
+        </div>
+      `;
 
     adminProducts = [];
+
     return;
   }
 
-  adminProducts = Array.isArray(data) ? data : [];
+
+  adminProducts =
+    Array.isArray(data)
+      ? data
+      : [];
 
 }
 
 
 function updateStats() {
 
-  document.getElementById("stat-orders").textContent =
-    orders.length;
+  document
+    .getElementById(
+      "stat-orders"
+    )
+    .textContent =
+      orders.length;
 
-  document.getElementById("stat-pending").textContent =
-    orders.filter(
-      order => order.status === "pending"
-    ).length;
 
-  document.getElementById("stat-products").textContent =
-    adminProducts.length;
+  document
+    .getElementById(
+      "stat-pending"
+    )
+    .textContent =
+      orders.filter(
+        order =>
+          order.status ===
+          "pending"
+      ).length;
 
-  document.getElementById("stat-available").textContent =
-    adminProducts.filter(
-      product => product.status === "available"
-    ).length;
+
+  document
+    .getElementById(
+      "stat-products"
+    )
+    .textContent =
+      adminProducts.length;
+
+
+  document
+    .getElementById(
+      "stat-available"
+    )
+    .textContent =
+      adminProducts.filter(
+        product =>
+          product.status ===
+          "available"
+      ).length;
 
 }
 
 
 function formatPrice(value) {
 
-  return Number(value || 0).toLocaleString("en-PK");
+  return Number(
+    value || 0
+  ).toLocaleString(
+    "en-PK"
+  );
 
 }
 
 
 function escapeHTML(value) {
 
-  return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+  return String(
+    value ?? ""
+  )
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
 
 function formatDate(value) {
 
-  if (!value) return "Unknown date";
+  if (!value) {
+    return "Unknown date";
+  }
 
-  return new Date(value).toLocaleString(
-    "en-PK",
-    {
-      dateStyle: "medium",
-      timeStyle: "short"
-    }
-  );
+
+  return new Date(value)
+    .toLocaleString(
+      "en-PK",
+      {
+        dateStyle:
+          "medium",
+        timeStyle:
+          "short"
+      }
+    );
 
 }
 
 
-/* =========================================================
-   ORDERS RENDER
-   ========================================================= */
+/* ORDERS RENDER */
 
 function renderOrders() {
 
   const container =
-    document.getElementById("orders-container");
+    document
+      .getElementById(
+        "orders-container"
+      );
+
 
   if (!orders.length) {
 
@@ -1959,161 +2519,225 @@ function renderOrders() {
     return;
   }
 
+
   container.innerHTML =
-    orders.map(order => {
+    orders
+      .map(order => {
 
-      const items =
-        orderItems.filter(
-          item =>
-            String(item.order_id) ===
-            String(order.id)
-        );
+        const items =
+          orderItems.filter(
+            item =>
+              String(
+                item.order_id
+              ) ===
+              String(
+                order.id
+              )
+          );
 
-      return `
 
-        <article class="order">
+        return `
 
-          <div class="order-top">
+          <article class="order">
 
-            <div>
+            <div class="order-top">
 
-              <div class="order-number">
-                Order #${escapeHTML(order.id)}
+              <div>
+
+                <div class="order-number">
+                  Order #${escapeHTML(order.id)}
+                </div>
+
+                <div class="order-name">
+                  ${escapeHTML(order.customer_name)}
+                </div>
+
+                <div class="order-date">
+                  ${formatDate(order.created_at)}
+                </div>
+
               </div>
 
-              <div class="order-name">
-                ${escapeHTML(order.customer_name)}
-              </div>
 
-              <div class="order-date">
-                ${formatDate(order.created_at)}
-              </div>
+              <select
+                class="status-select"
+                data-order-id="${escapeHTML(order.id)}"
+                onchange="changeOrderStatus(this)"
+              >
+                ${statusOptions(order.status)}
+              </select>
 
             </div>
 
-            <select
-              class="status-select"
-              data-order-id="${escapeHTML(order.id)}"
-              onchange="changeOrderStatus(this)"
-            >
-              ${statusOptions(order.status)}
-            </select>
 
-          </div>
+            <div class="order-details">
 
-          <div class="order-details">
+              <div>
 
-            <div>
-              <div class="detail-label">Phone</div>
-              <div class="detail-value">
-                ${escapeHTML(order.phone)}
+                <div class="detail-label">
+                  Phone
+                </div>
+
+                <div class="detail-value">
+                  ${escapeHTML(order.phone)}
+                </div>
+
               </div>
-            </div>
 
-            <div>
-              <div class="detail-label">City</div>
-              <div class="detail-value">
-                ${escapeHTML(order.city)}
+
+              <div>
+
+                <div class="detail-label">
+                  City
+                </div>
+
+                <div class="detail-value">
+                  ${escapeHTML(order.city)}
+                </div>
+
               </div>
-            </div>
 
-            <div>
-              <div class="detail-label">Address</div>
-              <div class="detail-value">
-                ${escapeHTML(order.address)}
+
+              <div>
+
+                <div class="detail-label">
+                  Address
+                </div>
+
+                <div class="detail-value">
+                  ${escapeHTML(order.address)}
+                </div>
+
               </div>
-            </div>
 
-            <div>
-              <div class="detail-label">Payment</div>
-              <div class="detail-value">
-                ${escapeHTML(order.payment_method)}
+
+              <div>
+
+                <div class="detail-label">
+                  Payment
+                </div>
+
+                <div class="detail-value">
+                  ${escapeHTML(order.payment_method)}
+                </div>
+
               </div>
-            </div>
 
-            <div>
-              <div class="detail-label">Transaction ID</div>
-              <div class="detail-value">
-                ${escapeHTML(order.transaction_id)}
+
+              <div>
+
+                <div class="detail-label">
+                  Transaction ID
+                </div>
+
+                <div class="detail-value">
+                  ${escapeHTML(order.transaction_id)}
+                </div>
+
               </div>
-            </div>
 
-            <div>
-              <div class="detail-label">Total</div>
-              <div class="detail-value">
-                <strong>
-                  Rs. ${formatPrice(order.total)}
-                </strong>
-              </div>
-            </div>
 
-          </div>
+              <div>
 
-          <div class="order-items">
+                <div class="detail-label">
+                  Total
+                </div>
 
-            <div class="order-items-title">
-              Items ordered
-            </div>
-
-            ${
-              items.length
-              ?
-              items.map(item => `
-
-                <div class="order-item">
-
-                  <span>
-
-                    ${escapeHTML(item.product_name)}
-
-                    ${
-                      item.size
-                      ?
-                      ` · Size ${escapeHTML(item.size)}`
-                      :
-                      ""
-                    }
-
-                    × ${item.quantity}
-
-                  </span>
+                <div class="detail-value">
 
                   <strong>
-                    Rs.
-                    ${formatPrice(
-                      Number(item.price) *
-                      Number(item.quantity)
-                    )}
+                    Rs. ${formatPrice(order.total)}
                   </strong>
 
                 </div>
 
-              `).join("")
-              :
-              `
-                <div style="color:#999;font-size:11px;">
-                  No item information found.
-                </div>
-              `
-            }
-
-            <div class="order-total">
-
-              <span>Order total</span>
-
-              <span>
-                Rs. ${formatPrice(order.total)}
-              </span>
+              </div>
 
             </div>
 
-          </div>
 
-        </article>
+            <div class="order-items">
 
-      `;
+              <div class="order-items-title">
+                Items ordered
+              </div>
 
-    }).join("");
+
+              ${
+                items.length
+                ?
+                items
+                  .map(item => `
+
+                    <div class="order-item">
+
+                      <span>
+
+                        ${escapeHTML(
+                          item.product_name
+                        )}
+
+                        ${
+                          item.size
+                          ?
+                          ` · Size ${escapeHTML(item.size)}`
+                          :
+                          ""
+                        }
+
+                        × ${item.quantity}
+
+                      </span>
+
+
+                      <strong>
+
+                        Rs.
+                        ${formatPrice(
+                          Number(item.price) *
+                          Number(item.quantity)
+                        )}
+
+                      </strong>
+
+                    </div>
+
+                  `)
+                  .join("")
+                :
+                `
+                  <div
+                    style="
+                      color:#999;
+                      font-size:11px;
+                    "
+                  >
+                    No item information found.
+                  </div>
+                `
+              }
+
+
+              <div class="order-total">
+
+                <span>
+                  Order total
+                </span>
+
+                <span>
+                  Rs. ${formatPrice(order.total)}
+                </span>
+
+              </div>
+
+            </div>
+
+          </article>
+
+        `;
+
+      })
+      .join("");
 
 }
 
@@ -2128,16 +2752,31 @@ function statusOptions(current) {
     "cancelled"
   ];
 
-  return statuses.map(status => `
 
-    <option
-      value="${status}"
-      ${String(current) === status ? "selected" : ""}
-    >
-      ${status.charAt(0).toUpperCase() + status.slice(1)}
-    </option>
+  return statuses
+    .map(status => `
 
-  `).join("");
+      <option
+        value="${status}"
+        ${
+          String(current) ===
+          status
+          ?
+          "selected"
+          :
+          ""
+        }
+      >
+        ${
+          status
+            .charAt(0)
+            .toUpperCase() +
+          status.slice(1)
+        }
+      </option>
+
+    `)
+    .join("");
 
 }
 
@@ -2150,17 +2789,25 @@ async function changeOrderStatus(select) {
   const newStatus =
     select.value;
 
+
   select.disabled = true;
+
 
   const { error } =
     await supabaseClient
       .from("orders")
       .update({
-        status: newStatus
+        status:
+          newStatus
       })
-      .eq("id", orderId);
+      .eq(
+        "id",
+        orderId
+      );
+
 
   select.disabled = false;
+
 
   if (error) {
 
@@ -2174,10 +2821,12 @@ async function changeOrderStatus(select) {
     );
 
     await loadOrders();
+
     renderOrders();
 
     return;
   }
+
 
   const order =
     orders.find(
@@ -2186,89 +2835,146 @@ async function changeOrderStatus(select) {
         String(orderId)
     );
 
+
   if (order) {
-    order.status = newStatus;
+    order.status =
+      newStatus;
   }
+
 
   updateStats();
 
 }
 
 
-/* =========================================================
-   TABS
-   ========================================================= */
+/* TABS */
 
 function showTab(tab) {
 
-  const sections = [
-    "orders-section",
-    "products-section",
-    "categories-section",
-    "website-section"
-  ];
+  const ordersSection =
+    document.getElementById(
+      "orders-section"
+    );
 
-  const tabs = [
-    "orders-tab",
-    "products-tab",
-    "categories-tab",
-    "website-tab"
-  ];
+  const productsSection =
+    document.getElementById(
+      "products-section"
+    );
 
-  sections.forEach(id => {
-    document.getElementById(id).classList.add("hidden");
-  });
+  const categoriesSection =
+    document.getElementById(
+      "categories-section"
+    );
 
-  tabs.forEach(id => {
-    document.getElementById(id).classList.remove("active");
-  });
+  const websiteSection =
+    document.getElementById(
+      "website-section"
+    );
+
+
+  const ordersTab =
+    document.getElementById(
+      "orders-tab"
+    );
+
+  const productsTab =
+    document.getElementById(
+      "products-tab"
+    );
+
+  const categoriesTab =
+    document.getElementById(
+      "categories-tab"
+    );
+
+  const websiteTab =
+    document.getElementById(
+      "website-tab"
+    );
+
+
+  ordersSection
+    .classList
+    .add("hidden");
+
+  productsSection
+    .classList
+    .add("hidden");
+
+  categoriesSection
+    .classList
+    .add("hidden");
+
+  websiteSection
+    .classList
+    .add("hidden");
+
+
+  ordersTab
+    .classList
+    .remove("active");
+
+  productsTab
+    .classList
+    .remove("active");
+
+  categoriesTab
+    .classList
+    .remove("active");
+
+  websiteTab
+    .classList
+    .remove("active");
 
 
   if (tab === "orders") {
 
-    document
-      .getElementById("orders-section")
-      .classList.remove("hidden");
+    ordersSection
+      .classList
+      .remove("hidden");
 
-    document
-      .getElementById("orders-tab")
-      .classList.add("active");
+    ordersTab
+      .classList
+      .add("active");
 
   }
+
 
   else if (tab === "products") {
 
-    document
-      .getElementById("products-section")
-      .classList.remove("hidden");
+    productsSection
+      .classList
+      .remove("hidden");
 
-    document
-      .getElementById("products-tab")
-      .classList.add("active");
+    productsTab
+      .classList
+      .add("active");
 
   }
+
 
   else if (tab === "categories") {
 
-    document
-      .getElementById("categories-section")
-      .classList.remove("hidden");
+    categoriesSection
+      .classList
+      .remove("hidden");
 
-    document
-      .getElementById("categories-tab")
-      .classList.add("active");
+    categoriesTab
+      .classList
+      .add("active");
 
   }
 
+
   else if (tab === "website") {
 
-    document
-      .getElementById("website-section")
-      .classList.remove("hidden");
+    websiteSection
+      .classList
+      .remove("hidden");
 
-    document
-      .getElementById("website-tab")
-      .classList.add("active");
+    websiteTab
+      .classList
+      .add("active");
 
     loadWebsiteContent();
 
@@ -2277,11 +2983,10 @@ function showTab(tab) {
 }
 
 
-/* =========================================================
-   WEBSITE CONTENT
-   ========================================================= */
+/* WEBSITE CONTENT */
 
 const websiteFields = [
+
   "announcement",
   "announcement-enabled",
   "hero-title",
@@ -2296,15 +3001,22 @@ const websiteFields = [
   "featured-title",
   "about-title",
   "about-text"
+
 ];
 
 
 async function loadWebsiteContent() {
 
-  const { data, error } =
+  const {
+    data,
+    error
+  } =
     await supabaseClient
       .from("site_content")
-      .select("key,value");
+      .select(
+        "key,value"
+      );
+
 
   if (error) {
 
@@ -2319,23 +3031,39 @@ async function loadWebsiteContent() {
 
   const content = {};
 
-  (data || []).forEach(item => {
-    content[item.key] = item.value;
-  });
+
+  (data || [])
+    .forEach(item => {
+
+      content[item.key] =
+        item.value;
+
+    });
 
 
-  websiteFields.forEach(key => {
+  websiteFields
+    .forEach(key => {
 
-    const element =
-      document.getElementById("site-" + key);
+      const element =
+        document.getElementById(
+          "site-" + key
+        );
 
-    if (!element) return;
 
-    if (content[key] !== undefined) {
-      element.value = content[key];
-    }
+      if (!element) return;
 
-  });
+
+      if (
+        content[key] !==
+        undefined
+      ) {
+
+        element.value =
+          content[key];
+
+      }
+
+    });
 
 }
 
@@ -2344,44 +3072,67 @@ async function saveWebsiteContent() {
 
   const values = {};
 
-  websiteFields.forEach(key => {
 
-    const element =
-      document.getElementById("site-" + key);
+  websiteFields
+    .forEach(key => {
 
-    if (element) {
-      values[key] = element.value;
-    }
+      const element =
+        document.getElementById(
+          "site-" + key
+        );
+
+
+      if (element) {
+
+        values[key] =
+          element.value;
+
+      }
+
+    });
+
+
+  const buttons =
+    document.querySelectorAll(
+      '#website-section .small-button, #website-section .black-button'
+    );
+
+
+  buttons.forEach(button => {
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "Saving...";
 
   });
 
 
-  const button =
-    document.querySelector(
-      '#website-section .small-button'
-    );
+  for (
+    const key of websiteFields
+  ) {
 
-  if (button) {
-    button.disabled = true;
-    button.textContent = "Saving...";
-  }
-
-
-  for (const key of websiteFields) {
-
-    const { error } =
+    const {
+      error
+    } =
       await supabaseClient
         .from("site_content")
         .upsert(
           {
             key,
-            value: values[key] || "",
-            updated_at: new Date().toISOString()
+            value:
+              values[key] || "",
+            updated_at:
+              new Date()
+                .toISOString()
           },
           {
-            onConflict: "key"
+            onConflict:
+              "key"
           }
         );
+
 
     if (error) {
 
@@ -2395,10 +3146,17 @@ async function saveWebsiteContent() {
         error.message
       );
 
-      if (button) {
-        button.disabled = false;
-        button.textContent = "Save changes";
-      }
+
+      buttons.forEach(button => {
+
+        button.disabled =
+          false;
+
+        button.textContent =
+          "Save changes";
+
+      });
+
 
       return;
     }
@@ -2406,10 +3164,15 @@ async function saveWebsiteContent() {
   }
 
 
-  if (button) {
-    button.disabled = false;
-    button.textContent = "Save changes";
-  }
+  buttons.forEach(button => {
+
+    button.disabled =
+      false;
+
+    button.textContent =
+      "Save changes";
+
+  });
 
 
   const message =
@@ -2417,13 +3180,18 @@ async function saveWebsiteContent() {
       "website-save-message"
     );
 
+
   if (message) {
 
     message.textContent =
       "✓ Website changes saved 🍒";
 
+
     setTimeout(() => {
-      message.textContent = "";
+
+      message.textContent =
+        "";
+
     }, 3000);
 
   }
@@ -2431,121 +3199,296 @@ async function saveWebsiteContent() {
 }
 
 
-/* =========================================================
-   PRODUCT FORM
-   ========================================================= */
+/* PRODUCT FORM */
 
-function openProductForm(product = null) {
+function resetImagePicker() {
 
-  const area =
-    document.getElementById("product-form-area");
+  const gallery =
+    document.getElementById(
+      "product-image-gallery"
+    );
 
-  area.classList.remove("hidden");
-
-  document.getElementById("editing-product-id").value =
-    product ? product.id : "";
-
-  document.getElementById("product-form-title").textContent =
-    product ? "Edit product" : "Add product";
-
-  document.getElementById("product-name").value =
-    product?.name || "";
-
-  document.getElementById("product-price").value =
-    product?.price || "";
-
-  document.getElementById("product-size").value =
-    product?.size || "";
-
-  document.getElementById("product-status").value =
-    product?.status || "available";
-
-  document.getElementById("product-image").value =
-    product?.image_url || "";
-
-  document.getElementById("product-description").value =
-    product?.description || "";
-
-  document.getElementById("product-image-file").value = "";
+  const camera =
+    document.getElementById(
+      "product-image-camera"
+    );
 
   const preview =
-    document.getElementById("product-image-preview");
+    document.getElementById(
+      "product-image-preview"
+    );
 
   const previewImage =
-    document.getElementById("product-image-preview-img");
+    document.getElementById(
+      "product-image-preview-img"
+    );
 
-  const uploadStatus =
-    document.getElementById("upload-status");
+  const previewLabel =
+    document.getElementById(
+      "product-image-preview-label"
+    );
 
-  uploadStatus.textContent = "";
 
-  if (product?.image_url) {
+  gallery.value = "";
+  camera.value = "";
 
-    previewImage.src = product.image_url;
-    preview.style.display = "block";
+  preview.style.display =
+    "none";
 
-  } else {
+  previewImage.src =
+    "";
 
-    previewImage.src = "";
-    preview.style.display = "none";
+  previewLabel.textContent =
+    "Photo ready to upload 🍒";
+
+}
+
+
+function showSelectedImage(file) {
+
+  if (!file) return;
+
+
+  if (
+    !file.type ||
+    !file.type.startsWith(
+      "image/"
+    )
+  ) {
+
+    alert(
+      "Please choose an image file."
+    );
+
+    return;
+  }
+
+
+  const preview =
+    document.getElementById(
+      "product-image-preview"
+    );
+
+  const previewImage =
+    document.getElementById(
+      "product-image-preview-img"
+    );
+
+  const previewLabel =
+    document.getElementById(
+      "product-image-preview-label"
+    );
+
+
+  if (
+    previewImage.dataset.objectUrl
+  ) {
+
+    URL.revokeObjectURL(
+      previewImage.dataset.objectUrl
+    );
 
   }
 
-  updateCategoryDropdown();
 
-  document.getElementById("product-category-id").value =
-    product?.category_id || "";
-
-  area.scrollIntoView({
-    behavior: "smooth"
-  });
-
-}
+  const imageURL =
+    URL.createObjectURL(
+      file
+    );
 
 
-function closeProductForm() {
+  previewImage.src =
+    imageURL;
 
-  document
-    .getElementById("product-form-area")
-    .classList.add("hidden");
+  previewImage.dataset.objectUrl =
+    imageURL;
 
-  document
-    .getElementById("product-form")
-    .reset();
 
-  document
-    .getElementById("editing-product-id")
-    .value = "";
+  preview.style.display =
+    "block";
 
-  document
-    .getElementById("product-image")
-    .value = "";
 
-  document
-    .getElementById("product-image-preview")
-    .style.display = "none";
-
-  document
-    .getElementById("product-image-preview-img")
-    .src = "";
-
-  document
-    .getElementById("upload-status")
-    .textContent = "";
+  previewLabel.textContent =
+    "Photo selected — it will upload when you save 🍒";
 
 }
 
-
-/* =========================================================
-   DIRECT PHOTO PREVIEW
-   ========================================================= */
 
 document
-  .getElementById("product-image-file")
-  .addEventListener("change", function(event) {
+  .getElementById(
+    "product-image-gallery"
+  )
+  .addEventListener(
+    "change",
+    function(event) {
 
-    const file =
-      event.target.files[0];
+      const file =
+        event.target.files[0];
+
+      if (!file) return;
+
+      /*
+        Clear the camera input so
+        there is only ever one selected
+        image.
+      */
+
+      document
+        .getElementById(
+          "product-image-camera"
+        )
+        .value = "";
+
+      showSelectedImage(file);
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "product-image-camera"
+  )
+  .addEventListener(
+    "change",
+    function(event) {
+
+      const file =
+        event.target.files[0];
+
+      if (!file) return;
+
+
+      document
+        .getElementById(
+          "product-image-gallery"
+        )
+        .value = "";
+
+
+      showSelectedImage(file);
+
+    }
+  );
+
+
+function openProductForm(
+  product = null
+) {
+
+  const area =
+    document.getElementById(
+      "product-form-area"
+    );
+
+
+  area.classList.remove(
+    "hidden"
+  );
+
+
+  document
+    .getElementById(
+      "editing-product-id"
+    )
+    .value =
+      product
+      ?
+      product.id
+      :
+      "";
+
+
+  document
+    .getElementById(
+      "product-form-title"
+    )
+    .textContent =
+      product
+      ?
+      "Edit product"
+      :
+      "Add product";
+
+
+  document
+    .getElementById(
+      "product-name"
+    )
+    .value =
+      product?.name ||
+      "";
+
+
+  document
+    .getElementById(
+      "product-price"
+    )
+    .value =
+      product?.price ||
+      "";
+
+
+  document
+    .getElementById(
+      "product-size"
+    )
+    .value =
+      product?.size ||
+      "";
+
+
+  document
+    .getElementById(
+      "product-status"
+    )
+    .value =
+      product?.status ||
+      "available";
+
+
+  document
+    .getElementById(
+      "product-image"
+    )
+    .value =
+      product?.image_url ||
+      "";
+
+
+  document
+    .getElementById(
+      "product-description"
+    )
+    .value =
+      product?.description ||
+      "";
+
+
+  updateCategoryDropdown();
+
+
+  document
+    .getElementById(
+      "product-category-id"
+    )
+    .value =
+      product?.category_id ||
+      "";
+
+
+  resetImagePicker();
+
+
+  /*
+    When editing an existing product,
+    show its current image.
+  */
+
+  if (
+    product &&
+    product.image_url
+  ) {
 
     const preview =
       document.getElementById(
@@ -2557,394 +3500,531 @@ document
         "product-image-preview-img"
       );
 
-    const uploadStatus =
+    const previewLabel =
       document.getElementById(
-        "upload-status"
+        "product-image-preview-label"
       );
 
 
-    uploadStatus.textContent = "";
-
-
-    if (!file) {
-
-      preview.style.display = "none";
-      previewImage.src = "";
-
-      return;
-    }
-
-
-    if (!file.type.startsWith("image/")) {
-
-      alert("Please choose an image file.");
-
-      event.target.value = "";
-
-      preview.style.display = "none";
-      previewImage.src = "";
-
-      return;
-    }
-
-
-    const imageURL =
-      URL.createObjectURL(file);
-
     previewImage.src =
-      imageURL;
+      product.image_url;
+
 
     preview.style.display =
       "block";
 
+
+    previewLabel.textContent =
+      "Current product photo";
+
+  }
+
+
+  area.scrollIntoView({
+    behavior:
+      "smooth"
   });
 
+}
 
-/* =========================================================
-   SAVE PRODUCT
-   ========================================================= */
+
+function closeProductForm() {
+
+  const previewImage =
+    document.getElementById(
+      "product-image-preview-img"
+    );
+
+
+  if (
+    previewImage.dataset.objectUrl
+  ) {
+
+    URL.revokeObjectURL(
+      previewImage.dataset.objectUrl
+    );
+
+    delete previewImage.dataset.objectUrl;
+
+  }
+
+
+  document
+    .getElementById(
+      "product-form-area"
+    )
+    .classList
+    .add("hidden");
+
+
+  document
+    .getElementById(
+      "product-form"
+    )
+    .reset();
+
+
+  document
+    .getElementById(
+      "editing-product-id"
+    )
+    .value =
+      "";
+
+
+  resetImagePicker();
+
+}
+
+
+/* SAVE PRODUCT */
 
 document
-  .getElementById("product-form")
-  .addEventListener("submit", async function(event) {
+  .getElementById(
+    "product-form"
+  )
+  .addEventListener(
+    "submit",
+    async function(event) {
 
-    event.preventDefault();
-
-
-    const editingId =
-      document
-        .getElementById("editing-product-id")
-        .value;
+      event.preventDefault();
 
 
-    const categoryId =
-      document
-        .getElementById("product-category-id")
-        .value;
-
-
-    const selectedCategory =
-      categories.find(
-        category =>
-          String(category.id) ===
-          String(categoryId)
-      );
-
-
-    if (!selectedCategory) {
-
-      alert("Please choose a category.");
-
-      return;
-    }
-
-
-    const button =
-      document.getElementById(
-        "save-product-button"
-      );
-
-    const uploadStatus =
-      document.getElementById(
-        "upload-status"
-      );
-
-
-    button.disabled = true;
-    button.textContent = "Saving...";
-
-    uploadStatus.textContent = "";
-
-
-    try {
-
-      /* ---------------------------------------------
-         GET CURRENT IMAGE URL
-         --------------------------------------------- */
-
-      let imageURL =
+      const editingId =
         document
-          .getElementById("product-image")
-          .value
-          .trim();
+          .getElementById(
+            "editing-product-id"
+          )
+          .value;
 
 
-      /* ---------------------------------------------
-         GET NEW PHOTO
-         --------------------------------------------- */
+      const categoryId =
+        document
+          .getElementById(
+            "product-category-id"
+          )
+          .value;
 
-      const imageFileInput =
-        document.getElementById(
-          "product-image-file"
+
+      const selectedCategory =
+        categories.find(
+          category =>
+            String(
+              category.id
+            ) ===
+            String(
+              categoryId
+            )
         );
 
 
-      const selectedFile =
-        imageFileInput.files[0];
+      if (!selectedCategory) {
+
+        alert(
+          "Please choose a category."
+        );
+
+        return;
+      }
 
 
-      /* ---------------------------------------------
-         AUTOMATIC SUPABASE STORAGE UPLOAD
-         --------------------------------------------- */
-
-      if (selectedFile) {
-
-        uploadStatus.textContent =
-          "Uploading photo to Cherry Club... 📸";
+      const button =
+        document.getElementById(
+          "save-product-button"
+        );
 
 
-        const originalName =
-          selectedFile.name
-            .split(".")
-            .slice(0, -1)
-            .join(".")
-            .replace(
-              /[^a-zA-Z0-9-_]/g,
-              "-"
+      button.disabled =
+        true;
+
+      button.textContent =
+        "Saving...";
+
+
+      try {
+
+        /*
+          CURRENT IMAGE
+
+          If editing an existing product
+          and no new image is selected,
+          keep its existing URL.
+        */
+
+        let imageURL =
+          document
+            .getElementById(
+              "product-image"
             )
-            .substring(0, 60);
-
-
-        const extension =
-          selectedFile.name
-            .split(".")
-            .pop()
-            .toLowerCase();
-
-
-        const uniqueFileName =
-          `${Date.now()}-${crypto.randomUUID()}` +
-          `-${originalName}.${extension}`;
+            .value
+            .trim();
 
 
         /*
-          Files go inside:
+          SELECTED IMAGE
 
-          product-images/products/
-
-          You do NOT need to manually create
-          a URL or filename.
+          Gallery and camera both feed
+          into this same upload process.
         */
 
-        const filePath =
-          `products/${uniqueFileName}`;
+        const galleryInput =
+          document.getElementById(
+            "product-image-gallery"
+          );
+
+        const cameraInput =
+          document.getElementById(
+            "product-image-camera"
+          );
 
 
-        const { error: uploadError } =
-          await supabaseClient
-            .storage
-            .from(PRODUCT_IMAGE_BUCKET)
-            .upload(
-              filePath,
-              selectedFile,
-              {
-                cacheControl: "3600",
-                upsert: false,
-                contentType: selectedFile.type
-              }
+        const selectedFile =
+          galleryInput.files[0] ||
+          cameraInput.files[0];
+
+
+        /*
+          UPLOAD IMAGE AUTOMATICALLY
+
+          Exact bucket:
+          product-images
+        */
+
+        if (selectedFile) {
+
+          if (
+            !selectedFile.type.startsWith(
+              "image/"
+            )
+          ) {
+
+            throw new Error(
+              "Please choose an image file."
+            );
+
+          }
+
+
+          /*
+            Keep original extension where possible.
+          */
+
+          const originalName =
+            selectedFile.name ||
+            "product-image";
+
+
+          const extension =
+            (
+              originalName
+                .split(".")
+                .pop() ||
+              "jpg"
+            )
+              .toLowerCase()
+              .replace(
+                /[^a-z0-9]/g,
+                ""
+              );
+
+
+          const safeBaseName =
+            (
+              originalName
+                .replace(
+                  /\.[^/.]+$/,
+                  ""
+                )
+                .replace(
+                  /[^a-zA-Z0-9-_]/g,
+                  "-"
+                )
+                .substring(
+                  0,
+                  80
+                ) ||
+              "product"
             );
 
 
-        if (uploadError) {
+          const fileName =
+            `${Date.now()}-${safeBaseName}.${extension}`;
+
+
+          const filePath =
+            `products/${fileName}`;
+
+
+          /*
+            Upload to EXACT bucket.
+          */
+
+          const {
+            error: uploadError
+          } =
+            await supabaseClient
+              .storage
+              .from(
+                PRODUCT_IMAGE_BUCKET
+              )
+              .upload(
+                filePath,
+                selectedFile,
+                {
+                  cacheControl:
+                    "3600",
+                  upsert:
+                    false,
+                  contentType:
+                    selectedFile.type
+                }
+              );
+
+
+          if (uploadError) {
+
+            console.error(
+              "Image upload error:",
+              uploadError
+            );
+
+
+            throw new Error(
+              "The photo couldn't be uploaded.\n\n" +
+              uploadError.message
+            );
+
+          }
+
+
+          /*
+            Automatically generate
+            the public URL from the
+            SAME exact bucket.
+          */
+
+          const {
+            data: publicURLData
+          } =
+            supabaseClient
+              .storage
+              .from(
+                PRODUCT_IMAGE_BUCKET
+              )
+              .getPublicUrl(
+                filePath
+              );
+
+
+          if (
+            !publicURLData ||
+            !publicURLData.publicUrl
+          ) {
+
+            throw new Error(
+              "The photo uploaded, but Supabase couldn't create its public URL."
+            );
+
+          }
+
+
+          imageURL =
+            publicURLData.publicUrl;
+
+
+          document
+            .getElementById(
+              "product-image"
+            )
+            .value =
+              imageURL;
+
+        }
+
+
+        /*
+          PRODUCT DATA
+        */
+
+        const productData = {
+
+          name:
+            document
+              .getElementById(
+                "product-name"
+              )
+              .value
+              .trim(),
+
+          category:
+            selectedCategory.name,
+
+          category_id:
+            Number(
+              categoryId
+            ),
+
+          price:
+            Number(
+              document
+                .getElementById(
+                  "product-price"
+                )
+                .value
+            ),
+
+          size:
+            document
+              .getElementById(
+                "product-size"
+              )
+              .value
+              .trim(),
+
+          status:
+            document
+              .getElementById(
+                "product-status"
+              )
+              .value,
+
+          image_url:
+            imageURL,
+
+          description:
+            document
+              .getElementById(
+                "product-description"
+              )
+              .value
+              .trim()
+
+        };
+
+
+        /*
+          SAVE / UPDATE
+        */
+
+        let error;
+
+
+        if (editingId) {
+
+          const result =
+            await supabaseClient
+              .from("products")
+              .update(
+                productData
+              )
+              .eq(
+                "id",
+                editingId
+              );
+
+
+          error =
+            result.error;
+
+        }
+
+        else {
+
+          const result =
+            await supabaseClient
+              .from("products")
+              .insert(
+                productData
+              );
+
+
+          error =
+            result.error;
+
+        }
+
+
+        if (error) {
 
           console.error(
-            "Image upload error:",
-            uploadError
+            "Product save error:",
+            error
           );
 
+
           throw new Error(
-            "The photo couldn't be uploaded.\n\n" +
-            uploadError.message
+            "I couldn't save that product.\n\n" +
+            error.message
           );
 
         }
 
 
         /*
-          AUTOMATICALLY GET PUBLIC URL
+          SUCCESS
         */
 
-        const { data: publicURLData } =
-          supabaseClient
-            .storage
-            .from(PRODUCT_IMAGE_BUCKET)
-            .getPublicUrl(filePath);
+        closeProductForm();
 
 
-        imageURL =
-          publicURLData.publicUrl;
+        await loadAdminProducts();
 
 
-        /*
-          Store URL automatically in hidden field.
-          User never needs to touch this.
-        */
-
-        document
-          .getElementById(
-            "product-image"
-          )
-          .value =
-          imageURL;
+        updateStats();
+        renderAdminProducts();
 
 
-        uploadStatus.textContent =
-          "✓ Photo uploaded successfully 🍒";
+        alert(
+          editingId
+          ?
+          "Product updated successfully 🍒"
+          :
+          "Product added successfully 🍒"
+        );
+
 
       }
 
-
-      /* ---------------------------------------------
-         PRODUCT DATA
-         --------------------------------------------- */
-
-      const productData = {
-
-        name:
-          document
-            .getElementById("product-name")
-            .value
-            .trim(),
-
-        category:
-          selectedCategory.name,
-
-        category_id:
-          Number(categoryId),
-
-        price:
-          Number(
-            document
-              .getElementById("product-price")
-              .value
-          ),
-
-        size:
-          document
-            .getElementById("product-size")
-            .value
-            .trim(),
-
-        status:
-          document
-            .getElementById("product-status")
-            .value,
-
-        image_url:
-          imageURL,
-
-        description:
-          document
-            .getElementById("product-description")
-            .value
-            .trim()
-
-      };
-
-
-      /* ---------------------------------------------
-         SAVE / UPDATE PRODUCT
-         --------------------------------------------- */
-
-      let error;
-
-
-      if (editingId) {
-
-        const result =
-          await supabaseClient
-            .from("products")
-            .update(productData)
-            .eq("id", editingId);
-
-        error =
-          result.error;
-
-      } else {
-
-        const result =
-          await supabaseClient
-            .from("products")
-            .insert(productData);
-
-        error =
-          result.error;
-
-      }
-
-
-      if (error) {
+      catch (error) {
 
         console.error(
           "Product save error:",
           error
         );
 
-        throw new Error(
-          "I couldn't save that product.\n\n" +
-          error.message
+
+        alert(
+          error.message ||
+          "Something went wrong while saving the product."
         );
 
       }
 
 
-      /* ---------------------------------------------
-         SUCCESS
-         --------------------------------------------- */
+      finally {
 
-      uploadStatus.textContent =
-        "✓ Product saved successfully 🍒";
+        button.disabled =
+          false;
 
+        button.textContent =
+          "Save product";
 
-      closeProductForm();
-
-
-      await loadAdminProducts();
-
-
-      updateStats();
-      renderAdminProducts();
-
-
-    } catch (error) {
-
-      console.error(
-        "Product save error:",
-        error
-      );
-
-
-      uploadStatus.textContent =
-        "";
-
-
-      alert(
-        error.message ||
-        "Something went wrong while saving the product."
-      );
-
-
-    } finally {
-
-      button.disabled = false;
-      button.textContent =
-        "Save product";
+      }
 
     }
+  );
 
-  });
 
-
-/* =========================================================
-   RENDER PRODUCTS
-   ========================================================= */
+/* RENDER PRODUCTS */
 
 function renderAdminProducts() {
 
   const container =
-    document.getElementById(
-      "products-container"
-    );
+    document
+      .getElementById(
+        "products-container"
+      );
+
 
   if (!adminProducts.length) {
 
@@ -2962,177 +4042,222 @@ function renderAdminProducts() {
 
 
   container.innerHTML =
-    adminProducts.map(product => {
+    adminProducts
+      .map(product => {
 
-      const image =
-        product.image_url;
-
-      const category =
-        categories.find(
-          item =>
-            String(item.id) ===
-            String(product.category_id)
-        );
-
-      const categoryName =
-        category?.name ||
-        product.category ||
-        "Uncategorized";
+        const image =
+          product.image_url;
 
 
-      let statusClass =
-        "status-hidden";
+        const category =
+          categories.find(
+            item =>
+              String(
+                item.id
+              ) ===
+              String(
+                product.category_id
+              )
+          );
 
 
-      if (product.status === "available") {
-        statusClass = "status-available";
-      }
-
-      if (product.status === "sold") {
-        statusClass = "status-sold";
-      }
+        const categoryName =
+          category?.name ||
+          product.category ||
+          "Uncategorized";
 
 
-      return `
+        let statusClass =
+          "status-hidden";
 
-        <article class="product-card">
 
-          ${
-            image
-            ?
-            `
-              <img
-                class="product-image"
-                src="${escapeHTML(image)}"
-                alt="${escapeHTML(product.name)}"
-                loading="lazy"
-              >
-            `
-            :
-            `
-              <div class="product-placeholder">
-                🍒
+        if (
+          product.status ===
+          "available"
+        ) {
+
+          statusClass =
+            "status-available";
+
+        }
+
+
+        if (
+          product.status ===
+          "sold"
+        ) {
+
+          statusClass =
+            "status-sold";
+
+        }
+
+
+        return `
+
+          <article class="product-card">
+
+            ${
+              image
+              ?
+              `
+                <img
+                  class="product-image"
+                  src="${escapeHTML(image)}"
+                  alt="${escapeHTML(product.name)}"
+                  loading="lazy"
+                >
+              `
+              :
+              `
+                <div class="product-placeholder">
+                  🍒
+                </div>
+              `
+            }
+
+
+            <div class="product-card-info">
+
+              <div class="product-card-name">
+                ${escapeHTML(product.name)}
               </div>
-            `
-          }
 
 
-          <div class="product-card-info">
+              <div class="product-card-meta">
 
-            <div class="product-card-name">
-              ${escapeHTML(product.name)}
-            </div>
+                ${escapeHTML(categoryName)}
 
-            <div class="product-card-meta">
+                ${
+                  product.size
+                  ?
+                  ` · ${escapeHTML(product.size)}`
+                  :
+                  ""
+                }
 
-              ${escapeHTML(categoryName)}
+              </div>
 
-              ${
-                product.size
-                ?
-                ` · ${escapeHTML(product.size)}`
-                :
-                ""
-              }
 
-            </div>
+              <div class="product-card-price">
+                Rs. ${formatPrice(product.price)}
+              </div>
 
-            <div class="product-card-price">
-              Rs. ${formatPrice(product.price)}
-            </div>
 
-            <div class="product-card-status ${statusClass}">
+              <div
+                class="product-card-status ${statusClass}"
+              >
 
-              ${
-                product.status === "sold"
-                ? "Sold Out"
-                : escapeHTML(
+                ${
+                  product.status ===
+                  "sold"
+                  ?
+                  "Sold Out"
+                  :
+                  escapeHTML(
                     product.status ||
                     "hidden"
                   )
-              }
+                }
+
+              </div>
+
+
+              <div class="product-actions">
+
+                <button
+                  onclick="editProduct('${escapeHTML(product.id)}')"
+                >
+                  Edit
+                </button>
+
+
+                <button
+                  onclick="setProductStatus('${escapeHTML(product.id)}','available')"
+                >
+                  Available
+                </button>
+
+
+                <button
+                  onclick="setProductStatus('${escapeHTML(product.id)}','sold')"
+                >
+                  Sold Out
+                </button>
+
+
+                <button
+                  onclick="setProductStatus('${escapeHTML(product.id)}','hidden')"
+                >
+                  Hide
+                </button>
+
+
+                <button
+                  class="delete-button"
+                  onclick="deleteProduct('${escapeHTML(product.id)}')"
+                >
+                  🗑 Delete product
+                </button>
+
+              </div>
 
             </div>
 
+          </article>
 
-            <div class="product-actions">
+        `;
 
-              <button
-                onclick="editProduct('${escapeHTML(product.id)}')"
-              >
-                Edit
-              </button>
-
-              <button
-                onclick="setProductStatus('${escapeHTML(product.id)}','available')"
-              >
-                Available
-              </button>
-
-              <button
-                onclick="setProductStatus('${escapeHTML(product.id)}','sold')"
-              >
-                Sold Out
-              </button>
-
-              <button
-                onclick="setProductStatus('${escapeHTML(product.id)}','hidden')"
-              >
-                Hide
-              </button>
-
-              <button
-                class="delete-button"
-                onclick="deleteProduct('${escapeHTML(product.id)}')"
-              >
-                🗑 Delete product
-              </button>
-
-            </div>
-
-          </div>
-
-        </article>
-
-      `;
-
-    }).join("");
+      })
+      .join("");
 
 }
 
 
-/* =========================================================
-   EDIT
-   ========================================================= */
+/* EDIT */
 
 function editProduct(id) {
 
   const product =
     adminProducts.find(
       item =>
-        String(item.id) ===
-        String(id)
+        String(
+          item.id
+        ) ===
+        String(
+          id
+        )
     );
+
 
   if (!product) return;
 
-  openProductForm(product);
+
+  openProductForm(
+    product
+  );
 
 }
 
 
-/* =========================================================
-   STATUS
-   ========================================================= */
+/* STATUS */
 
-async function setProductStatus(id, newStatus) {
+async function setProductStatus(
+  id,
+  newStatus
+) {
 
   const product =
     adminProducts.find(
       item =>
-        String(item.id) ===
-        String(id)
+        String(
+          item.id
+        ) ===
+        String(
+          id
+        )
     );
+
 
   if (!product) return;
 
@@ -3141,9 +4266,13 @@ async function setProductStatus(id, newStatus) {
     await supabaseClient
       .from("products")
       .update({
-        status: newStatus
+        status:
+          newStatus
       })
-      .eq("id", id);
+      .eq(
+        "id",
+        id
+      );
 
 
   if (error) {
@@ -3165,24 +4294,28 @@ async function setProductStatus(id, newStatus) {
   product.status =
     newStatus;
 
+
   updateStats();
   renderAdminProducts();
 
 }
 
 
-/* =========================================================
-   DELETE PRODUCT
-   ========================================================= */
+/* DELETE PRODUCT */
 
 async function deleteProduct(id) {
 
   const product =
     adminProducts.find(
       item =>
-        String(item.id) ===
-        String(id)
+        String(
+          item.id
+        ) ===
+        String(
+          id
+        )
     );
+
 
   if (!product) return;
 
@@ -3193,6 +4326,7 @@ async function deleteProduct(id) {
       `This will permanently remove the product from Cherry Club.`
     );
 
+
   if (!confirmed) return;
 
 
@@ -3200,7 +4334,10 @@ async function deleteProduct(id) {
     await supabaseClient
       .from("products")
       .delete()
-      .eq("id", id);
+      .eq(
+        "id",
+        id
+      );
 
 
   if (error) {
@@ -3222,9 +4359,14 @@ async function deleteProduct(id) {
   adminProducts =
     adminProducts.filter(
       item =>
-        String(item.id) !==
-        String(id)
+        String(
+          item.id
+        ) !==
+        String(
+          id
+        )
     );
+
 
   updateStats();
   renderAdminProducts();
@@ -3232,9 +4374,7 @@ async function deleteProduct(id) {
 }
 
 
-/* =========================================================
-   START
-   ========================================================= */
+/* START */
 
 checkLogin();
 
