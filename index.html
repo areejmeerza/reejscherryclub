@@ -4271,12 +4271,10 @@ async function loadProducts() {
       await supabaseClient
 
         .from("products")
-
-        .select(
-
-          "id,name,category,price,size,status,image_url,description,created_at"
-
-        )
+.select(
+  "id,name,category,price,size,status,image_url,description,created_at,quantity,sold_quantity"
+)
+      
 
         .eq(
 
