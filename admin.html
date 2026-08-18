@@ -771,7 +771,13 @@
       >
         Categories
       </button>
-
+<button
+  class="tab"
+  id="website-tab"
+  onclick="showTab('website')"
+>
+  Website
+</button>
     </div>
 
 
@@ -952,7 +958,197 @@
       </div>
 
     </section>
+<!-- WEBSITE -->
 
+<section id="website-section" class="section-card hidden">
+
+  <div class="section-heading">
+    <h2>Website</h2>
+
+    <button
+      class="small-button"
+      onclick="saveWebsiteContent()"
+    >
+      Save changes
+    </button>
+  </div>
+
+  <div class="form-box">
+
+    <h3 style="
+      font-family:Georgia,serif;
+      font-size:28px;
+      font-weight:normal;
+      margin-bottom:25px;
+    ">
+      Announcement Bar
+    </h3>
+
+    <label>Announcement text</label>
+
+    <input
+      id="site-announcement"
+      placeholder="e.g. FLAT 40% OFF 🍒"
+    >
+
+    <label>Show announcement?</label>
+
+    <select id="site-announcement-enabled">
+      <option value="true">Yes</option>
+      <option value="false">No</option>
+    </select>
+
+  </div>
+
+
+  <div class="form-box">
+
+    <h3 style="
+      font-family:Georgia,serif;
+      font-size:28px;
+      font-weight:normal;
+      margin-bottom:25px;
+    ">
+      Hero Section
+    </h3>
+
+    <label>Main heading</label>
+
+    <input
+      id="site-hero-title"
+      placeholder="e.g. The New Drop"
+    >
+
+    <label>Subtitle</label>
+
+    <textarea
+      id="site-hero-subtitle"
+      placeholder="e.g. Y2K pieces you'll obsess over."
+    ></textarea>
+
+    <label>Button text</label>
+
+    <input
+      id="site-hero-button"
+      placeholder="e.g. SHOP NOW"
+    >
+
+    <label>Button link</label>
+
+    <input
+      id="site-hero-link"
+      placeholder="e.g. #products"
+    >
+
+  </div>
+
+
+  <div class="form-box">
+
+    <h3 style="
+      font-family:Georgia,serif;
+      font-size:28px;
+      font-weight:normal;
+      margin-bottom:25px;
+    ">
+      Promotion / Deal
+    </h3>
+
+    <label>Show promotion?</label>
+
+    <select id="site-promo-enabled">
+      <option value="true">Yes</option>
+      <option value="false">No</option>
+    </select>
+
+    <label>Promotion title</label>
+
+    <input
+      id="site-promo-title"
+      placeholder="e.g. FLAT 40% OFF"
+    >
+
+    <label>Promotion description</label>
+
+    <textarea
+      id="site-promo-description"
+      placeholder="e.g. On selected Cherry Club pieces."
+    ></textarea>
+
+    <label>Promotion button</label>
+
+    <input
+      id="site-promo-button"
+      placeholder="e.g. SHOP SALE"
+    >
+
+  </div>
+
+
+  <div class="form-box">
+
+    <h3 style="
+      font-family:Georgia,serif;
+      font-size:28px;
+      font-weight:normal;
+      margin-bottom:25px;
+    ">
+      Homepage Sections
+    </h3>
+
+    <label>New Arrivals title</label>
+
+    <input
+      id="site-new-arrivals-title"
+      placeholder="New Arrivals"
+    >
+
+    <label>Featured Products title</label>
+
+    <input
+      id="site-featured-title"
+      placeholder="Cherry Picks"
+    >
+
+    <label>About section title</label>
+
+    <input
+      id="site-about-title"
+      placeholder="About Cherry Club"
+    >
+
+    <label>About section text</label>
+
+    <textarea
+      id="site-about-text"
+      placeholder="Tell customers about Cherry Club..."
+    ></textarea>
+
+  </div>
+
+
+  <div style="padding:25px;">
+
+    <button
+      class="black-button"
+      style="max-width:300px;"
+      onclick="saveWebsiteContent()"
+    >
+      Save all website changes 🍒
+    </button>
+
+    <div
+      id="website-save-message"
+      style="
+        margin-top:15px;
+        font-size:12px;
+        color:#176b3a;
+      "
+    ></div>
+
+  </div>
+
+</section>
   </main>
 
 </div>
@@ -1843,6 +2039,9 @@ function showTab(tab) {
   const categoriesSection =
     document.getElementById("categories-section");
 
+  const websiteSection =
+    document.getElementById("website-section");
+
   const ordersTab =
     document.getElementById("orders-tab");
 
@@ -1852,14 +2051,20 @@ function showTab(tab) {
   const categoriesTab =
     document.getElementById("categories-tab");
 
+  const websiteTab =
+    document.getElementById("website-tab");
+
 
   ordersSection.classList.add("hidden");
   productsSection.classList.add("hidden");
   categoriesSection.classList.add("hidden");
+  websiteSection.classList.add("hidden");
+
 
   ordersTab.classList.remove("active");
   productsTab.classList.remove("active");
   categoriesTab.classList.remove("active");
+  websiteTab.classList.remove("active");
 
 
   if (tab === "orders") {
@@ -1877,11 +2082,167 @@ function showTab(tab) {
     categoriesSection.classList.remove("hidden");
     categoriesTab.classList.add("active");
 
+  } else if (tab === "website") {
+
+    websiteSection.classList.remove("hidden");
+    websiteTab.classList.add("active");
+
+    loadWebsiteContent();
+
   }
 
 }
 
+/* WEBSITE CONTENT */
 
+const websiteFields = [
+  "announcement",
+  "announcement-enabled",
+  "hero-title",
+  "hero-subtitle",
+  "hero-button",
+  "hero-link",
+  "promo-enabled",
+  "promo-title",
+  "promo-description",
+  "promo-button",
+  "new-arrivals-title",
+  "featured-title",
+  "about-title",
+  "about-text"
+];
+
+
+async function loadWebsiteContent() {
+
+  const { data, error } =
+    await supabaseClient
+      .from("site_content")
+      .select("key,value");
+
+  if (error) {
+
+    console.error(
+      "Website content error:",
+      error
+    );
+
+    return;
+  }
+
+
+  const content = {};
+
+  (data || []).forEach(item => {
+    content[item.key] = item.value;
+  });
+
+
+  websiteFields.forEach(key => {
+
+    const element =
+      document.getElementById("site-" + key);
+
+    if (!element) return;
+
+    if (content[key] !== undefined) {
+      element.value = content[key];
+    }
+
+  });
+
+}
+
+
+async function saveWebsiteContent() {
+
+  const values = {};
+
+  websiteFields.forEach(key => {
+
+    const element =
+      document.getElementById("site-" + key);
+
+    if (element) {
+      values[key] = element.value;
+    }
+
+  });
+
+
+  const button =
+    document.querySelector(
+      '#website-section .small-button'
+    );
+
+  if (button) {
+    button.disabled = true;
+    button.textContent = "Saving...";
+  }
+
+
+  for (const key of websiteFields) {
+
+    const { error } =
+      await supabaseClient
+        .from("site_content")
+        .upsert(
+          {
+            key,
+            value: values[key] || "",
+            updated_at: new Date().toISOString()
+          },
+          {
+            onConflict: "key"
+          }
+        );
+
+    if (error) {
+
+      console.error(
+        "Website content save error:",
+        error
+      );
+
+      alert(
+        "Couldn't save website content.\n\n" +
+        error.message
+      );
+
+      if (button) {
+        button.disabled = false;
+        button.textContent = "Save changes";
+      }
+
+      return;
+    }
+
+  }
+
+
+  if (button) {
+    button.disabled = false;
+    button.textContent = "Save changes";
+  }
+
+
+  const message =
+    document.getElementById(
+      "website-save-message"
+    );
+
+  if (message) {
+
+    message.textContent =
+      "✓ Website changes saved 🍒";
+
+    setTimeout(() => {
+      message.textContent = "";
+    }, 3000);
+
+  }
+
+}
 /* PRODUCT FORM */
 
 function openProductForm(product = null) {
