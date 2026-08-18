@@ -1340,21 +1340,21 @@
     <button class="close-menu" onclick="closeMenu()">×</button>
 
     <div class="menu-label">Shop</div>
+<div class="menu-links" id="category-menu">
+  <a href="#shop" onclick="showAllProducts(); closeMenu();">
+    New Arrivals
+  </a>
 
-    <div class="menu-links">
-      <a href="#shop" onclick="showAllProducts(); closeMenu();">New Arrivals</a>
-      <a href="#shop" onclick="filterCategory('Dresses')">Dresses</a>
-      <a href="#shop" onclick="filterCategory('Tops')">Tops</a>
-      <a href="#shop" onclick="filterCategory('Jeans')">Jeans</a>
-      <a href="#shop" onclick="filterCategory('Bottoms')">Bottoms</a>
-      <a href="#shop" onclick="filterCategory('Shoes')">Shoes</a>
-      <a href="#shop" onclick="filterCategory('Accessories')">Accessories</a>
-      <a href="#shop" onclick="filterCategory('Women')">Women</a>
-      <a href="#shop" onclick="filterCategory('Men')">Men</a>
-      <a href="#shop" onclick="filterCategory('Unisex')">Unisex</a>
-      <a href="#shop" onclick="filterCategory('Sale')">Sale</a>
-    </div>
-
+  <span style="
+    color:#999;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+  ">
+    Loading categories...
+  </span>
+</div>
+ 
     <div class="menu-divider"></div>
 
     <div class="menu-label">Your Cherry Bag</div>
@@ -2126,7 +2126,8 @@ async function loadProducts() {
   products = Array.isArray(data)
     ? data
     : [];
-
+  
+load categories();
   renderProducts();
 }
 
@@ -2334,7 +2335,60 @@ function attachProductCardListeners(container) {
   });
 }
 
+function loadCategories() {
 
+  const menu =
+    document.getElementById("category-menu");
+
+  if (!menu) return;
+
+  const categories = [
+    ...new Set(
+      products
+        .map(product =>
+          String(product.category || "").trim()
+        )
+        .filter(Boolean)
+    )
+  ];
+
+  categories.sort((a, b) =>
+    a.localeCompare(b)
+  );
+
+  menu.innerHTML = `
+    <a
+      href="#shop"
+      onclick="showAllProducts(); closeMenu();"
+    >
+      New Arrivals
+    </a>
+
+    ${
+      categories.length
+      ?
+      categories.map(category => `
+        <a
+          href="#shop"
+          onclick="filterCategory('${escapeHTML(category).replace(/'/g, "\\'")}')"
+        >
+          ${escapeHTML(category)}
+        </a>
+      `).join("")
+      :
+      `
+        <span style="
+          color:#999;
+          font-size:10px;
+          text-transform:uppercase;
+          letter-spacing:1px;
+        ">
+          No categories yet
+        </span>
+      `
+    }
+  `;
+}
 /* =========================================================
    CATEGORY FILTER
 ========================================================= */
